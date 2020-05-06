@@ -22,6 +22,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'me.hiennguyen.circleseekbar:circleseekbar:1.0.1'
+
     implementation 'me.zhanghai.android.materialprogressbar:library:1.4.2'
     implementation 'com.pavelsikun:material-seekbar-preference:2.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
