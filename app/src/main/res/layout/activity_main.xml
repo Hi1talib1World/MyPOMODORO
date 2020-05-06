@@ -75,4 +75,10 @@
 
         </RelativeLayout>
     </LinearLayout>
+
+    <include layout="@layout/content_main" />
+
+    <!-- Adding bottom sheet after main content -->
+    <include layout="@layout/bottom_sheet" />
+
 </RelativeLayout>
