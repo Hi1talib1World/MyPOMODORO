@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".addpomodoro">
 
-    <Text
+    <EditText
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:layout_width="290dp"
         android:layout_height="wrap_content"
         android:text="TextView" />
 </LinearLayout>
