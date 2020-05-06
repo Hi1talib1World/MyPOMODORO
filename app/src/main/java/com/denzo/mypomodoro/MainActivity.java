@@ -66,6 +66,18 @@ public class MainActivity extends AppCompatActivity {
         mButtonStartPause = findViewById(R.id.button);
         mButtonReset = findViewById(R.id.button_reset);
 
+        for (int i = 0; i < icons.length; i++) {
+            itemModel itemModel = new itemModel();
+            itemModel.setImage(icons[i]);
+            itemModel.setName(iconsName[i]);
+
+            //add in array list
+            arrayList.add(itemModel);
+        }
+
+        CustomAdapter adapter = new CustomAdapter(getApplicationContext(), arrayList);
+        recyclerView.setAdapter(adapter);
+        
         mButtonStartPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
