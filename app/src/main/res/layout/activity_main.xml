@@ -32,11 +32,13 @@
 
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start"
+    <ImageButton
+        android:layout_width="100dip"
+        android:layout_height="100dip"
         android:id="@+id/button"
+        android:src="@drawable/play"
+        android:background="@null"
+
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         />
