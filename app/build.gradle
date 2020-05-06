@@ -21,9 +21,14 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'me.hiennguyen.circleseekbar:circleseekbar:1.0.1'
     implementation 'com.android.support:design:28.0.0'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'me.zhanghai.android.materialprogressbar:library:1.4.2'
     implementation 'com.pavelsikun:material-seekbar-preference:2.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
