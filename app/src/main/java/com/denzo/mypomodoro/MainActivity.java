@@ -1,5 +1,6 @@
 package com.denzo.mypomodoro;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -7,9 +8,15 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toolbar;
+
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.Locale;
+
+import butterknife.BindView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +32,15 @@ public class MainActivity extends AppCompatActivity {
 
     private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
 
+    private static final String TAG = MainActivity.class.getSimpleName();
+
+    @BindView(R.id.btn_bottom_sheet)
+    Button btnBottomSheet;
+
+    @BindView(R.id.bottom_sheet)
+    LinearLayout layoutBottomSheet;
+
+    BottomSheetBehavior sheetBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +70,44 @@ public class MainActivity extends AppCompatActivity {
         });
 
         updateCountDownText();
+
+
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+
+        /**
+         * bottom sheet state change listener
+         * we are changing button text when sheet changed state
+         * */
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+                        btnBottomSheet.setText("Close Sheet");
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+                        btnBottomSheet.setText("Expand Sheet");
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
     }
     private void startTimer() {
         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
