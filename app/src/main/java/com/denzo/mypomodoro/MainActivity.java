@@ -17,6 +17,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import java.util.Locale;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -152,6 +153,18 @@ public class MainActivity extends AppCompatActivity {
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
 
         mTextViewCountDown.setText(timeLeftFormatted);
+    }
+
+    //on click card view
+    @OnClick(R.id.btn_bottom_sheet)
+    public void toggleBottomSheet() {
+        if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            btnBottomSheet.setText("Close sheet");
+        } else {
+            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            btnBottomSheet.setText("Expand sheet");
+        }
     }
 
 }
