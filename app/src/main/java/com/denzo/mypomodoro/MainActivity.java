@@ -2,6 +2,9 @@ package com.denzo.mypomodoro;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -14,6 +17,7 @@ import android.widget.Toolbar;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -43,12 +47,22 @@ public class MainActivity extends AppCompatActivity {
 
     BottomSheetBehavior sheetBehavior;
 
+    ArrayList<itemModel> arrayList;
+    RecyclerView recyclerView;
+    int icons[] = {R.drawable.pause,R.drawable.play,R.drawable.play,R.drawable.play,R.drawable.play,R.drawable.play,R.drawable.play,R.drawable.play,R.drawable.play};
+    String iconsName[] = {"Chrome", "Google Drive", "Facebook", "Twitter", "Google Maps", "WhatsApp", "LinkedIn", "Google+", "Instagram"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mTextViewCountDown = findViewById(R.id.countdown_text);
 
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        arrayList = new ArrayList<>();
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         mButtonStartPause = findViewById(R.id.button);
         mButtonReset = findViewById(R.id.button_reset);
 
