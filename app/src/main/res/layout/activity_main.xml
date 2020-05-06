@@ -52,6 +52,15 @@
         android:layout_below="@+id/circular"
 
         />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset"
+        android:id="@+id/button_reset"
+        android:layout_below="@id/countdown_text"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
