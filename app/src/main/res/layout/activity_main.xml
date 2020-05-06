@@ -1,18 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000"
     tools:context=".MainActivity">
 
-    <TextView
+
+    <hiennguyen.me.circleseekbar.CircleSeekBar
+        android:id="@+id/circular"
+        android:layout_width="307dp"
+        android:layout_height="249dp"
+        android:padding="64dp"
+        app:csb_arcColor="@color/color_arc"
+        app:csb_arcWidth="10dp"
+        app:csb_max="1000"
+        app:csb_min="10"
+        app:csb_progress="555"
+        app:csb_progressColor="#00aad4"
+        app:csb_progressWidth="12dp"
+        app:csb_step="5"
+
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:csb_textColor="@color/color_text"
+        app:csb_thumbDrawable="@drawable/buttonzone"
+        app:csb_isShowText="false"
+        app:csb_thumbSize="36dp" >
+        </hiennguyen.me.circleseekbar.CircleSeekBar>
+
+
+
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Start"
+        android:id="@+id/button"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        />
+    <TextView
+        android:id="@+id/countdown_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="50sp"
+        android:text="10:00"
+        android:textColor="#fff"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/circular"
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>
