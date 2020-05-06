@@ -8,69 +8,95 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
 
+    private static final long START_TIME_IN_MILLIS = 600000;
 
-    public int counter;
-    private TextView countdownText;
-    Button button;
-    CountDownTimer countDownTimer;
-    private long timeLeftMillSeconds = 15000000;
-    private boolean timerRunning;
+    private TextView mTextViewCountDown;
+    private Button mButtonStartPause;
+    private Button mButtonReset;
+
+    private CountDownTimer mCountDownTimer;
+
+    private boolean mTimerRunning;
+
+    private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mTextViewCountDown = findViewById(R.id.countdown_text);
 
+        mButtonStartPause = findViewById(R.id.button);
+        mButtonReset = findViewById(R.id.button_reset);
 
-        countdownText = findViewById(R.id.countdown_text);
-        button = findViewById(R.id.button);
-
-        updateTimer();
-    }
-    public void startStop(){
-        if (timerRunning){
-            stopTimer();
-        }else {
-            startTimer();
-        }
-    }
-    public void startTimer(){
-        countDownTimer = new CountDownTimer(timeLeftMillSeconds, 1000){
+        mButtonStartPause.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTick(long l){
-                timeLeftMillSeconds = 1;
-                updateTimer();
+            public void onClick(View v) {
+                if (mTimerRunning) {
+                    pauseTimer();
+                } else {
+                    startTimer();
+                }
             }
-            @Override
-            public void onFinish(){
+        });
 
+        mButtonReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetTimer();
+            }
+        });
+
+        updateCountDownText();
+    }
+    private void startTimer() {
+        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                mTimeLeftInMillis = millisUntilFinished;
+                updateCountDownText();
+            }
+
+            @Override
+            public void onFinish() {
+                mTimerRunning = false;
+                mButtonStartPause.setText("Start");
+                mButtonStartPause.setVisibility(View.INVISIBLE);
+                mButtonReset.setVisibility(View.VISIBLE);
             }
         }.start();
-        button.setText("PAUSE");
-        timerRunning = true;
+
+        mTimerRunning = true;
+        mButtonStartPause.setText("pause");
+        mButtonReset.setVisibility(View.INVISIBLE);
     }
 
-    public void stopTimer(){
-        countDownTimer.cancel();
-        button.setText("START");
-        timerRunning = false;
+    private void pauseTimer() {
+        mCountDownTimer.cancel();
+        mTimerRunning = false;
+        mButtonStartPause.setText("Start");
+        mButtonReset.setVisibility(View.VISIBLE);
     }
-    public void updateTimer(){
-        int minutes = (int) timeLeftMillSeconds / 15000000;
-        int seconds = (int) timeLeftMillSeconds % 15000000 / 1000;
 
-        String timeLeftText;
+    private void resetTimer() {
+        mTimeLeftInMillis = START_TIME_IN_MILLIS;
+        updateCountDownText();
+        mButtonReset.setVisibility(View.INVISIBLE);
+        mButtonStartPause.setVisibility(View.VISIBLE);
+    }
 
-        timeLeftText = "" + minutes;
-        timeLeftText += ":";
-        if (seconds < 10) timeLeftText += "0";
-        timeLeftText += seconds;
-        countdownText.setText(timeLeftText);
+    private void updateCountDownText() {
+        int minutes = (int) (mTimeLeftInMillis / 1000) / 60;
+        int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
 
+        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
 
+        mTextViewCountDown.setText(timeLeftFormatted);
     }
 
 }
