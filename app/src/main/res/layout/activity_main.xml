@@ -69,6 +69,8 @@
         android:id="@+id/recycler_view"
         android:layout_below="@+id/button_reset"
         android:layout_height="wrap_content" />
+    
+    <include layout="@layout/bottom_sheet"></include>
 
 
 </RelativeLayout>
