@@ -30,13 +30,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTextViewCountDown;
     private ImageButton mButtonStartPause;
     private Button mButtonReset;
-
     private CountDownTimer mCountDownTimer;
-
     private boolean mTimerRunning;
-
     private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
-
     private static final String TAG = MainActivity.class.getSimpleName();
 
     @BindView(R.id.btn_bottom_sheet)
@@ -47,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
     BottomSheetBehavior sheetBehavior;
 
+    LinearLayout linearLayout;
     ArrayList<itemModel> arrayList;
     RecyclerView recyclerView;
     int icons[] = {R.drawable.pause,R.drawable.play,R.drawable.play,R.drawable.play,R.drawable.play,R.drawable.play,R.drawable.play,R.drawable.play,R.drawable.play};
@@ -60,6 +57,12 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         arrayList = new ArrayList<>();
+
+        //get the bottom sheet view
+        linearLayout = findViewById(R.id.bottom_sheet);
+
+        //init the bottom sheet view
+        final BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(linearLayout);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
