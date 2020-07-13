@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-     
+
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
 
         /**
