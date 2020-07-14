@@ -41,6 +41,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static java.util.Calendar.MINUTE;
+
 public class addpomodoro extends AppCompatActivity  {
 
     public static final String NOTIFICATION_CHANNEL_ID = "10001";
@@ -137,7 +139,7 @@ public class addpomodoro extends AppCompatActivity  {
 
     //on theme change refresh activity
     private void restartApp() {
-        Intent i = new Intent(getApplicationContext(), addpomodoro.class);
+        Intent i = new Intent(getApplicationContext(), addpomodoro .class);
         startActivity(i);
         finish();
         Log.d(TAG, "restartApp: Changed theme successfully");
@@ -278,7 +280,7 @@ public class addpomodoro extends AppCompatActivity  {
 
                                 timeText.setText(time);
                                 cal.set(Calendar.HOUR, hourOfDay);
-                                cal.set(Calendar.MINUTE, minute);
+                                cal.set(MINUTE, minute);
                                 cal.set(Calendar.SECOND, 0);
                                 Log.d(TAG, "onTimeSet: Time has been set successfully");
                             }
