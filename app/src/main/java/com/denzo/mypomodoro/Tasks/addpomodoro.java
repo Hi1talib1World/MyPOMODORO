@@ -67,8 +67,8 @@ public class addpomodoro extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_addpomodoro);//set custom action bar
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        
+
+
 
         //toggle to change theme and save uer preference
         toggleTheme = findViewById(R.id.themeActionButton);
@@ -128,7 +128,7 @@ public class addpomodoro extends AppCompatActivity  {
         builder.setContentText(content);
         builder.setContentIntent(pendingIntent);
         builder.setAutoCancel(true);
-        builder.setSmallIcon(R.drawable.ic_stat_name);
+        builder.setSmallIcon(R.drawable.ic_circle_seekbar);
         builder.setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND);
         builder.setChannelId(NOTIFICATION_CHANNEL_ID);
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
@@ -137,7 +137,7 @@ public class addpomodoro extends AppCompatActivity  {
 
     //on theme change refresh activity
     private void restartApp() {
-        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        Intent i = new Intent(getApplicationContext(), addpomodoro.class);
         startActivity(i);
         finish();
         Log.d(TAG, "restartApp: Changed theme successfully");
