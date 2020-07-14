@@ -68,7 +68,7 @@ public class addpomodoro extends AppCompatActivity  {
 
         setContentView(R.layout.activity_addpomodoro);//set custom action bar
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbar);
+        
 
         //toggle to change theme and save uer preference
         toggleTheme = findViewById(R.id.themeActionButton);
