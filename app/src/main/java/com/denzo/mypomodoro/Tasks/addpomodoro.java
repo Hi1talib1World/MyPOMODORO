@@ -67,10 +67,10 @@ public class addpomodoro extends AppCompatActivity  {
             setTheme(R.style.LightTheme);
         }
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        setContentView(R.layout.activity_addpomodoro);//set custom action bar
-
-
+        //set custom action bar
+        getSupportActionBar().setCustomView(R.layout.actionbar);
 
         //toggle to change theme and save uer preference
         toggleTheme = findViewById(R.id.themeActionButton);
@@ -130,7 +130,7 @@ public class addpomodoro extends AppCompatActivity  {
         builder.setContentText(content);
         builder.setContentIntent(pendingIntent);
         builder.setAutoCancel(true);
-        builder.setSmallIcon(R.drawable.ic_circle_seekbar);
+
         builder.setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND);
         builder.setChannelId(NOTIFICATION_CHANNEL_ID);
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
@@ -139,7 +139,7 @@ public class addpomodoro extends AppCompatActivity  {
 
     //on theme change refresh activity
     private void restartApp() {
-        Intent i = new Intent(getApplicationContext(), addpomodoro .class);
+        Intent i = new Intent(getApplicationContext(), addpomodoro.class);
         startActivity(i);
         finish();
         Log.d(TAG, "restartApp: Changed theme successfully");
@@ -280,7 +280,7 @@ public class addpomodoro extends AppCompatActivity  {
 
                                 timeText.setText(time);
                                 cal.set(Calendar.HOUR, hourOfDay);
-                                cal.set(MINUTE, minute);
+                                cal.set(Calendar.MINUTE, minute);
                                 cal.set(Calendar.SECOND, 0);
                                 Log.d(TAG, "onTimeSet: Time has been set successfully");
                             }
