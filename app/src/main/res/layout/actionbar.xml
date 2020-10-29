@@ -18,7 +18,7 @@
         android:id="@+id/themeActionButton"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:background="@drawable/button_day_night"
+        android:background="#FFF"
         android:checked="false"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
