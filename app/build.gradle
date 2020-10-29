@@ -24,12 +24,11 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
-    implementation 'com.android.support:design:26.1.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'com.android.support:cardview-v7:28.0.0'
     implementation "com.airbnb.android:lottie:3.0.1"
-
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'me.hiennguyen.circleseekbar:circleseekbar:1.0.1'
     implementation 'com.android.support:design:28.0.0'
