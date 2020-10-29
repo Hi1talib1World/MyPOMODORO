@@ -10,7 +10,7 @@
         <item name="colorPrimary">@color/darkColorPrimary</item>
         <item name="colorPrimaryDark">@color/darkColorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="fontFamily">@font/roboto</item>
+
         <item name="listBackground">@color/darkListBackground</item>
         <item name="cardBackground">@color/darkCardBackground</item>
         <item name="textColor">@color/darkCardTitle</item>
@@ -19,9 +19,6 @@
         <item name="dialogTextColor">@color/darkDialogTitle</item>
         <item name="dialogDateColor">@color/dialogDateColor</item>
         <item name="listEmptyTextColor">@color/darkListEmptyTextColor</item>
-        <item name="alertDialogTheme">@style/DarkDateAlertDialog</item>
-        <item name="android:datePickerDialogTheme">@style/DarkDateAlertDialog</item>
-        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 
 
@@ -30,7 +27,7 @@
         <item name="colorPrimary">@color/lightColorPrimary</item>
         <item name="colorPrimaryDark">@color/lightColorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="fontFamily">@font/roboto</item>
+
         <item name="listBackground">@color/lightListBackground</item>
         <item name="cardBackground">@color/lightCardBackground</item>
         <item name="textColor">@color/lightCardTitle</item>
@@ -39,8 +36,6 @@
         <item name="dialogTextColor">@color/lightDialogTitle</item>
         <item name="dialogDateColor">@color/dialogDateColor</item>
         <item name="listEmptyTextColor">@color/lightListEmptyTextColor</item>
-        <item name="alertDialogTheme">@style/LightDateAlertDialog</item>
-        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 
 </resources>
