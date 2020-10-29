@@ -21,7 +21,7 @@
             android:layout_marginTop="100dp"
             android:gravity="center_horizontal"
             android:textColor="?attr/listEmptyTextColor"
-            android:textSize="20sp" />
+            android:textSize="40sp" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="match_parent"
