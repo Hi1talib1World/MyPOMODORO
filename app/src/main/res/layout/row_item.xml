@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@drawable/ic_outline_event_available_white_24"
+                    android:background="#fff"
                     tools:ignore="ContentDescription" />
 
                 <TextView
