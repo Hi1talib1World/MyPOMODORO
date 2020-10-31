@@ -70,7 +70,7 @@
         android:layout_below="@+id/button_reset"
         android:layout_height="wrap_content" />
 
-    <include layout="@layout/bottom_sheet"></include>
+    <include layout="@layout/custom_dialog"></include>
 
 
 </RelativeLayout>
