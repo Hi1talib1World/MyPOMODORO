@@ -218,6 +218,14 @@ public class addpomodoro extends AppCompatActivity  {
         final EditText editTitle = dialogView.findViewById(R.id.edit_title);
         final TextView dateText = dialogView.findViewById(R.id.date);
         final TextView timeText = dialogView.findViewById(R.id.time);
+        final TextView day1 = dialogView.findViewById(R.id.time);
+        final TextView day2 = dialogView.findViewById(R.id.time);
+        final TextView day3 = dialogView.findViewById(R.id.time);
+        final TextView day4 = dialogView.findViewById(R.id.time);
+        final TextView day5 = dialogView.findViewById(R.id.time);
+        final TextView day6 = dialogView.findViewById(R.id.time);
+        final TextView day7 = dialogView.findViewById(R.id.time);
+
 
         //Set current date as default date
         final long date = System.currentTimeMillis();
