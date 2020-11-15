@@ -37,5 +37,12 @@
         <item name="dialogDateColor">@color/dialogDateColor</item>
         <item name="listEmptyTextColor">@color/lightListEmptyTextColor</item>
     </style>
-
+    <style name="BottomSheetItem">
+        <item name="android:textSize">20sp</item>
+        <item name="android:drawablePadding">20dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">15dp</item>
+        
+    </style>
 </resources>
