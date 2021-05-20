@@ -103,7 +103,7 @@ public class addpomodoro extends AppCompatActivity  {
         itemsListView.setEmptyView(emptyView);
 
         populateListView();
-        onFabClick();
+        //onFabClick();
         hideFab();
     }
 
@@ -194,6 +194,7 @@ public class addpomodoro extends AppCompatActivity  {
 
 
     //On floating button click open dialog
+
     private void onFabClick() {
         try {
             fab.setOnClickListener(new View.OnClickListener() {
@@ -300,7 +301,11 @@ public class addpomodoro extends AppCompatActivity  {
 
 
         dialogBuilder.setTitle("Lets add new task!");
+
         dialogBuilder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+
+
+
             public void onClick(DialogInterface dialog, int whichButton) {
                 String title = editTitle.getText().toString();
                 String date = dateText.getText().toString();
@@ -316,7 +321,10 @@ public class addpomodoro extends AppCompatActivity  {
                     toastMsg("Oops, Cannot set an empty ToDo!!!");
                 }
             }
+
+
         });
+
         dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 //pass
