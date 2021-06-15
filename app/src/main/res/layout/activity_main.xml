@@ -28,7 +28,6 @@
         app:csb_progressColor="#00aad4"
         app:csb_progressWidth="12dp"
         app:csb_step="5"
-
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         app:csb_textColor="@color/color_text"
@@ -77,7 +76,7 @@
         android:layout_below="@+id/button_reset"
         android:layout_height="wrap_content" />
 
-    <include layout="@layout/custom_dialog"></include>
+    <include layout="@layout/custom_dialog" />
 
 
 </RelativeLayout>
