@@ -26,4 +26,5 @@
 
 
     <color name="dialogDateColor">#9e9e9e</color>
+    <color name="bg">#000</color>
 </resources>
