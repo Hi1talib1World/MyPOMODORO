@@ -22,6 +22,7 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.internal.Constants;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,8 +53,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
-        mTextViewCountDown = findViewById(R.id.countdown_text);
+        //mTextViewCountDown = findViewById(R.id.countdown_text);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         arrayList = new ArrayList<>();
@@ -66,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        mButtonStartPause = findViewById(R.id.button);
-        mButtonReset = findViewById(R.id.button_reset);
+        //mButtonStartPause = findViewById(R.id.button);
+        //mButtonReset = findViewById(R.id.button_reset);
 
         for (int i = 0; i < icons.length; i++) {
             itemModel itemModel = new itemModel();
@@ -181,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
 
         mTextViewCountDown.setText(timeLeftFormatted);
     }
+
 
     //on click card view
     @OnClick(R.id.btn_bottom_sheet)
