@@ -13,6 +13,9 @@
     <string name="dialogDate">Date</string>
     <string name="dialogTime">Time</string>
     <string name="cardTitle">Title</string>
+    <string name="timer_done">Timer done</string>
+    <string name="timer_restart">Restart</string>
     <string name="cardDate">sub title</string>
     <string name="cardTime">sub title</string>
+    <string name="r">Reset</string>
 </resources>
