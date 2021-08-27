@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000"
+    android:background="@color/bg"
     tools:context=".MainActivity">
 
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addPomodoro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:srcCompat="@drawable/buttonzone" />
 
-    <hiennguyen.me.circleseekbar.CircleSeekBar
+    <!--<hiennguyen.me.circleseekbar.CircleSeekBar
         android:id="@+id/circular"
         android:layout_width="307dp"
         android:layout_height="249dp"
@@ -34,21 +27,19 @@
         app:csb_thumbDrawable="@drawable/buttonzone"
         app:csb_isShowText="false"
         app:csb_thumbSize="36dp" >
-        </hiennguyen.me.circleseekbar.CircleSeekBar>
+        </hiennguyen.me.circleseekbar.CircleSeekBar>-->
 
 
-
-    <ImageButton
+   <!-- <ImageButton
+        android:id="@+id/button"
         android:layout_width="100dip"
         android:layout_height="100dip"
-        android:id="@+id/button"
-        android:src="@drawable/play"
+        android:layout_centerInParent="true"
         android:background="@null"
 
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        />
-    <TextView
+        android:src="@drawable/play"
+        tools:ignore="SpeakableTextPresentCheck" />-->
+    <!--<TextView
         android:id="@+id/countdown_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -59,24 +50,26 @@
         android:layout_centerVertical="true"
         android:layout_below="@+id/circular"
 
-        />
-    <Button
+        />-->
+
+    <!--<Button
+        android:id="@+id/button_reset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reset"
-        android:id="@+id/button_reset"
         android:layout_below="@id/countdown_text"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        />
-
-    <androidx.recyclerview.widget.RecyclerView
+        android:layout_centerInParent="true"
+        android:minWidth="48dp"
+        android:text="@string/r" />
+-->
+   <!-- <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:id="@+id/recycler_view"
         android:layout_below="@+id/button_reset"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" />-->
 
-    <include layout="@layout/custom_dialog" />
+        <!--
+            <include layout="@layout/custom_dialog" />
+        -->
 
 
 </RelativeLayout>
