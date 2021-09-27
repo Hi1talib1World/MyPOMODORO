@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg"
-    tools:context=".MainActivity">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
-
-
-    <!--<hiennguyen.me.circleseekbar.CircleSeekBar
+    <hiennguyen.me.circleseekbar.CircleSeekBar
         android:id="@+id/circular"
         android:layout_width="307dp"
         android:layout_height="249dp"
@@ -27,32 +25,24 @@
         app:csb_thumbDrawable="@drawable/buttonzone"
         app:csb_isShowText="false"
         app:csb_thumbSize="36dp" >
-        </hiennguyen.me.circleseekbar.CircleSeekBar>-->
+        </hiennguyen.me.circleseekbar.CircleSeekBar>
 
 
-   <!-- <ImageButton
-        android:id="@+id/button"
-        android:layout_width="100dip"
-        android:layout_height="100dip"
-        android:layout_centerInParent="true"
-        android:background="@null"
 
-        android:src="@drawable/play"
-        tools:ignore="SpeakableTextPresentCheck" />-->
-    <!--<TextView
+   <TextView
         android:id="@+id/countdown_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="50sp"
-        android:text="10:00"
+        android:text="@string/Time"
         android:textColor="#fff"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_below="@+id/circular"
 
-        />-->
+        />
 
-    <!--<Button
+    <Button
         android:id="@+id/button_reset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -60,16 +50,16 @@
         android:layout_centerInParent="true"
         android:minWidth="48dp"
         android:text="@string/r" />
--->
-   <!-- <androidx.recyclerview.widget.RecyclerView
+
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:id="@+id/recycler_view"
         android:layout_below="@+id/button_reset"
-        android:layout_height="wrap_content" />-->
+        android:layout_height="wrap_content" />
 
-        <!--
-            <include layout="@layout/custom_dialog" />
-        -->
+
+    <include layout="@layout/custom_dialog" />
+
 
 
 </RelativeLayout>
