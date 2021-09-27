@@ -27,7 +27,6 @@ import butterknife.internal.Constants;
 public class MainActivity extends AppCompatActivity {
 
     private static final long START_TIME_IN_MILLIS = 1500000;
-
     private TextView mTextViewCountDown;
     private ImageButton mButtonStartPause;
     private Button mButtonReset;
@@ -35,15 +34,11 @@ public class MainActivity extends AppCompatActivity {
     private boolean mTimerRunning;
     private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
     private static final String TAG = MainActivity.class.getSimpleName();
-
     @BindView(R.id.btn_bottom_sheet)
     Button btnBottomSheet;
-
     @BindView(R.id.bottom_sheet)
     LinearLayout layoutBottomSheet;
-
     BottomSheetBehavior sheetBehavior;
-
     LinearLayout linearLayout;
     ArrayList<itemModel> arrayList;
     RecyclerView recyclerView;
@@ -53,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
         //mTextViewCountDown = findViewById(R.id.countdown_text);
 
