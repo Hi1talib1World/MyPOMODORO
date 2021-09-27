@@ -18,4 +18,5 @@
     <string name="cardDate">sub title</string>
     <string name="cardTime">sub title</string>
     <string name="r">Reset</string>
+    <string name="Time">10:00</string>
 </resources>
