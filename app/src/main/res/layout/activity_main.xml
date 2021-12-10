@@ -1,64 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
-
-    <hiennguyen.me.circleseekbar.CircleSeekBar
-        android:id="@+id/circular"
-        android:layout_width="307dp"
-        android:layout_height="249dp"
-        android:padding="64dp"
-        app:csb_arcColor="@color/color_arc"
-        app:csb_arcWidth="10dp"
-        app:csb_max="1000"
-        app:csb_min="10"
-        app:csb_progress="555"
-        app:csb_progressColor="#00aad4"
-        app:csb_progressWidth="12dp"
-        app:csb_step="5"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        app:csb_textColor="@color/color_text"
-        app:csb_thumbDrawable="@drawable/buttonzone"
-        app:csb_isShowText="false"
-        app:csb_thumbSize="36dp" >
-        </hiennguyen.me.circleseekbar.CircleSeekBar>
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
 
 
-
-   <TextView
-        android:id="@+id/countdown_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="50sp"
-        android:text="@string/Time"
-        android:textColor="#fff"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_below="@+id/circular"
-
-        />
-
-    <Button
-        android:id="@+id/button_reset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/countdown_text"
+    <ProgressBar
+        android:id="@+id/progressBarCircle"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="270dp"
+        android:layout_height="270dp"
         android:layout_centerInParent="true"
-        android:minWidth="48dp"
-        android:text="@string/r" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:id="@+id/recycler_view"
-        android:layout_below="@+id/button_reset"
-        android:layout_height="wrap_content" />
+        android:background="@drawable/drawable_circle_dark_blue"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="100"
+        android:progressDrawable="@drawable/drawable_circle_yellow"
+        android:rotation="-90" />
 
 
-    <include layout="@layout/custom_dialog" />
+
+    <TextView
+        android:id="@+id/textViewTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="25:00"
+        android:textColor="#ff8000"
+        android:textSize="40sp" />
+
+    <ImageView
+        android:id="@+id/imageViewReset"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/textViewTime"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/icon_reset"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/imageViewStartStop"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/progressBarCircle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/icon_start" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/m_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="33dp"
+        app:borderWidth="0dp"
+        app:elevation="8dp"
+        />
 
 
 

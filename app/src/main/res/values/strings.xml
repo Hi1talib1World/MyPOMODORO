@@ -19,4 +19,11 @@
     <string name="cardTime">sub title</string>
     <string name="r">Reset</string>
     <string name="Time">10:00</string>
+    <string name="today">Today</string>
+    <string name="overview">Overview</string>
+    <string name="week">Week</string>
+    <string name="month">Month</string>
+    <string name="total">Total</string>
+    <string name="history">History</string>
+    <string name="activities">Activities</string>
 </resources>
