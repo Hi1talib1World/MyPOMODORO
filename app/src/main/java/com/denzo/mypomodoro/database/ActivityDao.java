@@ -3,6 +3,9 @@ package com.denzo.mypomodoro.database;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+
+import com.denzo.mypomodoro.statistics.activitychart.LabelElement;
+
 import java.util.List;
 import java.util.Set;
 
@@ -15,7 +18,7 @@ public interface ActivityDao {
     @Query("SELECT ID FROM activity WHERE showInStatistics = 1")
     int[] getIdsToShow();
 
-    @ @Query("UPDATE Activity SET showInStatistics = CASE WHEN ID IN(:activityIds) THEN 1 ELSE 0 END")
+    @Query("UPDATE Activity SET showInStatistics = CASE WHEN ID IN(:activityIds) THEN 1 ELSE 0 END")
     void updateShowInStatistics(Set<Integer> activityIds);
 
     @Query("SELECT showInStatistics FROM Activity")
