@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 
 
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+
 import com.denzo.mypomodoro.Constants;
 
 import java.util.concurrent.ExecutorService;
