@@ -1,13 +1,23 @@
 package com.denzo.mypomodoro;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.preference.PreferenceManager;
+
 import com.denzo.mypomodoro.database.Database;
+import com.denzo.mypomodoro.database.Pomodoro;
+import com.denzo.mypomodoro.database.PomodoroDao;
 
 import java.time.LocalDate;
 import java.util.concurrent.TimeUnit;
