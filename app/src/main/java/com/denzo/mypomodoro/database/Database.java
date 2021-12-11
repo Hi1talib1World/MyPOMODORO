@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 
 
+import com.denzo.mypomodoro.Constants;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
