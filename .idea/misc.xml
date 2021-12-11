@@ -8,6 +8,7 @@
         <entry key="app/src/main/res/drawable/drawable_circle_dark_blue.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/drawable_circle_yellow.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/rounded_rectangle.xml" value="0.209375" />
+        <entry key="app/src/main/res/layout/activity_about.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_main_1.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/layout/bottom_sheet.xml" value="0.19322916666666667" />
