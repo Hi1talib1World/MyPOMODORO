@@ -23,6 +23,7 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.denzo.mypomodoro.Constants;
 import com.denzo.mypomodoro.R;
 import com.denzo.mypomodoro.Utility;
 import com.denzo.mypomodoro.database.Database;
@@ -32,6 +33,7 @@ import com.denzo.mypomodoro.statistics.activitychart.LabelElement;
 import com.denzo.mypomodoro.statistics.activitychart.LegendAdapter;
 import com.denzo.mypomodoro.statistics.activitychart.LegendItem;
 import com.denzo.mypomodoro.statistics.activitychart.PieChartItem;
+import com.denzo.mypomodoro.statistics.historychart.ChartData;
 import com.denzo.mypomodoro.statistics.historychart.DayData;
 import com.denzo.mypomodoro.statistics.historychart.HistoryChart;
 import com.denzo.mypomodoro.statistics.historychart.HistoryChartItem;
@@ -40,7 +42,7 @@ import com.denzo.mypomodoro.statistics.historychart.WeekData;
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.ChartData;
+
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -56,7 +58,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import butterknife.internal.Constants;
+
 
 public class StatisticsActivity extends AppCompatActivity {
 
