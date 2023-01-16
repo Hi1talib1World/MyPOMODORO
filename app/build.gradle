@@ -1,13 +1,9 @@
 apply plugin: 'com.android.application'
 
 android {
-<<<<<<< HEAD
     compileSdkVersion 33
     buildToolsVersion '33.0.0'
-=======
-    compileSdkVersion 31
     buildToolsVersion '29.0.2'
->>>>>>> 84aaf430a06247bc8ed9b261a166eef0e9f8e4f1
     defaultConfig {
         applicationId "com.denzo.mypomodoro"
         minSdkVersion 26
@@ -61,15 +57,12 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
     implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation 'me.hiennguyen.circleseekbar:circleseekbar:1.0.1'
-<<<<<<< HEAD
     implementation 'com.android.support:design:33.0.0'
     implementation 'com.jakewharton:butterknife:10.2.3'
-=======
-    implementation 'com.android.support:design:31.0.0'
+    implementation 'com.android.support:design:33.0.0'
     implementation 'com.jakewharton:butterknife:10.2.1'
     implementation 'com.google.android.gms:play-services-auth:9.8.0'
 
->>>>>>> 84aaf430a06247bc8ed9b261a166eef0e9f8e4f1
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
     implementation 'me.zhanghai.android.materialprogressbar:library:1.4.2'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
