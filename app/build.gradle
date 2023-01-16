@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdk 31
+    compileSdkVersion 31
     buildToolsVersion '29.0.2'
     defaultConfig {
         applicationId "com.denzo.mypomodoro"
@@ -60,6 +60,7 @@ dependencies {
     implementation 'me.hiennguyen.circleseekbar:circleseekbar:1.0.1'
     implementation 'com.android.support:design:31.0.0'
     implementation 'com.jakewharton:butterknife:10.2.1'
+    implementation 'com.google.android.gms:play-services-auth:9.8.0'
 
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
     implementation 'me.zhanghai.android.materialprogressbar:library:1.4.2'
