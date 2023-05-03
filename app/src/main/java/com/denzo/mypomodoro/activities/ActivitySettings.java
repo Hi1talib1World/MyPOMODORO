@@ -37,10 +37,6 @@ import com.denzo.mypomodoro.database.Database;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
-import org.wentura.getflow.Constants;
-import org.wentura.getflow.R;
-import org.wentura.getflow.Utility;
-import org.wentura.getflow.database.Database;
 
 public class ActivitySettings extends AppCompatActivity {
 
