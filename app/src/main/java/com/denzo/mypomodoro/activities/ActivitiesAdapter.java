@@ -20,11 +20,7 @@ import com.denzo.mypomodoro.R;
 import com.denzo.mypomodoro.database.Activity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import org.wentura.getflow.Constants;
-import org.wentura.getflow.MainActivity;
-import org.wentura.getflow.R;
-import org.wentura.getflow.TimerActionReceiver;
-import org.wentura.getflow.database.Activity;
+
 
 import java.util.List;
 
