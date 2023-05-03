@@ -1,9 +1,9 @@
 package com.denzo.mypomodoro.database;
 
-import androidx.contentpager.content.Query;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+
 
 import com.denzo.mypomodoro.statistics.activitychart.LabelElement;
 
