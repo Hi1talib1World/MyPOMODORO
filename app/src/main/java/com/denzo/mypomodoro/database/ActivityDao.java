@@ -5,6 +5,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 
 import com.denzo.mypomodoro.statistics.activitychart.LabelElement;
+import com.denzo.mypomodoro.database.Activity;
 
 import java.util.List;
 import java.util.Set;
