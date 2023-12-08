@@ -2,6 +2,7 @@ package com.denzo.mypomodoro.statistics.activitychart;
 
 import androidx.annotation.NonNull;
 
+import com.denzo.mypomodoro.database.Pomodoro;
 
 
 public final class PieChartItem {
