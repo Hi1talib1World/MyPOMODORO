@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.denzo.mypomodoro.Constants;
 import com.denzo.mypomodoro.MainActivity;
 import com.denzo.mypomodoro.R;
+import com.denzo.mypomodoro.TimerActionReceiver;
 import com.denzo.mypomodoro.database.Activity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 

@@ -1,11 +1,12 @@
 package com.denzo.mypomodoro.database;
 
+
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+
 import com.denzo.mypomodoro.statistics.activitychart.PieChartItem;
-import com.denzo.mypomodoro.statistics.historychart.HistoryChartItem;
 
 import java.util.List;
 
