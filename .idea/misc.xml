@@ -1,32 +1,50 @@
 <project version="4">
-  <component name="DesignSurface">
-    <option name="filePathToZoomLevelMap">
-      <map>
-        <entry key="../../../../../layout/custom_preview.xml" value="0.22135416666666666" />
-        <entry key="../../../.gradle/caches/transforms-2/files-2.1/2cfc6de18491d78868ffdd6cc499684d/core-1.1.0/res/layout/custom_dialog.xml" value="0.17527173913043478" />
-        <entry key="..\:/Users/hicham/Documents/GitHub/MyPOMODORO/app/src/main/res/drawable/drawable_circle_dark_blue.xml" value="0.1435" />
-        <entry key="..\:/Users/hicham/Documents/GitHub/MyPOMODORO/app/src/main/res/drawable/drawable_circle_yellow.xml" value="0.1435" />
-        <entry key="..\:/Users/hicham/Documents/GitHub/MyPOMODORO/app/src/main/res/layout/actionbar.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/hicham/Documents/GitHub/MyPOMODORO/app/src/main/res/layout/activity_about.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/hicham/Documents/GitHub/MyPOMODORO/app/src/main/res/layout/activity_addpomodoro.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/hicham/Documents/GitHub/MyPOMODORO/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/hicham/Documents/GitHub/MyPOMODORO/app/src/main/res/layout/bottom_sheet.xml" value="0.22" />
-        <entry key="..\:/Users/hicham/Documents/GitHub/MyPOMODORO/app/src/main/res/layout/content_main.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/hicham/Documents/GitHub/MyPOMODORO/app/src/main/res/layout/fragment_custom_bottom_sheet_dialog.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/hicham/Documents/GitHub/MyPOMODORO/app/src/main/res/layout/itemlist.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/hicham/Documents/GitHub/MyPOMODORO/app/src/main/res/layout/legend_item_view.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/hicham/Documents/GitHub/MyPOMODORO/app/src/main/res/layout/row_item.xml" value="0.20416666666666666" />
-        <entry key="app/src/main/res/drawable/drawable_circle_dark_blue.xml" value="0.209375" />
-        <entry key="app/src/main/res/drawable/drawable_circle_yellow.xml" value="0.209375" />
-        <entry key="app/src/main/res/drawable/rounded_rectangle.xml" value="0.209375" />
-        <entry key="app/src/main/res/layout/activity_about.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/activity_main_1.xml" value="0.19322916666666667" />
-        <entry key="app/src/main/res/layout/bottom_sheet.xml" value="0.19322916666666667" />
-        <entry key="app/src/main/res/layout/content_main.xml" value="0.12" />
-        <entry key="app/src/main/res/layout/legend_item_view.xml" value="0.19322916666666667" />
-        <entry key="app/src/main/res/menu/statistics_menu.xml" value="0.19322916666666667" />
-      </map>
+  <component name="JavadocGenerationManager">
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/.." />
+    <option name="OPTION_SCOPE" value="private" />
+    <option name="OPTION_LINK_TO_JDK_DOCS" value="true" />
+  </component>
+  <component name="NullableNotNullManager">
+    <option name="myDefaultNullable" value="android.support.annotation.Nullable" />
+    <option name="myDefaultNotNull" value="android.annotation.NonNull" />
+    <option name="myNullables">
+      <value>
+        <list size="14">
+          <item index="0" class="java.lang.String" itemvalue="org.jetbrains.annotations.Nullable" />
+          <item index="1" class="java.lang.String" itemvalue="javax.annotation.Nullable" />
+          <item index="2" class="java.lang.String" itemvalue="javax.annotation.CheckForNull" />
+          <item index="3" class="java.lang.String" itemvalue="edu.umd.cs.findbugs.annotations.Nullable" />
+          <item index="4" class="java.lang.String" itemvalue="android.support.annotation.Nullable" />
+          <item index="5" class="java.lang.String" itemvalue="androidx.annotation.Nullable" />
+          <item index="6" class="java.lang.String" itemvalue="androidx.annotation.RecentlyNullable" />
+          <item index="7" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.qual.Nullable" />
+          <item index="8" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NullableDecl" />
+          <item index="9" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NullableType" />
+          <item index="10" class="java.lang.String" itemvalue="android.annotation.Nullable" />
+          <item index="11" class="java.lang.String" itemvalue="com.android.annotations.Nullable" />
+          <item index="12" class="java.lang.String" itemvalue="org.jspecify.nullness.Nullable" />
+          <item index="13" class="java.lang.String" itemvalue="org.eclipse.jdt.annotation.Nullable" />
+        </list>
+      </value>
+    </option>
+    <option name="myNotNulls">
+      <value>
+        <list size="13">
+          <item index="0" class="java.lang.String" itemvalue="org.jetbrains.annotations.NotNull" />
+          <item index="1" class="java.lang.String" itemvalue="javax.annotation.Nonnull" />
+          <item index="2" class="java.lang.String" itemvalue="edu.umd.cs.findbugs.annotations.NonNull" />
+          <item index="3" class="java.lang.String" itemvalue="android.support.annotation.NonNull" />
+          <item index="4" class="java.lang.String" itemvalue="androidx.annotation.NonNull" />
+          <item index="5" class="java.lang.String" itemvalue="androidx.annotation.RecentlyNonNull" />
+          <item index="6" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.qual.NonNull" />
+          <item index="7" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NonNullDecl" />
+          <item index="8" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NonNullType" />
+          <item index="9" class="java.lang.String" itemvalue="android.annotation.NonNull" />
+          <item index="10" class="java.lang.String" itemvalue="com.android.annotations.NonNull" />
+          <item index="11" class="java.lang.String" itemvalue="org.jspecify.nullness.NonNull" />
+          <item index="12" class="java.lang.String" itemvalue="org.eclipse.jdt.annotation.NonNull" />
+        </list>
+      </value>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">

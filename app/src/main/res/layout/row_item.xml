@@ -26,7 +26,6 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/ic_circle_seekbar"
                 tools:ignore="ContentDescription" />
 
 
@@ -42,9 +41,8 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@drawable/ic_circle_seekbar"
-                    android:tint="#ffffff"
-                    tools:ignore="ContentDescription" />
+                    tools:ignore="ContentDescription"
+                    app:tint="#ffffff" />
 
                 <TextView
                     android:id="@+id/title"
@@ -97,7 +95,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
-                    android:background="@drawable/ic_circle_seekbar"
                     tools:ignore="ContentDescription" />
 
                 <TextView

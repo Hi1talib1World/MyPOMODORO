@@ -23,12 +23,7 @@
             android:textColor="?attr/listEmptyTextColor"
             android:textSize="40sp" />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/animation" />
+
 
     </FrameLayout>
 
@@ -62,7 +57,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_circle_seekbar" />
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

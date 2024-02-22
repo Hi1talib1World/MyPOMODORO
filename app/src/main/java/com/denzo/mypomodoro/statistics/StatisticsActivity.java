@@ -1,5 +1,6 @@
 package com.denzo.mypomodoro.statistics;
 
+
 import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.content.SharedPreferences;
@@ -34,7 +35,6 @@ import com.denzo.mypomodoro.statistics.activitychart.LegendAdapter;
 import com.denzo.mypomodoro.statistics.activitychart.LegendItem;
 import com.denzo.mypomodoro.statistics.activitychart.PieChartItem;
 import com.denzo.mypomodoro.statistics.historychart.ChartData;
-import com.denzo.mypomodoro.statistics.historychart.DayData;
 import com.denzo.mypomodoro.statistics.historychart.HistoryChart;
 import com.denzo.mypomodoro.statistics.historychart.HistoryChartItem;
 import com.denzo.mypomodoro.statistics.historychart.MonthData;
@@ -42,11 +42,12 @@ import com.denzo.mypomodoro.statistics.historychart.WeekData;
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
-
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
+
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -57,8 +58,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-
-
 
 public class StatisticsActivity extends AppCompatActivity {
 

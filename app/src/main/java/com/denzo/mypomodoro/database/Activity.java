@@ -8,6 +8,9 @@ import androidx.room.PrimaryKey;
 
 import com.denzo.mypomodoro.Constants;
 
+
+
+
 @Entity
 public final class Activity {
 

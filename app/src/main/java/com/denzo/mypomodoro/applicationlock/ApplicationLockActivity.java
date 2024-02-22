@@ -21,13 +21,13 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.denzo.mypomodoro.Constants;
 import com.denzo.mypomodoro.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 
 public class ApplicationLockActivity extends AppCompatActivity {
 
