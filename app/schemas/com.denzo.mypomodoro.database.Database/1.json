@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ad5b8cdd3ec3fb9886bfd1a69885fdcd",
+    "identityHash": "72b7bcfdc4c3457e077e7d0f5108bae6",
     "entities": [
       {
         "tableName": "Pomodoro",
@@ -64,21 +64,90 @@
           }
         ],
         "primaryKey": {
+          "autoGenerate": true,
           "columnNames": [
             "id"
-          ],
-          "autoGenerate": true
+          ]
         },
         "indices": [],
         "foreignKeys": []
       },
       {
         "tableName": "Activity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` ()",
-        "fields": [],
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `Name` TEXT, `WorkDuration` INTEGER NOT NULL, `BreakDuration` INTEGER NOT NULL, `LongBreaks` INTEGER NOT NULL, `LongBreakDuration` INTEGER NOT NULL, `SessionsBeforeLongBreak` INTEGER NOT NULL, `DND` INTEGER NOT NULL, `KeepDNDOnBreaks` INTEGER NOT NULL, `WiFi` INTEGER NOT NULL, `showInStatistics` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "ID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "Name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "workDuration",
+            "columnName": "WorkDuration",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "breakDuration",
+            "columnName": "BreakDuration",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "longBreaks",
+            "columnName": "LongBreaks",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "longBreakDuration",
+            "columnName": "LongBreakDuration",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sessionsBeforeLongBreak",
+            "columnName": "SessionsBeforeLongBreak",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "DND",
+            "columnName": "DND",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "keepDNDOnBreaks",
+            "columnName": "KeepDNDOnBreaks",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "WiFi",
+            "columnName": "WiFi",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "showInStatistics",
+            "columnName": "showInStatistics",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
         "primaryKey": {
-          "columnNames": [],
-          "autoGenerate": false
+          "autoGenerate": true,
+          "columnNames": [
+            "ID"
+          ]
         },
         "indices": [],
         "foreignKeys": []
@@ -87,7 +156,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ad5b8cdd3ec3fb9886bfd1a69885fdcd')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '72b7bcfdc4c3457e077e7d0f5108bae6')"
     ]
   }
 }

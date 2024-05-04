@@ -39,6 +39,7 @@ import com.denzo.mypomodoro.statistics.historychart.HistoryChart;
 import com.denzo.mypomodoro.statistics.historychart.HistoryChartItem;
 import com.denzo.mypomodoro.statistics.historychart.MonthData;
 import com.denzo.mypomodoro.statistics.historychart.WeekData;
+import com.denzo.mypomodoro.statistics.historychart.DayData;
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;

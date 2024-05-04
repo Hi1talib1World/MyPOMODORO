@@ -1,5 +1,5 @@
-package com.denzo.mypomodoro.database;
 
+package com.denzo.mypomodoro.database;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
