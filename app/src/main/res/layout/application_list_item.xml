@@ -1,37 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="64dp"
+    android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground">
 
-    <TextView
-        android:id="@+id/activity_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/settings_button"
+    <ImageView
+        android:id="@+id/application_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:contentDescription="@string/application_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Activity" />
-
-    <ImageButton
-        android:id="@+id/settings_button"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/settings"
-        android:background="?android:attr/selectableItemBackground"
-        android:src="@drawable/gear_icon"
-        android:tint="@color/colorPrimary"
-        app:backgroundTint="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/application_name"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="16dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/lock_application_switch"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/application_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Application Name" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/lock_application_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/application_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/application_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
