@@ -1,24 +1,28 @@
 package com.denzo.mypomodoro;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.concurrent.TimeUnit;
+import com.denzo.mypomodoro.statistics.StatisticsBottomSheet;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-
-    private long timeCountInMilliSeconds = 1 * 1500000;
+    private static final long DEFAULT_TIME = 25 * 60 * 1000; // 25 minutes in milliseconds
+    private long timeCountInMilliSeconds = DEFAULT_TIME;
 
     private enum TimerStatus {
         STARTED,
@@ -26,58 +30,58 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private TimerStatus timerStatus = TimerStatus.STOPPED;
-
     private ProgressBar progressBarCircle;
-    //private EditText editTextMinute;
-    private SharedPreferences settings;
-
     private TextView textViewTime;
     private ImageView imageViewReset;
     private ImageView imageViewStartStop;
     private CountDownTimer countDownTimer;
-
-
+    private RelativeLayout rootLayout; // Root layout to change background color
+    private Toolbar toolbar; // Toolbar reference
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // method call to initialize the views
+        toolbar = findViewById(R.id.toolbar); // Toolbar initialization
+        setSupportActionBar(toolbar);
+
+        // Remove title from Toolbar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("");
+        }
+
+        // Initialize views and listeners
         initViews();
-        // method call to initialize the listeners
         initListeners();
 
-
+        FloatingActionButton mFab = findViewById(R.id.m_fab);
+        mFab.setOnClickListener(v -> {
+            StatisticsBottomSheet bottomSheet = new StatisticsBottomSheet();
+            bottomSheet.show(getSupportFragmentManager(), "StatisticsBottomSheet");
+        });
     }
 
-    /**
-     * method to initialize the views
-     */
     private void initViews() {
-        progressBarCircle = (ProgressBar) findViewById(R.id.progressBarCircle);
-        textViewTime = (TextView) findViewById(R.id.textViewTime);
-        imageViewReset = (ImageView) findViewById(R.id.imageViewReset);
-        imageViewStartStop = (ImageView) findViewById(R.id.imageViewStartStop);
+        rootLayout = findViewById(R.id.activity_main); // Root layout
+        progressBarCircle = findViewById(R.id.progressBarCircle);
+        textViewTime = findViewById(R.id.textViewTime);
+        imageViewReset = findViewById(R.id.Reset);
+        imageViewStartStop = findViewById(R.id.imageViewStartStop);
+
+        // Set initial time on textView
+        textViewTime.setText(hmsTimeFormatter(DEFAULT_TIME));
     }
 
-    /**
-     * method to initialize the click listeners
-     */
     private void initListeners() {
         imageViewReset.setOnClickListener(this);
         imageViewStartStop.setOnClickListener(this);
     }
 
-    /**
-     * implemented method to listen clicks
-     *
-     * @param view
-     */
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.imageViewReset:
+            case R.id.Reset:
                 reset();
                 break;
             case R.id.imageViewStartStop:
@@ -86,139 +90,100 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    /**
-     * method to reset count down timer
-     */
     private void reset() {
         stopCountDownTimer();
-        startCountDownTimer();
+
+        // Reset to default values
+        timeCountInMilliSeconds = DEFAULT_TIME;
+        textViewTime.setText(hmsTimeFormatter(DEFAULT_TIME));
+        progressBarCircle.setProgress((int) (DEFAULT_TIME / 1000));
+
+        // Restore UI state
+        imageViewReset.setVisibility(View.GONE);
+        imageViewStartStop.setImageResource(R.drawable.icon_start);
+
+        // Reset background color for layout and toolbar to default
+        rootLayout.setBackgroundColor(getResources().getColor(R.color.default_background)); // Default background
+        toolbar.setBackgroundColor(getResources().getColor(R.color.default_toolbar)); // Default toolbar color
+        timerStatus = TimerStatus.STOPPED;
     }
 
-
-    /**
-     * method to start and stop count down timer
-     */
     private void startStop() {
         if (timerStatus == TimerStatus.STOPPED) {
-
-            // call to initialize the timer values
-            setTimerValues();
-            // call to initialize the progress bar values
             setProgressBarValues();
-            // showing the reset icon
             imageViewReset.setVisibility(View.VISIBLE);
-            // changing play icon to stop icon
             imageViewStartStop.setImageResource(R.drawable.icon_stop);
-            // making edit text not editable
-            /*editTextMinute.setEnabled(false);*/
-            // changing the timer status to started
+
+            // Change background color for layout and toolbar when play button is clicked
+            rootLayout.setBackgroundColor(android.graphics.Color.parseColor("#DA1E5B"));
+            toolbar.setBackgroundColor(android.graphics.Color.parseColor("#DA1E5B"));
+
             timerStatus = TimerStatus.STARTED;
-            // call to start the count down timer
             startCountDownTimer();
-
         } else {
-
-            // hiding the reset icon
-            imageViewReset.setVisibility(View.GONE);
-            // changing stop icon to start icon
-            imageViewStartStop.setImageResource(R.drawable.icon_start);
-            // making edit text editable
-            /*editTextMinute.setEnabled(true);*/
-            // changing the timer status to stopped
-            timerStatus = TimerStatus.STOPPED;
             stopCountDownTimer();
+            imageViewReset.setVisibility(View.GONE);
+            imageViewStartStop.setImageResource(R.drawable.icon_start);
 
+            // Reset background color for layout and toolbar to default when stop button is clicked
+            rootLayout.setBackgroundColor(getResources().getColor(R.color.default_background)); // Default background
+            toolbar.setBackgroundColor(getResources().getColor(R.color.default_toolbar)); // Default toolbar color
+
+            timerStatus = TimerStatus.STOPPED;
         }
-
     }
 
-    /**
-     * method to initialize the values for count down timer
-     */
-    private void setTimerValues() {
-        /*int time = 0;
-        if (!editTextMinute.getText().toString().isEmpty()) {
-            // fetching value from edit text and type cast to integer
-
-        } else {
-            // toast message to fill edit text
-           // Toast.makeText(getApplicationContext(), getString(R.string.message_minutes), Toast.LENGTH_LONG).show();
-        }
-        // assigning values after converting to milliseconds
-        timeCountInMilliSeconds = time * 60 * 1000;*/
-
-
-    }
-
-    /**
-     * method to start count down timer
-     */
     private void startCountDownTimer() {
-
         countDownTimer = new CountDownTimer(timeCountInMilliSeconds, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-
                 textViewTime.setText(hmsTimeFormatter(millisUntilFinished));
-
                 progressBarCircle.setProgress((int) (millisUntilFinished / 1000));
-
             }
 
             @Override
             public void onFinish() {
-
-                textViewTime.setText(hmsTimeFormatter(timeCountInMilliSeconds));
-                // call to initialize the progress bar values
-                setProgressBarValues();
-                // hiding the reset icon
-                imageViewReset.setVisibility(View.GONE);
-                // changing stop icon to start icon
-                imageViewStartStop.setImageResource(R.drawable.icon_start);
-                // making edit text editable
-                /*editTextMinute.setEnabled(true);*/
-                // changing the timer status to stopped
-                timerStatus = TimerStatus.STOPPED;
+                reset();
             }
-
         }.start();
-        countDownTimer.start();
     }
 
-    /**
-     * method to stop count down timer
-     */
     private void stopCountDownTimer() {
-        countDownTimer.cancel();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
     }
 
-    /**
-     * method to set circular progress bar values
-     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (id == R.id.action_about) {
+            Toast.makeText(this, "About Clicked", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void setProgressBarValues() {
-
-        progressBarCircle.setMax((int) timeCountInMilliSeconds / 1000);
-        progressBarCircle.setProgress((int) timeCountInMilliSeconds / 1000);
+        progressBarCircle.setMax((int) (DEFAULT_TIME / 1000));
+        progressBarCircle.setProgress((int) (timeCountInMilliSeconds / 1000));
     }
 
-
-    /**
-     * method to convert millisecond to time format
-     *
-     * @param milliSeconds
-     * @return HH:mm:ss time formatted string
-     */
     private String hmsTimeFormatter(long milliSeconds) {
-
-        String hms = String.format("%02d:%02d:%02d",
-                TimeUnit.MILLISECONDS.toHours(milliSeconds),
-                TimeUnit.MILLISECONDS.toMinutes(milliSeconds) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(milliSeconds)),
-                TimeUnit.MILLISECONDS.toSeconds(milliSeconds) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(milliSeconds)));
-
-        return hms;
-
-
+        return String.format("%02d:%02d",
+                TimeUnit.MILLISECONDS.toMinutes(milliSeconds),
+                TimeUnit.MILLISECONDS.toSeconds(milliSeconds) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(milliSeconds)));
     }
-
-
 }

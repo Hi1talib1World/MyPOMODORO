@@ -16,22 +16,45 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!-- Main Activity (Launcher) -->
         <activity
             android:name="com.denzo.mypomodoro.MainActivity"
             android:label="@string/app_name"
-            android:exported="true"
-            >
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name="com.denzo.mypomodoro.SplashActivity"
+            android:label="@string/app_name"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- About Page -->
         <activity
             android:name="com.denzo.mypomodoro.AboutActivity"
             android:exported="true">
         </activity>
 
+        <!-- Signup Activity -->
+        <activity
+            android:name="com.denzo.mypomodoro.SignUpActivity"
+            android:label="Sign Up"
+            android:exported="true">
+        </activity>
+
+        <!-- Signin Activity -->
+        <activity
+            android:name="com.denzo.mypomodoro.SignInActivity"
+            android:label="Sign In"
+            android:exported="true">
+        </activity>
+
+        <!-- Services -->
         <service android:name="com.denzo.mypomodoro.NotificationService" />
         <service android:name="com.denzo.mypomodoro.EndNotificationService" />
 
@@ -48,6 +71,7 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/accessibility_service_config" />
         </service>
+
     </application>
 
 </manifest>

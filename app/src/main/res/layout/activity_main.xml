@@ -7,6 +7,46 @@
     android:layout_height="match_parent"
     android:background="#24395B">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#24395B"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:titleTextColor="@android:color/white"/>
+
+    <!-- Title Container -->
+    <LinearLayout
+        android:id="@+id/titleContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:orientation="vertical"
+        android:padding="16dp"
+        >
+
+        <!-- Main Title -->
+        <TextView
+            android:id="@+id/mainTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="POMODORO TIMER"
+            android:textColor="@color/fab_yellow"
+            android:textSize="25sp"
+
+            android:textStyle="bold"
+            android:paddingBottom="4dp" />
+
+        <!-- Subtitle -->
+        <TextView
+            android:id="@+id/subTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Focus your work and don’t be distracted for only 25 minutes"
+            android:textColor="@color/fab_yellow"
+            android:textSize="14sp" />
+
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/progressBarCircle"
@@ -33,7 +73,7 @@
         android:textSize="40sp" />
 
     <ImageView
-        android:id="@+id/imageViewReset"
+        android:id="@+id/Reset"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_below="@+id/textViewTime"
@@ -49,21 +89,21 @@
         android:layout_below="@+id/progressBarCircle"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-
         android:src="@drawable/icon_start" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/m_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="33dp"
-        android:layout_marginTop="33dp"
-        android:layout_marginEnd="33dp"
-        android:layout_marginBottom="33dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:srcCompat="@drawable/ic_baseline_add_24"
         app:borderWidth="0dp"
+        app:backgroundTint="@color/fab_yellow"
         app:elevation="8dp" />
+
 
 
 

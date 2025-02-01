@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Outer Glow -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@android:color/transparent" />
+            <size android:width="80dp" android:height="80dp"/>  <!-- Adjust size for glow -->
+            <gradient
+                android:type="radial"
+                android:gradientRadius="40dp"
+                android:centerColor="#80FFD700"
+            android:endColor="@android:color/transparent"/>
+        </shape>
+    </item>
+
+    <!-- Main Icon -->
+    <item android:drawable="@drawable/icon_start"
+        android:gravity="center"/>
+</layer-list>

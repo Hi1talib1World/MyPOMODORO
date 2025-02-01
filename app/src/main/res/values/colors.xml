@@ -23,6 +23,10 @@
     <color name="lightListBackground">#ffffff</color>
     <color name="lightCardTitle">#ffffff</color>
     <color name="lightDialogTitle">#000000</color>
+    <color name="fab_yellow">#FDFE97</color>
+    <color name="default_background">#24395B</color>
+    <color name="default_toolbar">#24395B</color>
+
     <color name="lightListEmptyTextColor">#000000</color>
 
 
