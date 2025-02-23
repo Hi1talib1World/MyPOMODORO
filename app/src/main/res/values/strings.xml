@@ -114,6 +114,7 @@
     <string name="about_activity_name">About</string>
     <string name="activities_name">Activities</string>
     <string name="tutorial">Tutorial</string>
+    <string name="feature_summary">This feature is disabled by default.</string>
     <string name="ignore_optimization_dialog">Ignore battery optimization dialog</string>
 
     <string-array name="history_spinner">

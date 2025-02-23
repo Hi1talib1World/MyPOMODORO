@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Settings Item -->
     <item
         android:id="@+id/action_settings"
         android:title="Settings"
         android:orderInCategory="100"
         android:showAsAction="never"/>
 
+    <!-- About Item -->
     <item
         android:id="@+id/action_about"
         android:title="About"
         android:orderInCategory="101"
+        android:showAsAction="never"/>
+
+    <!-- Sign In Item -->
+    <item
+        android:id="@+id/action_sign_in"
+        android:title="Sign In"
+        android:orderInCategory="102"
+        android:showAsAction="never"/>
+
+    <!-- Sign Up Item -->
+    <item
+        android:id="@+id/action_sign_up"
+        android:title="Sign Up"
+        android:orderInCategory="103"
         android:showAsAction="never"/>
 
 </menu>

@@ -7,13 +7,14 @@
     android:layout_height="match_parent"
     android:background="#24395B">
 
+    <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#24395B"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:titleTextColor="@android:color/white"/>
+        app:titleTextColor="@android:color/white" />
 
     <!-- Title Container -->
     <LinearLayout
@@ -22,8 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
         android:orientation="vertical"
-        android:padding="16dp"
-        >
+        android:padding="16dp">
 
         <!-- Main Title -->
         <TextView
@@ -33,7 +33,6 @@
             android:text="POMODORO TIMER"
             android:textColor="@color/fab_yellow"
             android:textSize="25sp"
-
             android:textStyle="bold"
             android:paddingBottom="4dp" />
 
@@ -45,9 +44,9 @@
             android:text="Focus your work and don’t be distracted for only 25 minutes"
             android:textColor="@color/fab_yellow"
             android:textSize="14sp" />
-
     </LinearLayout>
 
+    <!-- Progress Bar (Circle) -->
     <ProgressBar
         android:id="@+id/progressBarCircle"
         style="?android:attr/progressBarStyleHorizontal"
@@ -61,8 +60,7 @@
         android:progressDrawable="@drawable/drawable_circle_yellow"
         android:rotation="-90" />
 
-
-
+    <!-- Timer Text -->
     <TextView
         android:id="@+id/textViewTime"
         android:layout_width="wrap_content"
@@ -72,25 +70,28 @@
         android:textColor="#FDFE97"
         android:textSize="40sp" />
 
+    <!-- Reset Button (Initially Hidden) -->
     <ImageView
         android:id="@+id/Reset"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_below="@+id/textViewTime"
+        android:layout_below="@id/textViewTime"
         android:layout_centerInParent="true"
         android:layout_marginTop="30dp"
         android:src="@drawable/icon_reset"
         android:visibility="gone" />
 
+    <!-- Start/Stop Button -->
     <ImageView
         android:id="@+id/imageViewStartStop"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/progressBarCircle"
+        android:layout_below="@id/progressBarCircle"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:src="@drawable/icon_start" />
 
+    <!-- Floating Action Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/m_fab"
         android:layout_width="wrap_content"
@@ -99,12 +100,21 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        app:srcCompat="@drawable/ic_baseline_add_24"
-        app:borderWidth="0dp"
         app:backgroundTint="@color/fab_yellow"
-        app:elevation="8dp" />
+        app:borderWidth="0dp"
+        app:elevation="8dp"
+        app:srcCompat="@drawable/ic_baseline_add_24" />
 
-
-
-
+    <!-- Pomodoro Finish Message (Initially Hidden) -->
+    <TextView
+        android:id="@+id/finishMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewStartStop"
+        android:layout_centerHorizontal="true"
+        android:text="Pomodoro Session Finished!"
+        android:textColor="#FF6347"
+        android:textSize="18sp"
+        android:visibility="gone"
+        android:layout_marginTop="20dp" />
 </RelativeLayout>

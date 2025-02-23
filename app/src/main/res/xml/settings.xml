@@ -1,0 +1,30 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    > <!-- Set background color for the entire preference screen -->
+
+    <!-- Switch Preference Example -->
+    <SwitchPreference
+        android:key="pref_enable_feature"
+        android:title="Enable Feature"
+        android:summary="Enable or disable this feature"
+        android:defaultValue="false" />
+
+    <!-- EditText Preference Example -->
+    <EditTextPreference
+        android:key="pref_username"
+        android:title="Username"
+        android:summary="Enter your username"
+        android:defaultValue=""
+        android:inputType="text"
+        android:maxLength="20"
+        android:hint="Username" />
+
+    <!-- List Preference Example -->
+    <ListPreference
+        android:key="pref_theme"
+        android:title="Select Theme"
+        android:summary="Choose your theme"
+        android:defaultValue="light"
+        android:entries="@array/theme_entries"
+        android:entryValues="@array/theme_values" />
+
+</PreferenceScreen>
