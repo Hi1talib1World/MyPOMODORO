@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Focus your work and don’t be distracted for only 25 minutes"
-            android:textColor="@color/fab_yellow"
+            android:textColor="@color/white"
             android:textSize="14sp" />
     </LinearLayout>
 
@@ -89,7 +89,7 @@
         android:layout_below="@id/progressBarCircle"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:src="@drawable/icon_start" />
+        android:src="@drawable/ic_play_button" />
 
     <!-- Floating Action Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton

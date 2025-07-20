@@ -207,6 +207,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (id == R.id.action_about) {
             Toast.makeText(this, "About Clicked", Toast.LENGTH_SHORT).show();
             // Start About Activity if needed
+            Intent aboutIntent = new Intent(MainActivity.this, AboutActivity.class);
+            startActivity(aboutIntent);
             return true;
         } else if (id == R.id.action_sign_in) {
             Toast.makeText(this, "Sign In Clicked", Toast.LENGTH_SHORT).show();

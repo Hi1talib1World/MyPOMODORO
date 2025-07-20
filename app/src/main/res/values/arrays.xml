@@ -8,4 +8,18 @@
         <item>light</item>
         <item>dark</item>
     </string-array>
+
+
+        <string-array name="history_options">
+            <item>Last 7 days</item>
+            <item>Last 30 days</item>
+            <item>All time</item>
+        </string-array>
+
+        <string-array name="activity_options">
+            <item>All activities</item>
+            <item>Work</item>
+            <item>Study</item>
+            <item>Personal</item>
+        </string-array>
 </resources>
