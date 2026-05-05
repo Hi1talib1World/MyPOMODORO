@@ -144,4 +144,13 @@ public interface PomodoroDao {
 
     @Query("SELECT BreakTime FROM Pomodoro WHERE ID = :id")
     int getBreakTime(int id);
+
+    @Query("SELECT SUM(CompletedWorks) FROM Pomodoro WHERE ActivityId IN(:activityId)")
+    int getTotalCompletedWorks(int[] activityId);
+
+    @Query("SELECT SUM(CompletedWorks) FROM Pomodoro WHERE Date = :date AND ActivityId IN(:activityId)")
+    int getCompletedWorksForDate(String date, int[] activityId);
+
+    @Query("SELECT SUM(CompletedWorks) FROM Pomodoro WHERE Date BETWEEN :startDate AND :endDate AND ActivityId IN(:activityId)")
+    int getCompletedWorksBetweenDates(String startDate, String endDate, int[] activityId);
 }
