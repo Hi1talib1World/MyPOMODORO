@@ -26,6 +26,8 @@
             android:foregroundServiceType="dataSync|mediaPlayback"
             android:exported="true" />
         <receiver android:name=".PomodoroReceiver" android:exported="false"/>
+        <receiver android:name=".TimerActionReceiver" android:exported="false"/>
+        <receiver android:name=".Tasks.MyNotificationPublisher" android:exported="false"/>
 
         <activity
             android:name="com.denzo.mypomodoro.MainActivity"

@@ -145,9 +145,13 @@ public class NotificationService extends Service {
                 Intent displayEndNotification = new Intent(getApplicationContext(),
                         EndNotificationService.class);
 
+                int pendingIntentFlags = 0;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    pendingIntentFlags |= PendingIntent.FLAG_IMMUTABLE;
+                }
                 PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(),
                         Constants.PENDING_INTENT_END_REQUEST_CODE,
-                        displayEndNotification, 0);
+                        displayEndNotification, pendingIntentFlags);
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     alarmManager.setExactAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP,
@@ -245,9 +249,13 @@ public class NotificationService extends Service {
         Intent displayEndNotification = new Intent(getApplicationContext(),
                 EndNotificationService.class);
 
+        int flags = 0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            flags |= PendingIntent.FLAG_IMMUTABLE;
+        }
         PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(),
                 Constants.PENDING_INTENT_END_REQUEST_CODE,
-                displayEndNotification, 0);
+                displayEndNotification, flags);
 
         alarmManager.cancel(pendingIntent);
     }

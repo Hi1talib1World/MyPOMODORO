@@ -1,39 +1,89 @@
-<!-- res/layout/notification_layout.xml -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:background="@color/bg"
-    android:padding="16dp">
+    android:background="@color/default_background"
+    android:padding="12dp">
 
-    <!-- Countdown Timer Text -->
-    <TextView
-        android:id="@+id/countdownText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="00:00"
-        android:textSize="48sp"
-        android:textColor="@color/fab_yellow"
-    android:gravity="center" />
+    <ImageView
+        android:id="@+id/notification_logo"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/logo"
+        android:padding="4dp"
+        android:background="@drawable/drawable_circle_dark_blue"
+        android:contentDescription="@null" />
 
-    <!-- Play/Stop Buttons -->
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/text_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center">
+        android:layout_toEndOf="@id/notification_logo"
+        android:layout_toStartOf="@+id/button_container"
+        android:layout_marginStart="16dp"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/playButton"
-            android:text="Play"
+        <TextView
+            android:id="@+id/notification_title_label"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textAllCaps="true"
+            android:alpha="0.7" />
 
-        <Button
-            android:id="@+id/stopButton"
-            android:text="Stop"
+        <TextView
+            android:id="@+id/countdownText"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/default_time_string"
+            android:textColor="@color/fab_yellow"
+            android:textSize="24sp"
+            android:textStyle="bold" />
     </LinearLayout>
-</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/button_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/playButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_play_button"
+            android:scaleType="centerInside"
+            android:padding="6dp"
+            android:contentDescription="@string/resume" />
+
+        <ImageButton
+            android:id="@+id/stopButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_stop_button"
+            android:scaleType="centerInside"
+            android:padding="6dp"
+            android:contentDescription="@string/stop" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/notification_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_below="@id/text_container"
+        android:layout_marginTop="8dp"
+        android:progress="0"
+        android:max="100" />
+
+</RelativeLayout>

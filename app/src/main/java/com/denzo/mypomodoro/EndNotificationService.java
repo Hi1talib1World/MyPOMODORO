@@ -119,7 +119,7 @@ public class EndNotificationService extends Service {
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         .setCategory(NotificationCompat.CATEGORY_ALARM)
                         .setOngoing(true)
-                        .setDefaults(Notification.DEFAULT_SOUND)
+                        .setOnlyAlertOnce(true)
                         .setLights(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary),
                                 500, 2000);
 
@@ -128,9 +128,13 @@ public class EndNotificationService extends Service {
         }
 
         Intent intent = new Intent(this, MainActivity.class);
+        int flags = PendingIntent.FLAG_CANCEL_CURRENT;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            flags |= PendingIntent.FLAG_IMMUTABLE;
+        }
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 Constants.PENDING_INTENT_OPEN_APP_REQUEST_CODE, intent,
-                PendingIntent.FLAG_CANCEL_CURRENT);
+                flags);
 
         builder.setContentIntent(pendingIntent);
 

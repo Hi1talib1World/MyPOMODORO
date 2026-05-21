@@ -17,7 +17,6 @@ import java.util.concurrent.TimeUnit;
 
 public class PomodoroService extends Service {
 
-    private static final String CHANNEL_ID = "pomodoro_channel";
     private static final int NOTIFICATION_ID = 1;
     private CountDownTimer countDownTimer;
     private long timeRemaining = 25 * 60 * 1000; // 25 minutes in milliseconds
@@ -34,7 +33,9 @@ public class PomodoroService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        startCountDown();
+        if (countDownTimer == null) {
+            startCountDown();
+        }
         return START_STICKY; // The service will restart if it's killed
     }
 
@@ -55,18 +56,23 @@ public class PomodoroService extends Service {
         }.start();
 
         // Start the foreground service with a notification
-        startForeground(NOTIFICATION_ID, buildNotification("Pomodoro Timer", formatTime(timeRemaining)));
+        startForeground(NOTIFICATION_ID, buildNotification(formatTime(timeRemaining)));
     }
 
-    private Notification buildNotification(String title, String text) {
+    private Notification buildNotification(String text) {
         // Create the play and stop button intents
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            flags |= PendingIntent.FLAG_IMMUTABLE;
+        }
+
         Intent playIntent = new Intent(this, PomodoroReceiver.class); // Custom BroadcastReceiver to handle play
         playIntent.setAction("com.denzo.mypomodoro.PLAY");
-        PendingIntent playPendingIntent = PendingIntent.getBroadcast(this, 0, playIntent, 0);
+        PendingIntent playPendingIntent = PendingIntent.getBroadcast(this, 0, playIntent, flags);
 
         Intent stopIntent = new Intent(this, PomodoroReceiver.class); // Custom BroadcastReceiver to handle stop
         stopIntent.setAction("com.denzo.mypomodoro.STOP");
-        PendingIntent stopPendingIntent = PendingIntent.getBroadcast(this, 0, stopIntent, 0);
+        PendingIntent stopPendingIntent = PendingIntent.getBroadcast(this, 0, stopIntent, flags);
 
         // Set the custom view
         remoteViews.setTextViewText(R.id.countdownText, text);
@@ -74,12 +80,13 @@ public class PomodoroService extends Service {
         remoteViews.setOnClickPendingIntent(R.id.stopButton, stopPendingIntent);
 
         // Build the notification
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.logo) // Use your icon here
-                .setContentTitle(title)
-                .setContent(remoteViews)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, Constants.CHANNEL_TIMER)
+                .setSmallIcon(R.drawable.notification_icon)
+                .setCustomContentView(remoteViews)
+                .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
+                .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setOngoing(true)
+                .setOnlyAlertOnce(true)
                 .setAutoCancel(false);
 
         return builder.build();
@@ -87,7 +94,13 @@ public class PomodoroService extends Service {
 
     private void updateNotification() {
         String timeFormatted = formatTime(timeRemaining);
-        Notification notification = buildNotification("Pomodoro Timer", timeFormatted);
+        Notification notification = buildNotification(timeFormatted);
+        
+        // Calculate progress percentage
+        long totalTime = 25 * 60 * 1000;
+        int progress = (int) ((totalTime - timeRemaining) * 100 / totalTime);
+        remoteViews.setProgressBar(R.id.notification_progress, 100, progress, false);
+
         notificationManager.notify(NOTIFICATION_ID, notification);
     }
 
@@ -99,15 +112,7 @@ public class PomodoroService extends Service {
     }
 
     private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Pomodoro Channel";
-            String description = "Channel for Pomodoro timer notifications";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
+        // Channels are now created in SplashActivity
     }
 
     @Override

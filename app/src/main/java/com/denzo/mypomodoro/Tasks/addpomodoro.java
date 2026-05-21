@@ -112,7 +112,11 @@ public class addpomodoro extends AppCompatActivity  {
         Intent notificationIntent = new Intent(this, MyNotificationPublisher.class);
         notificationIntent.putExtra(MyNotificationPublisher.NOTIFICATION_ID, 1);
         notificationIntent.putExtra(MyNotificationPublisher.NOTIFICATION, notification);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            flags |= PendingIntent.FLAG_IMMUTABLE;
+        }
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, flags);
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         assert alarmManager != null;
         alarmManager.set(AlarmManager.RTC_WAKEUP, delay, pendingIntent);
@@ -124,7 +128,11 @@ public class addpomodoro extends AppCompatActivity  {
         //on notification click open MainActivity
         Intent intent = new Intent(this, addpomodoro.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            flags |= PendingIntent.FLAG_IMMUTABLE;
+        }
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, flags);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, default_notification_channel_id);
         builder.setContentTitle("ToDo Reminder");
@@ -132,7 +140,7 @@ public class addpomodoro extends AppCompatActivity  {
         builder.setContentIntent(pendingIntent);
         builder.setAutoCancel(true);
 
-        builder.setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND);
+        builder.setDefaults(Notification.DEFAULT_LIGHTS);
         builder.setChannelId(NOTIFICATION_CHANNEL_ID);
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         return builder.build();

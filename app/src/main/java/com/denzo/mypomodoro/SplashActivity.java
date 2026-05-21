@@ -1,6 +1,10 @@
 package com.denzo.mypomodoro;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
@@ -34,10 +38,37 @@ public class SplashActivity extends AppCompatActivity {
         appName.startAnimation(fadeIn);
 
         // Delay before navigating to MainActivity
+        createNotificationChannels();
         new Handler().postDelayed(() -> {
             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
             startActivity(intent);
             finish(); // Close splash screen
         }, SPLASH_DELAY);
+    }
+
+    private void createNotificationChannels() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            if (notificationManager != null) {
+                // Ongoing Timer Channel
+                NotificationChannel timerChannel = new NotificationChannel(
+                        Constants.CHANNEL_TIMER,
+                        "Timer",
+                        NotificationManager.IMPORTANCE_LOW
+                );
+                timerChannel.setSound(null, null);
+                timerChannel.enableVibration(false);
+                notificationManager.createNotificationChannel(timerChannel);
+
+                // Timer Completed Channel
+                NotificationChannel completedChannel = new NotificationChannel(
+                        Constants.CHANNEL_TIMER_COMPLETED,
+                        "Timer Completed",
+                        NotificationManager.IMPORTANCE_LOW
+                );
+                completedChannel.setSound(null, null);
+                notificationManager.createNotificationChannel(completedChannel);
+            }
+        }
     }
 }

@@ -166,6 +166,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
+        Intent serviceIntent = new Intent(MainActivity.this, PomodoroService.class);
+        stopService(serviceIntent);
     }
 
     private void finishPomodoroSession() {

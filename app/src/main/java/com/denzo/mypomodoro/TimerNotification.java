@@ -26,9 +26,10 @@ final class TimerNotification {
     private NotificationCompat.Builder setupNotification() {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, Constants.CHANNEL_TIMER)
                 .setSmallIcon(R.drawable.notification_icon)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
                 .setOngoing(true)
+                .setOnlyAlertOnce(true)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .setShowWhen(false);
 
@@ -52,17 +53,25 @@ final class TimerNotification {
 
         Intent intent = new Intent(context, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        int flags = PendingIntent.FLAG_CANCEL_CURRENT;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            flags |= PendingIntent.FLAG_IMMUTABLE;
+        }
         PendingIntent pendingIntent = PendingIntent.getActivity(context,
                 Constants.PENDING_INTENT_OPEN_APP_REQUEST_CODE, intent,
-                PendingIntent.FLAG_CANCEL_CURRENT);
+                flags);
 
         builder.setContentIntent(pendingIntent);
         return builder;
     }
 
     private PendingIntent createButtonPendingIntent(String actionValue) {
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            flags |= PendingIntent.FLAG_IMMUTABLE;
+        }
         return PendingIntent.getBroadcast(context, getRequestCode(actionValue),
-                createButtonIntent(actionValue), PendingIntent.FLAG_UPDATE_CURRENT);
+                createButtonIntent(actionValue), flags);
     }
 
     private int getRequestCode(String actionValue) {
