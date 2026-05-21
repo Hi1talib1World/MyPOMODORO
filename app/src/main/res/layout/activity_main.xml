@@ -23,9 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
         android:orientation="vertical"
+        android:gravity="center_horizontal"
         android:padding="16dp">
 
-        <!-- Main Title -->
         <TextView
             android:id="@+id/mainTitle"
             android:layout_width="wrap_content"
@@ -33,8 +33,20 @@
             android:text="POMODORO TIMER"
             android:textColor="@color/fab_yellow"
             android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/activity_label_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/pill_label_background"
+            android:textColor="#333333"
+            android:textSize="16sp"
             android:textStyle="bold"
-            android:paddingBottom="4dp" />
+            android:text="Work"
+            android:clickable="true"
+            android:focusable="true" />
 
         <!-- Subtitle -->
         <TextView
@@ -70,26 +82,44 @@
         android:textColor="#FDFE97"
         android:textSize="40sp" />
 
-    <!-- Reset Button (Initially Hidden) -->
-    <ImageView
-        android:id="@+id/Reset"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_below="@id/textViewTime"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="30dp"
-        android:src="@drawable/icon_reset"
-        android:visibility="gone" />
-
-    <!-- Start/Stop Button -->
-    <ImageView
-        android:id="@+id/imageViewStartStop"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+    <!-- Control Row -->
+    <LinearLayout
+        android:id="@+id/controlRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/progressBarCircle"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:src="@drawable/ic_play_button" />
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <!-- Rewind Button -->
+        <ImageView
+            android:id="@+id/imageViewRewind"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="30dp"
+            android:src="@drawable/ic_skip_button"
+            android:scaleX="-1"
+            android:contentDescription="Rewind 10 seconds" />
+
+        <!-- Start/Pause Button -->
+        <ImageView
+            android:id="@+id/imageViewStartStop"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_play_button"
+            android:contentDescription="Start or Pause Timer" />
+
+        <!-- Reset Button -->
+        <ImageView
+            android:id="@+id/Reset"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="30dp"
+            android:src="@drawable/icon_reset"
+            android:contentDescription="Reset Timer" />
+
+    </LinearLayout>
 
     <!-- Floating Action Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -110,7 +140,7 @@
         android:id="@+id/finishMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imageViewStartStop"
+        android:layout_below="@id/controlRow"
         android:layout_centerHorizontal="true"
         android:text="Pomodoro Session Finished!"
         android:textColor="#FF6347"

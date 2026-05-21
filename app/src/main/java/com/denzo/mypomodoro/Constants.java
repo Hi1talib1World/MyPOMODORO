@@ -14,6 +14,9 @@ public final class Constants {
     public static final String LOCKED_APPLICATIONS_LIST = "locked_applications_list";
     public static final String MASTER_LOCK_APPLICATION_SETTING = "master_lock_application_setting";
     public static final String CURRENT_ACTIVITY_ID = "current_activity_id";
+    public static final String WORK_DURATION_SETTING = "work_duration_setting";
+    public static final String BREAK_DURATION_SETTING = "break_duration_setting";
+    public static final String LONG_BREAK_DURATION_SETTING = "long_break_duration_setting";
     static final String KEEP_SCREEN_ON_SETTING = "keep_screen_on";
     static final String IS_STOP_BUTTON_VISIBLE = "is_stop_button_visible";
     static final String IS_SKIP_BUTTON_VISIBLE = "is_skip_button_visible";

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
-import android.os.Bundle;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.PreferenceManager;
@@ -28,18 +27,8 @@ public final class TimerActionReceiver extends BroadcastReceiver {
         String action = intent.getStringExtra(Constants.BUTTON_ACTION);
         int activityId = intent.getIntExtra(Constants.CURRENT_ACTIVITY_ID_INTENT, 1);
 
-        Bundle extras = intent.getExtras();
-
-        if (extras == null) {
-            throw new AssertionError("Provide Activity ID and Button Action");
-        }
-
-        if (!extras.containsKey(Constants.CURRENT_ACTIVITY_ID_INTENT)) {
-            throw new AssertionError("No Activity ID");
-        }
-
         if (action == null) {
-            throw new AssertionError("Provide Button Action");
+            return;
         }
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);

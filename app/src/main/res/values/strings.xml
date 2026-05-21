@@ -129,15 +129,15 @@
     <string name="rate_the_app">Rate the App</string>
 
     <string-array name="history_spinner">
-        <item name="days">@string/days</item>
-        <item name="weeks">@string/weeks</item>
-        <item name="months">@string/months</item>
+        <item>@string/days</item>
+        <item>@string/weeks</item>
+        <item>@string/months</item>
     </string-array>
 
     <string-array name="activities_spinner">
-        <item name="days">@string/today</item>
-        <item name="weeks">@string/last_week</item>
-        <item name="months">@string/last_month</item>
-        <item name="total">@string/total</item>
+        <item>@string/today</item>
+        <item>@string/last_week</item>
+        <item>@string/last_month</item>
+        <item>@string/total</item>
     </string-array>
 </resources>

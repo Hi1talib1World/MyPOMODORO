@@ -17,32 +17,32 @@ public interface PomodoroDao {
     void insertPomodoro(Pomodoro pomodoro);
 
     @Query("SELECT " +
-            "SUM(Pomodoro.CompletedWorkTime) + SUM(Pomodoro.IncompleteWorkTime) AS TotalTime, " +
+            "IFNULL(SUM(Pomodoro.CompletedWorkTime) + SUM(Pomodoro.IncompleteWorkTime), 0) AS TotalTime, " +
             "0 AS Percent, " +
             "Activity.Name AS ActivityName " +
-            "FROM Pomodoro " +
-            "INNER JOIN Activity ON Pomodoro.ActivityId = Activity.ID " +
-            "GROUP BY ActivityId")
+            "FROM Activity " +
+            "LEFT JOIN Pomodoro ON Activity.ID = Pomodoro.ActivityId " +
+            "GROUP BY Activity.ID")
     List<PieChartItem> getAllPieChartItems();
 
     @Query("SELECT " +
-            "SUM(Pomodoro.CompletedWorkTime) + SUM(Pomodoro.IncompleteWorkTime) AS TotalTime, " +
+            "IFNULL(SUM(Pomodoro.CompletedWorkTime) + SUM(Pomodoro.IncompleteWorkTime), 0) AS TotalTime, " +
             "0 AS Percent, " +
             "Activity.Name AS ActivityName " +
-            "FROM Pomodoro " +
-            "INNER JOIN Activity ON Pomodoro.ActivityId = Activity.ID " +
-            "WHERE Pomodoro.Date BETWEEN :startDate AND :endDate " +
-            "GROUP BY ActivityId")
+            "FROM Activity " +
+            "LEFT JOIN Pomodoro ON Activity.ID = Pomodoro.ActivityId " +
+            "WHERE Pomodoro.Date BETWEEN :startDate AND :endDate OR Pomodoro.Date IS NULL " +
+            "GROUP BY Activity.ID")
     List<PieChartItem> getPieChartItems(String startDate, String endDate);
 
     @Query("SELECT " +
-            "SUM(Pomodoro.CompletedWorkTime) + SUM(Pomodoro.IncompleteWorkTime) AS TotalTime, " +
+            "IFNULL(SUM(Pomodoro.CompletedWorkTime) + SUM(Pomodoro.IncompleteWorkTime), 0) AS TotalTime, " +
             "0 AS Percent, " +
             "Activity.Name AS ActivityName " +
-            "FROM Pomodoro " +
-            "INNER JOIN Activity ON Pomodoro.ActivityId = Activity.ID " +
-            "WHERE Pomodoro.Date = :date " +
-            "GROUP BY ActivityId")
+            "FROM Activity " +
+            "LEFT JOIN Pomodoro ON Activity.ID = Pomodoro.ActivityId " +
+            "WHERE Pomodoro.Date = :date OR Pomodoro.Date IS NULL " +
+            "GROUP BY Activity.ID")
     List<PieChartItem> getPieChartItems(String date);
 
     @Query("SELECT 1 FROM Pomodoro WHERE ActivityId = :activityId")

@@ -30,6 +30,8 @@ import com.denzo.mypomodoro.database.Database;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
+
 
 
 public class Activities extends AppCompatActivity {
@@ -117,11 +119,13 @@ public class Activities extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        Database.databaseExecutor.execute(() ->
-                adapter = new ActivitiesAdapter(this, database.activityDao().getAll()));
-
-        Database.databaseExecutor.execute(() ->
-                recyclerView.setAdapter(adapter));
+        Database.databaseExecutor.execute(() -> {
+            List<Activity> allActivities = database.activityDao().getAll();
+            runOnUiThread(() -> {
+                adapter = new ActivitiesAdapter(this, allActivities);
+                recyclerView.setAdapter(adapter);
+            });
+        });
     }
 
     @Override

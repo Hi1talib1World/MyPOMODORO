@@ -33,9 +33,14 @@ public class PomodoroService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (countDownTimer == null) {
-            startCountDown();
+        if (intent != null && intent.hasExtra("TIME_REMAINING")) {
+            timeRemaining = intent.getLongExtra("TIME_REMAINING", 25 * 60 * 1000);
         }
+
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+        startCountDown();
         return START_STICKY; // The service will restart if it's killed
     }
 
@@ -51,6 +56,7 @@ public class PomodoroService extends Service {
             public void onFinish() {
                 timeRemaining = 0;
                 updateNotification();
+                countDownTimer = null;
                 stopSelf(); // Stop service when the countdown finishes
             }
         }.start();
@@ -82,6 +88,7 @@ public class PomodoroService extends Service {
         // Build the notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, Constants.CHANNEL_TIMER)
                 .setSmallIcon(R.drawable.notification_icon)
+                .setContentTitle(getString(R.string.app_name))
                 .setCustomContentView(remoteViews)
                 .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
                 .setPriority(NotificationCompat.PRIORITY_LOW)
@@ -96,11 +103,6 @@ public class PomodoroService extends Service {
         String timeFormatted = formatTime(timeRemaining);
         Notification notification = buildNotification(timeFormatted);
         
-        // Calculate progress percentage
-        long totalTime = 25 * 60 * 1000;
-        int progress = (int) ((totalTime - timeRemaining) * 100 / totalTime);
-        remoteViews.setProgressBar(R.id.notification_progress, 100, progress, false);
-
         notificationManager.notify(NOTIFICATION_ID, notification);
     }
 

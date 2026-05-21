@@ -16,29 +16,69 @@
   ~ along with this program. If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SwitchPreferenceCompat
-        app:defaultValue="false"
+    <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:key="keep_screen_on"
-        app:singleLineTitle="false"
-        app:title="@string/keep_screen_on" />
+        app:title="Timer Durations">
 
-    <SwitchPreferenceCompat
-        app:defaultValue="false"
-        app:iconSpaceReserved="false"
-        app:key="full_screen_mode"
-        app:singleLineTitle="false"
-        app:title="@string/full_screen_mode_title" />
+        <SeekBarPreference
+            app:defaultValue="25"
+            app:iconSpaceReserved="false"
+            app:key="work_duration_setting"
+            app:min="1"
+            android:max="60"
+            app:showSeekBarValue="true"
+            app:title="@string/work_duration_title" />
 
-    <SwitchPreferenceCompat
-        app:defaultValue="false"
+        <SeekBarPreference
+            app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:key="break_duration_setting"
+            app:min="1"
+            android:max="30"
+            app:showSeekBarValue="true"
+            app:title="@string/break_duration_title" />
+
+        <SeekBarPreference
+            app:defaultValue="20"
+            app:iconSpaceReserved="false"
+            app:key="long_break_duration_setting"
+            app:min="1"
+            android:max="60"
+            app:showSeekBarValue="true"
+            app:title="@string/long_break_duration_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:key="automatically_start_activities"
-        app:singleLineTitle="false"
-        app:summary="@string/automatically_start_activities_summary"
-        app:title="@string/automatically_start_new_activities" />
+        app:title="General Settings">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="keep_screen_on"
+            app:singleLineTitle="false"
+            app:title="@string/keep_screen_on" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="full_screen_mode"
+            app:singleLineTitle="false"
+            app:title="@string/full_screen_mode_title" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="automatically_start_activities"
+            app:singleLineTitle="false"
+            app:summary="@string/automatically_start_activities_summary"
+            app:title="@string/automatically_start_new_activities" />
+
+    </PreferenceCategory>
 
     <SwitchPreferenceCompat
         app:defaultValue="true"

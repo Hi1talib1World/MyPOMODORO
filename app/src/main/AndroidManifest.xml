@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.denzo.mypomodoro">
 
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -69,6 +70,30 @@
         <activity
             android:name="com.denzo.mypomodoro.SettingsActivity"
             android:label="Settings"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name="com.denzo.mypomodoro.activities.Activities"
+            android:label="Activities"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name="com.denzo.mypomodoro.statistics.StatisticsActivity"
+            android:label="Statistics"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name="com.denzo.mypomodoro.applicationlock.ApplicationLockActivity"
+            android:label="App Lock"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name="com.denzo.mypomodoro.Tasks.addpomodoro"
+            android:label="Add Pomodoro"
             android:exported="true">
         </activity>
 
