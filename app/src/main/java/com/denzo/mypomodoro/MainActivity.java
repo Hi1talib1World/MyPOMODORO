@@ -8,15 +8,16 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
@@ -27,6 +28,7 @@ import com.denzo.mypomodoro.database.Activity;
 import com.denzo.mypomodoro.database.Database;
 import com.denzo.mypomodoro.settings.SettingsActivity;
 import com.denzo.mypomodoro.statistics.StatisticsBottomSheet;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TimerStatus timerStatus = TimerStatus.STOPPED;
     private ProgressBar progressBarCircle;
     private TextView textViewTime;
-    private Spinner activitySelectorSpinner;
+    private TextView activityLabelButton;
     private List<Activity> activityList;
     private ImageView imageViewReset;
     private ImageView imageViewStartStop;
@@ -100,34 +102,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Database db = Database.getInstance(this);
             activityList = db.activityDao().getAll();
             
-            List<String> names = new ArrayList<>();
-            int selectedIndex = 0;
-            for (int i = 0; i < activityList.size(); i++) {
-                Activity a = activityList.get(i);
-                names.add(a.getName());
+            String currentName = "Work";
+            for (Activity a : activityList) {
                 if (a.getId() == currentActivityId) {
-                    selectedIndex = i;
+                    currentName = a.getName();
+                    break;
                 }
             }
             
-            final int fSelectedIndex = selectedIndex;
+            final String fName = currentName;
             runOnUiThread(() -> {
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                        R.layout.spinner_item_selected, names);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                activitySelectorSpinner.setAdapter(adapter);
-                activitySelectorSpinner.setSelection(fSelectedIndex);
-                
-                activitySelectorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        Activity selected = activityList.get(position);
-                        prefs.edit().putInt(Constants.CURRENT_ACTIVITY_ID, selected.getId()).apply();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {}
-                });
+                activityLabelButton.setText(fName);
+                activityLabelButton.setOnClickListener(v -> showActivitySelectionDialog());
             });
         });
 
@@ -139,11 +125,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void showActivitySelectionDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select or Add Activity");
+
+        // Prepare the list of activity names
+        String[] names = new String[activityList.size() + 1];
+        for (int i = 0; i < activityList.size(); i++) {
+            names[i] = activityList.get(i).getName();
+        }
+        names[activityList.size()] = "+ Add New Activity";
+
+        builder.setItems(names, (dialog, which) -> {
+            if (which == activityList.size()) {
+                // Add New Activity option selected
+                showAddActivityDialog();
+            } else {
+                // Existing activity selected
+                Activity selected = activityList.get(which);
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                prefs.edit().putInt(Constants.CURRENT_ACTIVITY_ID, selected.getId()).apply();
+                activityLabelButton.setText(selected.getName());
+            }
+        });
+
+        builder.show();
+    }
+
+    private void showAddActivityDialog() {
+        NewBlockDialogFragment dialog = new NewBlockDialogFragment();
+        dialog.setOnActivityAddedListener(this::loadTimerSettings);
+        dialog.show(getSupportFragmentManager(), "NewBlockDialog");
+    }
+
     private void initViews() {
         rootLayout = findViewById(R.id.activity_main); // Root layout
         progressBarCircle = findViewById(R.id.progressBarCircle);
         textViewTime = findViewById(R.id.textViewTime);
-        activitySelectorSpinner = findViewById(R.id.activity_selector_spinner);
+        activityLabelButton = findViewById(R.id.activity_label_button);
         imageViewReset = findViewById(R.id.Reset);
         imageViewStartStop = findViewById(R.id.imageViewStartStop);
         imageViewRewind = findViewById(R.id.imageViewRewind);

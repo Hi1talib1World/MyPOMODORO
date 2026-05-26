@@ -55,4 +55,9 @@
         <item name="android:textSize">14sp</item>
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
+
+    <style name="RedTimePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#FF5252</item>
+        <item name="android:windowBackground">#ffffff</item>
+    </style>
 </resources>
