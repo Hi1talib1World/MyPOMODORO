@@ -76,7 +76,8 @@ public class NewBlockDialogFragment extends DialogFragment {
                 (view, hourOfDay, minute) -> {
                     selectedDurationMins = (hourOfDay * 60) + minute;
                     if (selectedDurationMins == 0) selectedDurationMins = 1; // Min 1 min
-                    durationText.setText(selectedDurationMins + " minutes");
+                    String durationStr = selectedDurationMins + " minutes";
+                    durationText.setText(durationStr);
                 }, hours, mins, true);
 
         timePickerDialog.setTitle("Set Duration");
@@ -89,9 +90,9 @@ public class NewBlockDialogFragment extends DialogFragment {
     private void saveActivity() {
         String name = nameInput.getText().toString().trim();
         String sessionsStr = sessionInput.getText().toString().trim();
-        int sessions = 4; // Default
+        int sessionsValue = 4; // Default
         try {
-            if (!sessionsStr.isEmpty()) sessions = Integer.parseInt(sessionsStr);
+            if (!sessionsStr.isEmpty()) sessionsValue = Integer.parseInt(sessionsStr);
         } catch (NumberFormatException ignored) {}
 
         if (name.isEmpty()) {
@@ -99,7 +100,7 @@ public class NewBlockDialogFragment extends DialogFragment {
             return;
         }
 
-        final int finalSessions = sessions;
+        final int finalSessions = sessionsValue;
         Database.databaseExecutor.execute(() -> {
             Database db = Database.getInstance(requireContext());
             if (!db.activityDao().isNameOccupied(name)) {
