@@ -177,16 +177,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.Reset:
-                reset();
-                break;
-            case R.id.imageViewStartStop:
-                startStop();
-                break;
-            case R.id.imageViewRewind:
-                rewind();
-                break;
+        int id = view.getId();
+        if (id == R.id.Reset) {
+            reset();
+        } else if (id == R.id.imageViewStartStop) {
+            startStop();
+        } else if (id == R.id.imageViewRewind) {
+            rewind();
         }
     }
 
