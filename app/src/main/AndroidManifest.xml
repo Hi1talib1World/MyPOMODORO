@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.denzo.mypomodoro">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
@@ -30,7 +28,7 @@
         <service
             android:name=".PomodoroService"
             android:foregroundServiceType="dataSync|mediaPlayback"
-            android:exported="true" />
+            android:exported="false" />
         <receiver android:name=".PomodoroReceiver" android:exported="false"/>
         <receiver android:name=".TimerActionReceiver" android:exported="false"/>
         <receiver android:name=".Tasks.MyNotificationPublisher" android:exported="false"/>
@@ -38,7 +36,7 @@
         <activity
             android:name="com.denzo.mypomodoro.MainActivity"
             android:label="@string/app_name"
-            android:exported="true">
+            android:exported="false">
         </activity>
 
         <activity
@@ -54,57 +52,59 @@
         <!-- About Page -->
         <activity
             android:name="com.denzo.mypomodoro.AboutActivity"
-            android:exported="true">
+            android:exported="false">
         </activity>
 
         <!-- Signup Activity -->
         <activity
             android:name="com.denzo.mypomodoro.SignUpActivity"
             android:label="Sign Up"
-            android:exported="true">
+            android:exported="false">
         </activity>
 
         <!-- Signin Activity -->
         <activity
             android:name="com.denzo.mypomodoro.SignInActivity"
             android:label="Sign In"
-            android:exported="true">
+            android:exported="false">
         </activity>
 
         <!-- Settings Activity -->
         <activity
             android:name="com.denzo.mypomodoro.SettingsActivity"
             android:label="Settings"
-            android:exported="true">
+            android:exported="false">
         </activity>
 
         <activity
             android:name="com.denzo.mypomodoro.activities.Activities"
             android:label="Activities"
-            android:exported="true">
+            android:exported="false">
         </activity>
 
         <activity
             android:name="com.denzo.mypomodoro.statistics.StatisticsActivity"
             android:label="Statistics"
-            android:exported="true">
+            android:exported="false">
         </activity>
 
         <activity
             android:name="com.denzo.mypomodoro.applicationlock.ApplicationLockActivity"
             android:label="App Lock"
-            android:exported="true">
+            android:exported="false">
         </activity>
 
         <activity
             android:name="com.denzo.mypomodoro.Tasks.addpomodoro"
             android:label="Add Pomodoro"
-            android:exported="true">
+            android:exported="false">
         </activity>
 
         <!-- Services -->
-        <service android:name="com.denzo.mypomodoro.NotificationService" />
-        <service android:name="com.denzo.mypomodoro.EndNotificationService" />
+        <service android:name="com.denzo.mypomodoro.NotificationService"
+            android:exported="false" />
+        <service android:name="com.denzo.mypomodoro.EndNotificationService"
+            android:exported="false" />
 
         <service
             android:name="com.denzo.mypomodoro.applicationlock.ApplicationLockService"
