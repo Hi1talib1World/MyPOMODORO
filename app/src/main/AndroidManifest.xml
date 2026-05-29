@@ -109,7 +109,6 @@
         <service
             android:name="com.denzo.mypomodoro.applicationlock.ApplicationLockService"
             android:label="@string/app_name"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
