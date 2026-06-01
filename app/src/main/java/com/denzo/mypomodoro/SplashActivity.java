@@ -31,11 +31,15 @@ public class SplashActivity extends AppCompatActivity {
         // Initialize UI elements
         ImageView logo = findViewById(R.id.logo);
         TextView appName = findViewById(R.id.app_name);
+        android.widget.ProgressBar progressBar = findViewById(R.id.splash_progress);
 
         // Apply fade-in animation
         Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         logo.startAnimation(fadeIn);
         appName.startAnimation(fadeIn);
+        if (progressBar != null) {
+            progressBar.startAnimation(fadeIn);
+        }
 
         // Delay before navigating to MainActivity
         createNotificationChannels();
