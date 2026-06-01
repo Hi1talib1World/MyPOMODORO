@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
@@ -21,43 +22,62 @@
             android:layout_gravity="center"
             android:paddingBottom="20dp"/>
 
-        <EditText
-            android:id="@+id/signup_username"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:hint="Username"
-            android:padding="12dp"
+            android:textColorHint="@color/white">
 
-            android:background="@drawable/edittext_background"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signup_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/signup_email"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:padding="12dp"
-            android:background="@drawable/edittext_background"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:textColorHint="@color/white">
 
-        <EditText
-            android:id="@+id/signup_password"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signup_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:hint="Password"
-            android:inputType="textPassword"
-            android:padding="12dp"
-            android:background="@drawable/edittext_background"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:textColorHint="@color/white"
+            app:endIconMode="password_toggle">
 
-        <Button
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signup_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/signup_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sign Up"
-            android:backgroundTint="@color/fab_yellow"
+            app:backgroundTint="@color/fab_yellow"
             android:textColor="#24395B"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            style="@style/Widget.Material3.Button" />
 
         <TextView
             android:id="@+id/login_redirect"
