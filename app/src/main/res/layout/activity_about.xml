@@ -39,10 +39,9 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            app:cardBackgroundColor="#3A4D6E"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp">
+            android:layout_marginBottom="16dp"
+            style="@style/Widget.Material3.CardView.Elevated"
+            app:cardBackgroundColor="#3A4D6E">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -69,13 +68,13 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Version Info -->
+        <!-- Version Info Card -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            app:cardBackgroundColor="#3A4D6E"
-            app:cardCornerRadius="12dp">
+            android:layout_marginBottom="16dp"
+            style="@style/Widget.Material3.CardView.Elevated"
+            app:cardBackgroundColor="#3A4D6E">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -102,13 +101,13 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Developer Info -->
+        <!-- Developer Info Card -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            app:cardBackgroundColor="#3A4D6E"
-            app:cardCornerRadius="12dp">
+            style="@style/Widget.Material3.CardView.Elevated"
+            app:cardBackgroundColor="#3A4D6E">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -159,29 +158,26 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- Contact Button -->
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/contactButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/contact_developer"
-                    android:textColor="#4CAF50"
-                    android:background="@color/fab_yellow"
-                    app:strokeColor="#4CAF50"/>
+                    android:textColor="#24395B"
+                    app:backgroundTint="@color/fab_yellow"
+                    style="@style/Widget.Material3.Button"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Rate App Button -->
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/rateButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:text="@string/rate_the_app"
-            android:textColor="@android:color/black"
-            android:background="@color/fab_yellow"
-            />
-
+            android:textColor="#24395B"
+            app:backgroundTint="@color/fab_yellow"
+            style="@style/Widget.Material3.Button"/>
 
     </LinearLayout>
 </ScrollView>
