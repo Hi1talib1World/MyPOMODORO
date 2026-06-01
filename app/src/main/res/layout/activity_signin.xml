@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
@@ -21,33 +22,47 @@
             android:layout_gravity="center"
             android:paddingBottom="20dp"/>
 
-        <EditText
-            android:id="@+id/signin_email"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:padding="12dp"
-            android:background="@drawable/edittext_background"/>
+            android:textColorHint="@color/white">
 
-        <EditText
-            android:id="@+id/signin_password"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signin_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:hint="Password"
-            android:inputType="textPassword"
-            android:padding="12dp"
-            android:background="@drawable/edittext_background"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:textColorHint="@color/white"
+            app:endIconMode="password_toggle">
 
-        <Button
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signin_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/signin_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sign In"
-            android:backgroundTint="@color/fab_yellow"
+            app:backgroundTint="@color/fab_yellow"
             android:textColor="@android:color/black"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            style="@style/Widget.Material3.Button" />
 
         <TextView
             android:id="@+id/signup_redirect"
