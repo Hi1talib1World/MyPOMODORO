@@ -1,50 +1,45 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Base application theme with Material 3. -->
+    <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/colorAccent</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
     </style>
 
 
-    <style name="DarkTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="DarkTheme" parent="Theme.Material3.Dark">
         <!-- Dark theme -->
         <item name="colorPrimary">@color/darkColorPrimary</item>
-        <item name="colorPrimaryDark">@color/darkColorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorOnPrimary">@color/darkCardTitle</item>
+        <item name="colorSecondary">@color/colorAccent</item>
+        <item name="colorOnSecondary">@color/white</item>
 
-        <item name="listBackground">@color/darkListBackground</item>
-        <item name="cardBackground">@color/darkCardBackground</item>
-        <item name="textColor">@color/darkCardTitle</item>
-        <item name="actionBarBackgroundColor">@color/darkColorPrimary</item>
-        <item name="actionBarTextColor">@color/darkCardTitle</item>
-        <item name="dialogTextColor">@color/darkDialogTitle</item>
-        <item name="dialogDateColor">@color/dialogDateColor</item>
-        <item name="listEmptyTextColor">@color/darkListEmptyTextColor</item>
+        <item name="android:windowBackground">@color/darkListBackground</item>
+        <item name="colorSurface">@color/darkCardBackground</item>
     </style>
 
 
     <!-- Light theme -->
-    <style name="LightTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="LightTheme" parent="Theme.Material3.Light">
         <item name="colorPrimary">@color/lightColorPrimary</item>
-        <item name="colorPrimaryDark">@color/lightColorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/colorAccent</item>
+        <item name="colorOnSecondary">@color/white</item>
 
-        <item name="listBackground">@color/lightListBackground</item>
-        <item name="cardBackground">@color/lightCardBackground</item>
-        <item name="textColor">@color/lightCardTitle</item>
-        <item name="actionBarBackgroundColor">@color/lightColorPrimary</item>
-        <item name="actionBarTextColor">#ffffff</item>
-        <item name="dialogTextColor">@color/lightDialogTitle</item>
-        <item name="dialogDateColor">@color/dialogDateColor</item>
-        <item name="listEmptyTextColor">@color/lightListEmptyTextColor</item>
+        <item name="android:windowBackground">@color/lightListBackground</item>
+        <item name="colorSurface">@color/lightCardBackground</item>
     </style>
+
     <style name="BottomSheetItem">
         <item name="android:textSize">20sp</item>
         <item name="android:drawablePadding">20dp</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">15dp</item>
-
     </style>
 
     <style name="StatsPeriodButton">
@@ -56,7 +51,7 @@
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
-    <style name="RedTimePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+    <style name="RedTimePickerTheme" parent="Theme.Material3.Light.Dialog">
         <item name="colorAccent">#FF5252</item>
         <item name="android:windowBackground">#ffffff</item>
     </style>
