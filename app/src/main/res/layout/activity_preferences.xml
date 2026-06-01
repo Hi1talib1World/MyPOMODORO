@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#24395B">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/some_constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -34,6 +34,7 @@
                 android:id="@+id/work_duration_summary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#A0B0D0"
                 tools:text="25m" />
         </LinearLayout>
 
@@ -54,15 +55,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/break_duration_title"
                 android:textColor="@color/white"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/work_duration_linear_layout" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/break_duration_summary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#A0B0D0"
                 tools:text="5m" />
         </LinearLayout>
 
@@ -85,15 +84,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/long_break_duration_title"
                 android:textColor="@color/white"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/break_duration" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/long_break_duration_summary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#A0B0D0"
                 tools:text="20m" />
         </LinearLayout>
 
@@ -116,30 +113,28 @@
                 android:layout_height="wrap_content"
                 android:text="@string/sessions_before_a_long_break_title"
                 android:textColor="@color/white"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/break_duration" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/sessions_till_long_break_summary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#A0B0D0"
                 tools:text="4" />
         </LinearLayout>
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
+        <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/enable_long_breaks_switch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
             android:padding="16dp"
             android:text="@string/enable_long_breaks_title"
+            android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sessions_till_long_break_linear_layout"
-            app:useMaterialThemeColors="false" />
+            app:layout_constraintTop_toBottomOf="@id/sessions_till_long_break_linear_layout" />
 
         <RelativeLayout
             android:id="@+id/do_not_disturb_linear_layout"
@@ -158,7 +153,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_toStartOf="@+id/do_not_disturb_switch"
-                android:defaultValue="false"
                 android:text="@string/do_not_disturb_title"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
@@ -170,29 +164,29 @@
                 android:layout_below="@id/do_not_disturb"
                 android:layout_marginEnd="8dp"
                 android:layout_toStartOf="@+id/do_not_disturb_switch"
+                android:textColor="#A0B0D0"
                 android:text="@string/do_not_disturb_summary" />
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
+            <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/do_not_disturb_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                app:useMaterialThemeColors="false" />
+                android:layout_centerVertical="true" />
         </RelativeLayout>
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
+        <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/enable_do_not_disturb_on_breaks_switch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
             android:padding="16dp"
             android:text="@string/do_not_disturb_break_summary"
+            android:textColor="@color/white"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/do_not_disturb_linear_layout"
-            app:useMaterialThemeColors="false" />
+            app:layout_constraintTop_toBottomOf="@id/do_not_disturb_linear_layout" />
 
         <RelativeLayout
             android:id="@+id/wifi_group"
@@ -211,7 +205,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_toStartOf="@+id/wifi_switch"
-                android:defaultValue="false"
                 android:text="@string/disable_wifi_title"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
@@ -223,15 +216,15 @@
                 android:layout_below="@id/disable_wifi"
                 android:layout_marginEnd="8dp"
                 android:layout_toStartOf="@+id/wifi_switch"
+                android:textColor="#A0B0D0"
                 android:text="@string/disable_wifi_summary" />
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
+            <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/wifi_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                app:useMaterialThemeColors="false" />
+                android:layout_centerVertical="true" />
         </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
