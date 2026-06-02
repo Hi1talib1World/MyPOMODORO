@@ -3,13 +3,13 @@
 
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-
-
 
     <application
         android:name=".MyApplication"
@@ -27,8 +27,12 @@
         <!-- Main Activity (Launcher) -->
         <service
             android:name=".PomodoroService"
-            android:foregroundServiceType="dataSync|mediaPlayback"
-            android:exported="false" />
+            android:foregroundServiceType="specialUse"
+            android:exported="false">
+            <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_TYPE"
+                android:value="Pomodoro timer needs to keep running in background to notify user."/>
+        </service>
+
         <receiver android:name=".PomodoroReceiver" android:exported="false"/>
         <receiver android:name=".TimerActionReceiver" android:exported="false"/>
         <receiver android:name=".Tasks.MyNotificationPublisher" android:exported="false"/>
@@ -102,14 +106,31 @@
 
         <!-- Services -->
         <service android:name="com.denzo.mypomodoro.NotificationService"
-            android:exported="false" />
+            android:foregroundServiceType="specialUse"
+            android:exported="false">
+            <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_TYPE"
+                android:value="Timer progress updates in notification."/>
+        </service>
+
         <service android:name="com.denzo.mypomodoro.EndNotificationService"
-            android:exported="false" />
+            android:foregroundServiceType="specialUse"
+            android:exported="false">
+            <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_TYPE"
+                android:value="Notify user when pomodoro session ends."/>
+        </service>
 
         <service
             android:name="com.denzo.mypomodoro.applicationlock.ApplicationLockService"
             android:label="@string/app_name"
-            android:exported="false" />
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.view.accessibility.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
 
     </application>
 
