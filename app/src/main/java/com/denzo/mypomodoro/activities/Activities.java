@@ -47,7 +47,7 @@ public class Activities extends AppCompatActivity {
         database = Database.getInstance(this);
 
         RecyclerView recyclerView = findViewById(R.id.activities_list);
-        FloatingActionButton addActivity = findViewById(R.id.add_activity_button);
+        View addActivity = findViewById(R.id.add_activity_button);
 
         addActivity.setOnClickListener(view -> {
             MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
