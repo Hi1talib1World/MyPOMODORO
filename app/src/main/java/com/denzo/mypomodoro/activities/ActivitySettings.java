@@ -35,7 +35,7 @@ import com.denzo.mypomodoro.R;
 import com.denzo.mypomodoro.Utility;
 import com.denzo.mypomodoro.database.Database;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.android.material.materialswitch.MaterialSwitch;
 
 
 public class ActivitySettings extends AppCompatActivity {
@@ -46,10 +46,10 @@ public class ActivitySettings extends AppCompatActivity {
     private TextView breakDurationSummary;
     private TextView longBreakDurationSummary;
     private TextView sessionsBeforeLongBreakSummary;
-    private SwitchMaterial wifiSwitch;
-    private SwitchMaterial dndSwitch;
-    private SwitchMaterial enableLongBreaksSwitch;
-    //    private SwitchMaterial enableDNDOnBreaksSwitch;
+    private MaterialSwitch wifiSwitch;
+    private MaterialSwitch dndSwitch;
+    private MaterialSwitch enableLongBreaksSwitch;
+    //    private MaterialSwitch enableDNDOnBreaksSwitch;
     private LinearLayout longBreakDurationGroup;
     private LinearLayout sessionsBeforeLongBreakGroup;
 
