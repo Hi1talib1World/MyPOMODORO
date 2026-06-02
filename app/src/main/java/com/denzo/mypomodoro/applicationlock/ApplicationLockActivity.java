@@ -16,7 +16,7 @@ import android.widget.ProgressBar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
+import com.google.android.material.materialswitch.MaterialSwitch;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,7 +31,7 @@ import java.util.List;
 
 public class ApplicationLockActivity extends AppCompatActivity {
 
-    private SwitchCompat masterLockApplicationSwitch;
+    private MaterialSwitch masterLockApplicationSwitch;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
