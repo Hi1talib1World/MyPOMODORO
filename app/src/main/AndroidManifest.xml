@@ -75,7 +75,7 @@
 
         <!-- Settings Activity -->
         <activity
-            android:name="com.denzo.mypomodoro.SettingsActivity"
+            android:name="com.denzo.mypomodoro.settings.SettingsActivity"
             android:label="Settings"
             android:exported="false">
         </activity>
