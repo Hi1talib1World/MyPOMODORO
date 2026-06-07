@@ -7,16 +7,24 @@
     android:layout_height="match_parent"
     android:background="#24395B">
 
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="transparent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <!-- Top Tabs (Toggle Group) -->
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/toggleGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         app:checkedButton="@+id/btn_focus"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:selectionRequired="true"
         app:singleSelection="true">
 
@@ -122,6 +130,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageViewStartStop" />
+
+    <!-- Finish Message -->
+    <TextView
+        android:id="@+id/finishMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Session Finished!"
+        android:textColor="@color/yellow"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/task_card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Active Task Card -->
     <com.google.android.material.card.MaterialCardView
