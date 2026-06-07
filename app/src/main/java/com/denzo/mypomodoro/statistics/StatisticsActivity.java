@@ -44,6 +44,11 @@ import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import android.content.Intent;
+import com.denzo.mypomodoro.MainActivity;
+import com.denzo.mypomodoro.activities.Activities;
+import com.denzo.mypomodoro.settings.SettingsActivity;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -91,7 +96,26 @@ public class StatisticsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bottom_sheet);
+        setContentView(R.layout.activity_statistics);
+
+        BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
+        bottomNavigation.setSelectedItemId(R.id.nav_stats);
+        bottomNavigation.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_focus) {
+                startActivity(new Intent(this, MainActivity.class));
+                return true;
+            } else if (itemId == R.id.nav_tasks) {
+                startActivity(new Intent(this, Activities.class));
+                return true;
+            } else if (itemId == R.id.nav_stats) {
+                return true;
+            } else if (itemId == R.id.nav_settings) {
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            }
+            return false;
+        });
 
         historySpinner = findViewById(R.id.history_spinner);
         activitiesSpinner = findViewById(R.id.activities_spinner);
