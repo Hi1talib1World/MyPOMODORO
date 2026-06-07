@@ -648,28 +648,17 @@ public class StatisticsActivity extends AppCompatActivity {
         numberTotalTextView.setText(Utility.formatStatisticsTime(timeTotal));
 
         // New design data population
-        long totalCompletedSessions = 0;
-        int streakCount = 0;
-        List<com.github.mikephil.charting.data.BarEntry> barEntries = new ArrayList<>();
-        
-        // Sum total sessions
-        for (HistoryChartItem item : data) {
-            // This is a simplification; ideally we'd get the actual session count from DB
-            // Assuming 1 session = 25 mins if not tracked explicitly, 
-            // but we have pomodoroDao which tracks completedWorks.
-        }
-
+        int[] finalIdsOfActivitiesToShow = idsOfActivitiesToShow;
         Database.databaseExecutor.execute(() -> {
-            int totalSessions = database.pomodoroDao().getTotalCompletedWorks();
-            int currentStreak = calculateDailyStreak();
+            int totalSessions = database.pomodoroDao().getTotalCompletedWorks(finalIdsOfActivitiesToShow);
+            int currentStreak = calculateDailyStreak(finalIdsOfActivitiesToShow);
             
             // Get last 7 days of activity for BarChart
-            List<HistoryChartItem> last7Days = new ArrayList<>();
+            List<com.github.mikephil.charting.data.BarEntry> barEntries = new ArrayList<>();
             for (int i = 6; i >= 0; i--) {
                 LocalDate date = LocalDate.now().minusDays(i);
-                HistoryChartItem item = database.pomodoroDao().getAllGroupByDate(date.toString(), idsOfActivitiesToShow);
-                last7Days.add(item);
-                float value = (item != null) ? (float) item.getTime() / 60000 : 0f; // minutes
+                HistoryChartItem item = database.pomodoroDao().getAllGroupByDate(date.toString(), finalIdsOfActivitiesToShow);
+                float value = (item != null) ? (float) item.getTime() / 60000 : 0f; // focus minutes
                 barEntries.add(new com.github.mikephil.charting.data.BarEntry(6 - i, value));
             }
 
@@ -709,11 +698,11 @@ public class StatisticsActivity extends AppCompatActivity {
         }
     }
 
-    private int calculateDailyStreak() {
+    private int calculateDailyStreak(int[] activityIds) {
         int streak = 0;
         LocalDate date = LocalDate.now();
         while (true) {
-            if (database.pomodoroDao().hasActivityOnDate(date.toString())) {
+            if (database.pomodoroDao().getCompletedWorksForDate(date.toString(), activityIds) > 0) {
                 streak++;
                 date = date.minusDays(1);
             } else {
