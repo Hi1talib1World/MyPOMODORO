@@ -78,6 +78,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initViews();
         initListeners();
 
+        com.google.android.material.bottomnavigation.BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
+        bottomNavigation.setSelectedItemId(R.id.nav_focus);
+        bottomNavigation.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_focus) {
+                return true;
+            } else if (itemId == R.id.nav_tasks) {
+                startActivity(new Intent(this, com.denzo.mypomodoro.activities.Activities.class));
+                return true;
+            } else if (itemId == R.id.nav_stats) {
+                startActivity(new Intent(this, com.denzo.mypomodoro.statistics.StatisticsActivity.class));
+                return true;
+            } else if (itemId == R.id.nav_settings) {
+                startActivity(new Intent(this, com.denzo.mypomodoro.settings.SettingsActivity.class));
+                return true;
+            }
+            return false;
+        });
+
         FloatingActionButton mFab = findViewById(R.id.m_fab);
         mFab.setOnClickListener(v -> {
             StatisticsBottomSheet bottomSheet = new StatisticsBottomSheet();
