@@ -270,7 +270,7 @@
                     android:textColor="#24395B"
                     android:textSize="16sp"
                     android:lineSpacingMultiplier="1.2"
-                    android:italic="true"/>
+                    android:textStyle="italic"/>
             </com.google.android.material.card.MaterialCardView>
 
             <!-- Existing Pie Chart (Hidden for now as it's not in the target design) -->
