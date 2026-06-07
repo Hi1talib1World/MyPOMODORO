@@ -83,10 +83,13 @@ public class StatisticsActivity extends AppCompatActivity {
 
     // Views
     private LineChart historyChartView;
+    private com.github.mikephil.charting.charts.BarChart focusBarChart;
     private TextView numberTodayTextView;
     private TextView numberWeekTextView;
     private TextView numberMonthTextView;
     private TextView numberTotalTextView;
+    private TextView numberTotalSessionsTextView;
+    private TextView dailyStreakTextView;
     private Spinner historySpinner;
     private Spinner activitiesSpinner;
     private RecyclerView legendRecyclerView;
@@ -123,10 +126,14 @@ public class StatisticsActivity extends AppCompatActivity {
         numberWeekTextView = findViewById(R.id.number_week_text_view);
         numberMonthTextView = findViewById(R.id.number_month_text_view);
         numberTotalTextView = findViewById(R.id.number_total_text_view);
+        numberTotalSessionsTextView = findViewById(R.id.number_total_sessions_text_view);
+        dailyStreakTextView = findViewById(R.id.daily_streak_text_view);
         historyChartView = findViewById(R.id.history_chart);
+        focusBarChart = findViewById(R.id.focus_bar_chart);
 
         scrollView = findViewById(R.id.statistics_scroll_view);
-        scrollView.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
+        // LayoutTransition may cause issues with some Chart views if not handled carefully
+        // scrollView.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
 
         legendRecyclerView = findViewById(R.id.legend_recycler_view);
         legendRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -139,12 +146,38 @@ public class StatisticsActivity extends AppCompatActivity {
         database = Database.getInstance(this);
 
         setupPieChartLook();
+        setupBarChartLook();
 
         setHistoryChartNoDataText();
         setupHistorySpinner();
         setupActivitiesSpinner();
 
         loadFromDatabase();
+    }
+
+    private void setupBarChartLook() {
+        focusBarChart.setDrawBarShadow(false);
+        focusBarChart.setDrawValueAboveBar(true);
+        focusBarChart.getDescription().setEnabled(false);
+        focusBarChart.setMaxVisibleValueCount(60);
+        focusBarChart.setPinchZoom(false);
+        focusBarChart.setDrawGridBackground(false);
+        focusBarChart.getLegend().setEnabled(false);
+
+        com.github.mikephil.charting.components.XAxis xAxis = focusBarChart.getXAxis();
+        xAxis.setPosition(com.github.mikephil.charting.components.XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setGranularity(1f);
+        xAxis.setLabelCount(7);
+        xAxis.setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(new String[]{"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"}));
+
+        com.github.mikephil.charting.components.YAxis leftAxis = focusBarChart.getAxisLeft();
+        leftAxis.setLabelCount(5, false);
+        leftAxis.setPosition(com.github.mikephil.charting.components.YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        leftAxis.setSpaceTop(15f);
+        leftAxis.setAxisMinimum(0f);
+
+        focusBarChart.getAxisRight().setEnabled(false);
     }
 
     @Override
@@ -614,6 +647,47 @@ public class StatisticsActivity extends AppCompatActivity {
         numberMonthTextView.setText(Utility.formatStatisticsTime(timeMonth));
         numberTotalTextView.setText(Utility.formatStatisticsTime(timeTotal));
 
+        // New design data population
+        long totalCompletedSessions = 0;
+        int streakCount = 0;
+        List<com.github.mikephil.charting.data.BarEntry> barEntries = new ArrayList<>();
+        
+        // Sum total sessions
+        for (HistoryChartItem item : data) {
+            // This is a simplification; ideally we'd get the actual session count from DB
+            // Assuming 1 session = 25 mins if not tracked explicitly, 
+            // but we have pomodoroDao which tracks completedWorks.
+        }
+
+        Database.databaseExecutor.execute(() -> {
+            int totalSessions = database.pomodoroDao().getTotalCompletedWorks();
+            int currentStreak = calculateDailyStreak();
+            
+            // Get last 7 days of activity for BarChart
+            List<HistoryChartItem> last7Days = new ArrayList<>();
+            for (int i = 6; i >= 0; i--) {
+                LocalDate date = LocalDate.now().minusDays(i);
+                HistoryChartItem item = database.pomodoroDao().getAllGroupByDate(date.toString(), idsOfActivitiesToShow);
+                last7Days.add(item);
+                float value = (item != null) ? (float) item.getTime() / 60000 : 0f; // minutes
+                barEntries.add(new com.github.mikephil.charting.data.BarEntry(6 - i, value));
+            }
+
+            runOnUiThread(() -> {
+                numberTotalSessionsTextView.setText(String.valueOf(totalSessions));
+                dailyStreakTextView.setText(getString(R.string.days_unit, currentStreak));
+                
+                com.github.mikephil.charting.data.BarDataSet barDataSet = new com.github.mikephil.charting.data.BarDataSet(barEntries, "Focus Minutes");
+                barDataSet.setColor(getResources().getColor(R.color.lightColorPrimary));
+                barDataSet.setDrawValues(false);
+                
+                com.github.mikephil.charting.data.BarData barData = new com.github.mikephil.charting.data.BarData(barDataSet);
+                barData.setBarWidth(0.5f);
+                focusBarChart.setData(barData);
+                focusBarChart.invalidate();
+            });
+        });
+
         monthData = new MonthData(data);
         monthData.generate();
 
@@ -633,5 +707,19 @@ public class StatisticsActivity extends AppCompatActivity {
         } else {
             historyChart.displayData(monthData);
         }
+    }
+
+    private int calculateDailyStreak() {
+        int streak = 0;
+        LocalDate date = LocalDate.now();
+        while (true) {
+            if (database.pomodoroDao().hasActivityOnDate(date.toString())) {
+                streak++;
+                date = date.minusDays(1);
+            } else {
+                break;
+            }
+        }
+        return streak;
     }
 }
