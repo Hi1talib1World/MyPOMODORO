@@ -582,38 +582,39 @@ public class StatisticsActivity extends AppCompatActivity {
         List<HistoryChartItem> historyChartItemsMonth = new ArrayList<>();
         List<HistoryChartItem> historyChartItemsTotal = new ArrayList<>();
         List<HistoryChartItem> historyChartItemsWeekData = new ArrayList<>();
+        int[] idsOfActivitiesToShow = new int[0];
 
         try {
-            int[] idsOfActivitiesToShow =
-                    Database.databaseExecutor.submit(() -> database.activityDao().getIdsToShow()).get();
+            int[] tempIds = Database.databaseExecutor.submit(() -> database.activityDao().getIdsToShow()).get();
+            idsOfActivitiesToShow = tempIds;
 
             LocalDate now = LocalDate.now();
 
             historyChartItemToday =
                     Database.databaseExecutor.submit(() ->
-                            database.pomodoroDao().getAllGroupByDate(now.toString(), idsOfActivitiesToShow)).get();
+                            database.pomodoroDao().getAllGroupByDate(now.toString(), tempIds)).get();
 
             historyChartItemsWeek =
                     Database.databaseExecutor.submit(() ->
                             database.pomodoroDao().getAllDatesBetweenGroupByDate(now.minusDays(6).toString(),
-                                    now.minusDays(1).toString(), idsOfActivitiesToShow)).get();
+                                    now.minusDays(1).toString(), tempIds)).get();
 
             historyChartItemsMonth =
                     Database.databaseExecutor.submit(() ->
                             database.pomodoroDao().getAllDatesBetweenGroupByDate(now.minusDays(29).toString(),
-                                    now.minusDays(7).toString(), idsOfActivitiesToShow)).get();
+                                    now.minusDays(7).toString(), tempIds)).get();
 
             historyChartItemsTotal =
                     Database.databaseExecutor.submit(() ->
                             database.pomodoroDao().getAllDateLessGroupByDate(now.minusDays(29).toString(),
-                                    idsOfActivitiesToShow)).get();
+                                    tempIds)).get();
 
             data = Database.databaseExecutor.submit(() ->
-                    database.pomodoroDao().getAllGroupByDate(idsOfActivitiesToShow)).get();
+                    database.pomodoroDao().getAllGroupByDate(tempIds)).get();
 
             historyChartItemsWeekData =
                     Database.databaseExecutor.submit(() ->
-                            database.pomodoroDao().getAllGroupByWeek(idsOfActivitiesToShow)).get();
+                            database.pomodoroDao().getAllGroupByWeek(tempIds)).get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
