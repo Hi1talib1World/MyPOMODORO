@@ -18,9 +18,10 @@
     <!-- Top Tabs (Toggle Group) -->
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/toggleGroup"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="24dp"
         app:checkedButton="@+id/btn_focus"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,8 +32,9 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_focus"
             style="@style/Widget.Material3.Button.TonalButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Focus"
             app:backgroundTint="@color/lightColorPrimary"
             android:textColor="@color/white" />
@@ -40,17 +42,21 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_short_break"
             style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Short\nBreak"
+            android:layout_weight="1"
+            android:text="Short Break"
+            android:textSize="12sp"
             android:textColor="@color/white" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_long_break"
             style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Long\nBreak"
+            android:layout_weight="1"
+            android:text="Long Break"
+            android:textSize="12sp"
             android:textColor="@color/white" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
