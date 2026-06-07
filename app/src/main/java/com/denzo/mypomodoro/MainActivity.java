@@ -134,11 +134,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         loadTimerSettings();
     }
 
+    private void setTimerMode(TimerMode mode) {
+        currentMode = mode;
+        stopCountDownTimer();
+        timerStatus = TimerStatus.STOPPED;
+        imageViewStartStop.setText("START SESSION");
+        loadTimerSettings();
+    }
+
     private void loadTimerSettings() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        workTimeMs = prefs.getInt(Constants.WORK_DURATION_SETTING, 25) * 60 * 1000L;
-        shortBreakTimeMs = prefs.getInt(Constants.BREAK_DURATION_SETTING, 5) * 60 * 1000L;
-        longBreakTimeMs = prefs.getInt(Constants.LONG_BREAK_DURATION_SETTING, 20) * 60 * 1000L;
+        
+        switch (currentMode) {
+            case FOCUS:
+                workTimeMs = prefs.getInt(Constants.WORK_DURATION_SETTING, 25) * 60 * 1000L;
+                currentTimeLimitMs = workTimeMs;
+                break;
+            case SHORT_BREAK:
+                shortBreakTimeMs = prefs.getInt(Constants.BREAK_DURATION_SETTING, 5) * 60 * 1000L;
+                currentTimeLimitMs = shortBreakTimeMs;
+                break;
+            case LONG_BREAK:
+                longBreakTimeMs = prefs.getInt(Constants.LONG_BREAK_DURATION_SETTING, 20) * 60 * 1000L;
+                currentTimeLimitMs = longBreakTimeMs;
+                break;
+        }
 
         int currentActivityId = prefs.getInt(Constants.CURRENT_ACTIVITY_ID, 1);
         Database.databaseExecutor.execute(() -> {
@@ -155,13 +175,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             
             final String fName = currentName;
             runOnUiThread(() -> {
-                activityLabelButton.setText(fName);
-                activityLabelButton.setOnClickListener(v -> showActivitySelectionDialog());
+                if (activityLabelButton != null) {
+                    activityLabelButton.setText(fName);
+                    activityLabelButton.setOnClickListener(v -> showActivitySelectionDialog());
+                }
             });
         });
 
         if (timerStatus == TimerStatus.STOPPED) {
-            currentTimeLimitMs = workTimeMs;
             timeCountInMilliSeconds = currentTimeLimitMs;
             textViewTime.setText(hmsTimeFormatter(timeCountInMilliSeconds));
             setProgressBarValues();
@@ -208,14 +229,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         activityLabelButton = findViewById(R.id.activity_label_button);
         imageViewReset = findViewById(R.id.Reset);
         imageViewStartStop = findViewById(R.id.imageViewStartStop);
-        imageViewRewind = findViewById(R.id.imageViewRewind);
         finishMessage = findViewById(R.id.finishMessage); // Initialize finish message TextView
     }
 
     private void initListeners() {
-        imageViewReset.setOnClickListener(this);
-        imageViewStartStop.setOnClickListener(this);
-        imageViewRewind.setOnClickListener(this);
+        if (imageViewReset != null) imageViewReset.setOnClickListener(this);
+        if (imageViewStartStop != null) imageViewStartStop.setOnClickListener(this);
     }
 
     @Override
@@ -225,8 +244,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             reset();
         } else if (id == R.id.imageViewStartStop) {
             startStop();
-        } else if (id == R.id.imageViewRewind) {
-            rewind();
         }
     }
 
@@ -237,60 +254,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         loadTimerSettings();
 
         // Restore UI state
-        imageViewStartStop.setImageResource(R.drawable.ic_play_button);
+        if (imageViewStartStop != null) imageViewStartStop.setText("START SESSION");
 
         // Reset background color for layout and toolbar to default
-        rootLayout.setBackgroundColor(getResources().getColor(R.color.default_background)); // Default background
-        toolbar.setBackgroundColor(getResources().getColor(R.color.default_toolbar)); // Default toolbar color
-        finishMessage.setVisibility(View.GONE); // Hide finish message
+        if (finishMessage != null) finishMessage.setVisibility(View.GONE); // Hide finish message
         timerStatus = TimerStatus.STOPPED;
     }
 
     private void startStop() {
         if (timerStatus == TimerStatus.STOPPED) {
             setProgressBarValues();
-            imageViewStartStop.setImageResource(R.drawable.pause);
-
-            // Change background color for layout and toolbar when play button is clicked
-            rootLayout.setBackgroundColor(android.graphics.Color.parseColor("#DA1E5B"));
-            toolbar.setBackgroundColor(android.graphics.Color.parseColor("#DA1E5B"));
+            if (imageViewStartStop != null) imageViewStartStop.setText("PAUSE");
 
             timerStatus = TimerStatus.STARTED;
             startCountDownTimer();
             startPomodoroService();  // Start the foreground service
         } else {
             stopCountDownTimer();
-            imageViewStartStop.setImageResource(R.drawable.ic_play_button);
-
-            // Reset background color for layout and toolbar to default when stop button is clicked
-            rootLayout.setBackgroundColor(getResources().getColor(R.color.default_background)); // Default background
-            toolbar.setBackgroundColor(getResources().getColor(R.color.default_toolbar)); // Default toolbar color
+            if (imageViewStartStop != null) imageViewStartStop.setText("RESUME");
 
             timerStatus = TimerStatus.STOPPED;
         }
     }
 
     private void rewind() {
-        // Add 10 seconds (10,000 ms)
-        timeCountInMilliSeconds += 10000;
-
-        if (timeCountInMilliSeconds > currentTimeLimitMs) {
-             currentTimeLimitMs = timeCountInMilliSeconds;
-             progressBarCircle.setMax((int) (currentTimeLimitMs / 1000));
-        }
-        
-        // Update UI immediately
-        textViewTime.setText(hmsTimeFormatter(timeCountInMilliSeconds));
-        progressBarCircle.setProgress((int) (timeCountInMilliSeconds / 1000));
-
-        // If timer is running, restart it with new time to sync
-        if (timerStatus == TimerStatus.STARTED) {
-            if (countDownTimer != null) {
-                countDownTimer.cancel();
-            }
-            startCountDownTimer();
-            startPomodoroService();
-        }
+        // Not used in new layout
     }
 
     private void startPomodoroService() {
