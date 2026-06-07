@@ -4,246 +4,303 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FDFE97">
+    android:background="#F8F9FA">
 
     <ScrollView
         android:id="@+id/statistics_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:animateLayoutChanges="true"
+        android:clipToPadding="false"
+        android:paddingBottom="80dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="24dp">
+            android:orientation="vertical"
+            android:padding="24dp">
 
             <TextView
-                android:id="@+id/overview_text_view"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="16dp"
-                android:text="@string/overview"
-                android:textColor="#DA1E5B"
-                android:textSize="18sp"
+                android:text="@string/performance_summary"
+                android:textColor="#8D8D8D"
+                android:textSize="12sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:letterSpacing="0.1"/>
 
-            <!-- Stats Row -->
-            <LinearLayout
-                android:id="@+id/stats_row"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/insightful_productivity"
+                android:textColor="#24395B"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+
+            <!-- Total Focus Time Card -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingHorizontal="12dp"
-                android:weightSum="4"
-                app:layout_constraintTop_toBottomOf="@id/overview_text_view">
+                android:layout_marginTop="24dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="#E0E0E0">
 
-                <!-- Today -->
-                <LinearLayout
-                    android:layout_width="0dp"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/number_today_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        tools:text="5" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/today"
-                        android:textColor="#DA1E5B"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                    android:padding="20dp">
 
-                <!-- Week -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/number_week_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        tools:text="25" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/week"
-                        android:textColor="#DA1E5B"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                    <ImageView
+                        android:id="@+id/icon_timer"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_focus"
+                        app:tint="#4777C0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <!-- Month -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
                     <TextView
-                        android:id="@+id/number_month_text_view"
+                        android:id="@+id/label_total_focus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        tools:text="100" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/month"
-                        android:textColor="#DA1E5B"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                        android:layout_marginTop="16dp"
+                        android:text="@string/total_focus_time"
+                        android:textColor="#8D8D8D"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/icon_timer" />
 
-                <!-- Total -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
                     <TextView
                         android:id="@+id/number_total_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="18sp"
+                        android:text="24h 45m"
+                        android:textColor="#4777C0"
+                        android:textSize="32sp"
                         android:textStyle="bold"
-                        tools:text="500" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/label_total_focus" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/total"
-                        android:textColor="#DA1E5B"
-                        android:textSize="12sp" />
-                </LinearLayout>
-            </LinearLayout>
+                        android:background="@drawable/rounded_rectangle"
+                        android:backgroundTint="#E1E9FF"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="6dp"
+                        android:text="@string/vs_last_week"
+                        android:textColor="#4777C0"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/history_text_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="32dp"
-                android:text="@string/history"
-                android:textColor="#DA1E5B"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/history_spinner"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/stats_row" />
-
-            <Spinner
-                android:id="@+id/history_spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="32dp"
-                android:popupBackground="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/stats_row" />
-
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/history_chart"
-                android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:layout_margin="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/history_text_view" />
-
-            <TextView
-                android:id="@+id/activities_text_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="24dp"
-                android:text="@string/activities"
-                android:textColor="#DA1E5B"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/activities_spinner"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/history_chart" />
-
-            <Spinner
-                android:id="@+id/activities_spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="24dp"
-                android:popupBackground="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/history_chart" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
 
             <LinearLayout
-                android:id="@+id/add_activity_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/activities_text_view">
+                android:baselineAligned="false">
 
-                <EditText
-                    android:id="@+id/new_activity_edit_text"
+                <!-- Sessions Card -->
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Add custom label"
-                    android:textSize="14sp" />
+                    android:layout_marginEnd="8dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#E0E0E0">
 
-                <Button
-                    android:id="@+id/add_activity_button"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_tasks"
+                            app:tint="#5E5E5E" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/sessions"
+                            android:textColor="#8D8D8D"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/number_total_sessions_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="42"
+                            android:textColor="#5E5E5E"
+                            android:textSize="28sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Daily Streak Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Add"
-                    android:textColor="#DA1E5B"
-                    android:textSize="14sp" />
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#E0E0E0">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_baseline_add_24"
+                            app:tint="#EB6E7A" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/daily_streak"
+                            android:textColor="#8D8D8D"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/daily_streak_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="7 Days"
+                            android:textColor="#EB6E7A"
+                            android:textSize="28sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
+            <!-- Focus Activity Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="#E0E0E0">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/focus_activity_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/focus_activity"
+                            android:textColor="#24395B"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/focus_activity_title"
+                            android:text="@string/last_7_days_minutes"
+                            android:textColor="#8D8D8D"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_baseline_add_24"
+                            app:tint="#8D8D8D" />
+                    </RelativeLayout>
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/focus_bar_chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="24dp" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Insight Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:cardBackgroundColor="#E1E9FF"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="24dp"
+                    android:text="@string/insight_text"
+                    android:textColor="#24395B"
+                    android:textSize="16sp"
+                    android:lineSpacingMultiplier="1.2"
+                    android:italic="true"/>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Existing Pie Chart (Hidden for now as it's not in the target design) -->
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/pie_chart"
                 android:layout_width="match_parent"
                 android:layout_height="270dp"
-                android:layout_margin="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/add_activity_container" />
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/others_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp"
-                android:layout_marginStart="20dp"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/pie_chart"
-                tools:text="Others (3%) consists of" />
+                android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/legend_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="8dp"
-                app:layout_constraintTop_toBottomOf="@id/others_text_view" />
+                android:visibility="gone" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <!-- Hidden spinners for logic -->
+            <Spinner android:id="@+id/history_spinner" android:layout_width="wrap_content" android:layout_height="wrap_content" android:visibility="gone"/>
+            <Spinner android:id="@+id/activities_spinner" android:layout_width="wrap_content" android:layout_height="wrap_content" android:visibility="gone"/>
+            <TextView android:id="@+id/number_today_text_view" android:layout_width="wrap_content" android:layout_height="wrap_content" android:visibility="gone"/>
+            <TextView android:id="@+id/number_week_text_view" android:layout_width="wrap_content" android:layout_height="wrap_content" android:visibility="gone"/>
+            <TextView android:id="@+id/number_month_text_view" android:layout_width="wrap_content" android:layout_height="wrap_content" android:visibility="gone"/>
+            <com.github.mikephil.charting.charts.LineChart android:id="@+id/history_chart" android:layout_width="match_parent" android:layout_height="wrap_content" android:visibility="gone"/>
+
+        </LinearLayout>
     </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
