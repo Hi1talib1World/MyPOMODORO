@@ -28,6 +28,8 @@ import com.denzo.mypomodoro.database.Activity;
 import com.denzo.mypomodoro.database.Database;
 import com.denzo.mypomodoro.settings.SettingsActivity;
 import com.denzo.mypomodoro.statistics.StatisticsBottomSheet;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initViews();
         initListeners();
 
-        com.google.android.material.bottomnavigation.BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setSelectedItemId(R.id.nav_focus);
         bottomNavigation.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
