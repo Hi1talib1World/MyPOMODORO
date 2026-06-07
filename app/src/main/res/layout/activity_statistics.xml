@@ -79,12 +79,12 @@
                         android:id="@+id/number_total_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="24h 45m"
                         android:textColor="#4777C0"
                         android:textSize="32sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/label_total_focus" />
+                        app:layout_constraintTop_toBottomOf="@id/label_total_focus"
+                        tools:text="24h 45m" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -146,10 +146,10 @@
                             android:id="@+id/number_total_sessions_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="42"
                             android:textColor="#5E5E5E"
                             android:textSize="28sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            tools:text="42" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -189,10 +189,10 @@
                             android:id="@+id/daily_streak_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="7 Days"
                             android:textColor="#EB6E7A"
                             android:textSize="28sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            tools:text="7 Days" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
