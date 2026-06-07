@@ -26,6 +26,16 @@
     <string name="total">Total</string>
     <string name="history">History</string>
     <string name="activities">Activities</string>
+    <string name="performance_summary">PERFORMANCE SUMMARY</string>
+    <string name="insightful_productivity">Insightful Productivity</string>
+    <string name="total_focus_time">Total Focus Time</string>
+    <string name="sessions">Sessions</string>
+    <string name="daily_streak">Daily Streak</string>
+    <string name="focus_activity">Focus Activity</string>
+    <string name="last_7_days_minutes">Last 7 days (minutes)</string>
+    <string name="insight_text">“Peak focus observed on Wednesday mornings. Consider scheduling your deep work tasks during this window next week.”</string>
+    <string name="vs_last_week">+12% vs last week</string>
+    <string name="days_unit">%d Days</string>
 
     <string name="work_icon">Work</string>
     <string name="break_icon">Break</string>
