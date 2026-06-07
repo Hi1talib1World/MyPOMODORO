@@ -27,7 +27,12 @@ import com.denzo.mypomodoro.R;
 import com.denzo.mypomodoro.Utility;
 import com.denzo.mypomodoro.database.Activity;
 import com.denzo.mypomodoro.database.Database;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import android.content.Intent;
+import com.denzo.mypomodoro.MainActivity;
+import com.denzo.mypomodoro.statistics.StatisticsActivity;
+import com.denzo.mypomodoro.settings.SettingsActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -45,6 +50,25 @@ public class Activities extends AppCompatActivity {
         setContentView(R.layout.activity_activities);
 
         database = Database.getInstance(this);
+
+        BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
+        bottomNavigation.setSelectedItemId(R.id.nav_tasks);
+        bottomNavigation.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_focus) {
+                startActivity(new Intent(this, MainActivity.class));
+                return true;
+            } else if (itemId == R.id.nav_tasks) {
+                return true;
+            } else if (itemId == R.id.nav_stats) {
+                startActivity(new Intent(this, StatisticsActivity.class));
+                return true;
+            } else if (itemId == R.id.nav_settings) {
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            }
+            return false;
+        });
 
         RecyclerView recyclerView = findViewById(R.id.activities_list);
         View addActivity = findViewById(R.id.add_activity_button);
