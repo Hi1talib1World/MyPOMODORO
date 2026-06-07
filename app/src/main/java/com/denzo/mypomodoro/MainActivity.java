@@ -50,16 +50,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         STOPPED
     }
 
+    private enum TimerMode {
+        FOCUS,
+        SHORT_BREAK,
+        LONG_BREAK
+    }
+
+    private TimerMode currentMode = TimerMode.FOCUS;
     private TimerStatus timerStatus = TimerStatus.STOPPED;
     private ProgressBar progressBarCircle;
     private TextView textViewTime;
     private TextView activityLabelButton;
     private List<Activity> activityList;
-    private ImageView imageViewReset;
-    private ImageView imageViewStartStop;
-    private ImageView imageViewRewind;
+    private View imageViewReset;
+    private Button imageViewStartStop;
+    private View toggleGroup;
     private CountDownTimer countDownTimer;
-    private RelativeLayout rootLayout; // Root layout to change background color
+    private View rootLayout; // Root layout to change background color
     private Toolbar toolbar; // Toolbar reference
     private TextView finishMessage; // TextView to show Pomodoro finished message
 
@@ -79,6 +86,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Initialize views and listeners
         initViews();
         initListeners();
+
+        toggleGroup = findViewById(R.id.toggleGroup);
+        if (toggleGroup instanceof com.google.android.material.button.MaterialButtonToggleGroup) {
+            ((com.google.android.material.button.MaterialButtonToggleGroup) toggleGroup).addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+                if (isChecked) {
+                    if (checkedId == R.id.btn_focus) {
+                        setTimerMode(TimerMode.FOCUS);
+                    } else if (checkedId == R.id.btn_short_break) {
+                        setTimerMode(TimerMode.SHORT_BREAK);
+                    } else if (checkedId == R.id.btn_long_break) {
+                        setTimerMode(TimerMode.LONG_BREAK);
+                    }
+                }
+            });
+        }
 
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setSelectedItemId(R.id.nav_focus);
