@@ -56,4 +56,22 @@
             android:textColor="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Planned Pomodoros (Sessions)"
+        app:boxStrokeColor="#FDFE97"
+        app:hintTextColor="#A0B0D0">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_planned_pomos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="4"
+            android:textColor="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 </LinearLayout>
