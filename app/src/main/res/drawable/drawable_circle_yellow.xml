@@ -5,4 +5,5 @@
     android:thickness="10dp"
     android:useLevel="true">
     <solid android:color="#FDFE97" />
+    <corners android:radius="10dp" />
 </shape>
