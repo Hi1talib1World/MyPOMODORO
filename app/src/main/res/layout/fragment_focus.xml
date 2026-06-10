@@ -2,16 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/focus_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#24395B">
 
-    <!-- Top Tabs (Toggle Group) -->
+    <!-- Top Margin and Mode Toggle -->
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/toggleGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="48dp"
         android:layout_marginHorizontal="24dp"
         app:checkedButton="@+id/btn_focus"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Focus"
-            app:backgroundTint="@color/lightColorPrimary"
+            app:backgroundTint="#DA1E5B"
             android:textColor="@color/white" />
 
         <com.google.android.material.button.MaterialButton
@@ -51,27 +52,28 @@
             android:textColor="@color/white" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
-    <!-- Timer Circle Container -->
+    <!-- Timer Progress Circle -->
     <FrameLayout
         android:id="@+id/timer_container"
-        android:layout_width="280dp"
-        android:layout_height="280dp"
-        android:layout_marginTop="48dp"
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+        android:layout_marginTop="64dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toggleGroup">
 
-        <ProgressBar
+        <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/progressBarCircle"
-            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/drawable_circle_dark_blue"
-            android:indeterminate="false"
-            android:max="100"
-            android:progress="100"
-            android:progressDrawable="@drawable/drawable_circle_yellow"
-            android:rotation="-90" />
+            android:layout_gravity="center"
+            app:indicatorSize="300dp"
+            app:trackThickness="12dp"
+            app:indicatorColor="#FDFE97"
+            app:trackColor="#3A4D6E"
+            app:trackCornerRadius="10dp"
+            android:max="1000"
+            android:progress="1000" />
 
         <TextView
             android:id="@+id/textViewTime"
@@ -80,22 +82,39 @@
             android:layout_gravity="center"
             android:text="25:00"
             android:textColor="#FDFE97"
-            android:textSize="64sp"
+            android:textSize="80sp"
             android:fontFamily="sans-serif-light" />
+    </FrameLayout>
 
-        <!-- Progress Dots (Simplified representation) -->
-        <LinearLayout
+    <!-- Stats Summary -->
+    <LinearLayout
+        android:id="@+id/stats_summary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/timer_container">
+
+        <TextView
+            android:id="@+id/today_pomos_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|bottom"
-            android:layout_marginBottom="48dp"
-            android:orientation="horizontal">
-            <View android:layout_width="8dp" android:layout_height="8dp" android:layout_margin="4dp" android:background="@drawable/drawable_circle_yellow"/>
-            <View android:layout_width="8dp" android:layout_height="8dp" android:layout_margin="4dp" android:background="@drawable/drawable_circle_yellow" android:alpha="0.3"/>
-            <View android:layout_width="8dp" android:layout_height="8dp" android:layout_margin="4dp" android:background="@drawable/drawable_circle_yellow" android:alpha="0.3"/>
-            <View android:layout_width="8dp" android:layout_height="8dp" android:layout_margin="4dp" android:background="@drawable/drawable_circle_yellow" android:alpha="0.3"/>
-        </LinearLayout>
-    </FrameLayout>
+            android:text="0"
+            android:textColor="#FDFE97"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Sessions Today"
+            android:textColor="#A0B0D0"
+            android:textSize="14sp" />
+    </LinearLayout>
 
     <!-- Start Session Button -->
     <com.google.android.material.button.MaterialButton
@@ -103,23 +122,23 @@
         android:layout_width="0dp"
         android:layout_height="64dp"
         android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="24dp"
         android:text="START SESSION"
         android:textSize="18sp"
         app:cornerRadius="16dp"
-        app:backgroundTint="@color/lightColorPrimary"
+        app:backgroundTint="#DA1E5B"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/timer_container" />
+        app:layout_constraintTop_toBottomOf="@id/stats_summary" />
 
-    <!-- Reset Timer Button -->
+    <!-- Reset Timer -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/Reset"
         style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="Reset Timer"
         android:textColor="@color/white"
         app:icon="@drawable/icon_reset"
@@ -133,14 +152,14 @@
         android:id="@+id/finishMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
         android:text="Session Finished!"
         android:textColor="@color/yellow"
         android:textSize="16sp"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/task_card"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Reset" />
 
     <!-- Active Task Card -->
     <com.google.android.material.card.MaterialCardView
@@ -148,10 +167,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         app:cardBackgroundColor="#3A4D6E"
         app:cardCornerRadius="24dp"
-        app:layout_constraintTop_toBottomOf="@id/Reset">
+        app:layout_constraintTop_toBottomOf="@id/finishMessage">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -176,7 +195,8 @@
                 android:src="@drawable/edit_icon"
                 app:tint="#A0B0D0"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="Edit task" />
 
             <RadioButton
                 android:id="@+id/task_checkbox"
@@ -191,9 +211,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Design System Architecture"
+                android:text="Focus Activity"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/task_checkbox"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -218,7 +238,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Project Alpha"
+                android:text="General"
                 app:chipBackgroundColor="#E1E9FF"
                 android:textColor="#4777C0"
                 app:layout_constraintBottom_toBottomOf="@id/chip_type"
