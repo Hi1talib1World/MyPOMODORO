@@ -37,6 +37,16 @@
         <receiver android:name=".TimerActionReceiver" android:exported="false"/>
         <receiver android:name=".Tasks.MyNotificationPublisher" android:exported="false"/>
 
+        <receiver android:name=".PomodoroWidgetProvider"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/pomodoro_widget_info" />
+        </receiver>
+
         <activity
             android:name="com.denzo.mypomodoro.MainActivity"
             android:label="@string/app_name"
@@ -73,34 +83,10 @@
             android:exported="false">
         </activity>
 
-        <!-- Settings Activity -->
-        <activity
-            android:name="com.denzo.mypomodoro.settings.SettingsActivity"
-            android:label="Settings"
-            android:exported="false">
-        </activity>
-
-        <activity
-            android:name="com.denzo.mypomodoro.activities.Activities"
-            android:label="Activities"
-            android:exported="false">
-        </activity>
-
-        <activity
-            android:name="com.denzo.mypomodoro.statistics.StatisticsActivity"
-            android:label="Statistics"
-            android:exported="false">
-        </activity>
-
+        <!-- App Lock -->
         <activity
             android:name="com.denzo.mypomodoro.applicationlock.ApplicationLockActivity"
             android:label="App Lock"
-            android:exported="false">
-        </activity>
-
-        <activity
-            android:name="com.denzo.mypomodoro.Tasks.addpomodoro"
-            android:label="Add Pomodoro"
             android:exported="false">
         </activity>
 
