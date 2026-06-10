@@ -65,9 +65,15 @@ public final class Activity {
     @ColumnInfo(name = "showInStatistics")
     private final boolean showInStatistics;
 
+    @ColumnInfo(name = "TaskType")
+    private final String taskType;
+
+    @ColumnInfo(name = "ProjectName")
+    private final String projectName;
+
     public Activity(String name, int workDuration, int breakDuration, boolean longBreaks,
                     int longBreakDuration, int sessionsBeforeLongBreak, boolean DND, boolean keepDNDOnBreaks,
-                    boolean WiFi, boolean showInStatistics) {
+                    boolean WiFi, boolean showInStatistics, String taskType, String projectName) {
         this.name = name;
         this.workDuration = workDuration;
         this.breakDuration = breakDuration;
@@ -78,12 +84,14 @@ public final class Activity {
         this.keepDNDOnBreaks = keepDNDOnBreaks;
         this.WiFi = WiFi;
         this.showInStatistics = showInStatistics;
+        this.taskType = taskType;
+        this.projectName = projectName;
     }
 
     @Ignore
     public Activity(String name) {
         this(name, Constants.DEFAULT_WORK_TIME, Constants.DEFAULT_BREAK_TIME, true, Constants.DEFAULT_LONG_BREAK_TIME,
-                Constants.DEFAULT_SESSIONS_BEFORE_LONG_BREAK, false, false, false, true);
+                Constants.DEFAULT_SESSIONS_BEFORE_LONG_BREAK, false, false, false, true, "Deep Work", "General");
     }
 
     public void setId(int id) {
@@ -132,5 +140,13 @@ public final class Activity {
 
     public boolean isShowInStatistics() {
         return showInStatistics;
+    }
+
+    public String getTaskType() {
+        return taskType;
+    }
+
+    public String getProjectName() {
+        return projectName;
     }
 }
