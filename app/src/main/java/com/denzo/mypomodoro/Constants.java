@@ -50,6 +50,8 @@ public final class Constants {
     public static final String TIME_LEFT = "time_left";
 
     public static final String IS_TIMER_RUNNING = "is_timer_running";
+    public static final String TIMER_END_TIME = "timer_end_time";
+    public static final String CURRENT_TIME_LIMIT = "current_time_limit";
     public static final String IS_BREAK_STATE = "is_break_state";
     static final String CENTER_BUTTONS = "center_buttons";
 
