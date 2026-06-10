@@ -1,53 +1,147 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (C) 2020 Adrian Miozga <AdrianMiozga@outlook.com>
-  ~
-  ~ This program is free software: you can redistribute it and/or modify
-  ~ it under the terms of the GNU General Public License as published by
-  ~ the Free Software Foundation, either version 3 of the License, or
-  ~ (at your option) any later version.
-  ~
-  ~ This program is distributed in the hope that it will be useful,
-  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  ~ GNU General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU General Public License
-  ~ along with this program. If not, see <https://www.gnu.org/licenses/>.
-  -->
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="64dp"
-    android:background="?android:attr/selectableItemBackground">
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="8dp"
+    app:cardBackgroundColor="#3A4D6E"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp"
+    app:strokeColor="#50668F"
+    app:strokeWidth="1dp">
 
-    <TextView
-        android:id="@+id/activity_name"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/settings_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Activity" />
+        android:padding="20dp">
 
-    <ImageButton
-        android:id="@+id/settings_button"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/settings"
-        android:background="?android:attr/selectableItemBackground"
-        android:src="@drawable/gear_icon"
-        android:tint="@color/colorPrimary"
-        app:backgroundTint="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <RadioButton
+            android:id="@+id/task_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false"
+            android:buttonTint="#FDFE97"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:id="@+id/text_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@+id/progress_dots"
+            app:layout_constraintStart_toEndOf="@id/task_radio"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/activity_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                tools:text="Deep Work on UI Library" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/ic_pomodoro"
+                    android:contentDescription="Pomodoro Icon"
+                    app:tint="#A0B0D0" />
+
+                <TextView
+                    android:id="@+id/activity_pomos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:textColor="#A0B0D0"
+                    android:textSize="12sp"
+                    tools:text="4 POMOS" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_type"
+                    style="@style/Widget.Material3.Chip.Assist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:textColor="#A0B0D0"
+                    app:chipBackgroundColor="#24395B"
+                    app:chipStrokeWidth="0dp"
+                    android:textSize="11sp"
+                    tools:text="Deep Work" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_project"
+                    style="@style/Widget.Material3.Chip.Assist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"
+                    android:textColor="#4777C0"
+                    app:chipBackgroundColor="#E1E9FF"
+                    app:chipStrokeWidth="0dp"
+                    android:textSize="11sp"
+                    tools:text="Project Alpha" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/progress_dots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toStartOf="@+id/settings_button"
+            app:layout_constraintTop_toTopOf="@id/text_container">
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_margin="2dp"
+                android:background="@drawable/drawable_circle_yellow" />
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_margin="2dp"
+                android:background="@drawable/drawable_circle_yellow" />
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_margin="2dp"
+                android:background="@drawable/drawable_circle_yellow"
+                android:alpha="0.2"/>
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/settings_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="@string/settings"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/edit_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#A0B0D0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
