@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="64dp"
-    android:background="@color/default_background"
+    android:background="#24395B"
     android:padding="8dp">
 
     <ImageView
@@ -13,7 +13,7 @@
         android:layout_alignParentStart="true"
         android:src="@drawable/logo"
         android:padding="4dp"
-        android:contentDescription="@null" />
+        android:contentDescription="App Logo" />
 
     <LinearLayout
         android:id="@+id/text_container"
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textColor="#B3FFFFFF"
+            android:textColor="#A0B0D0"
             android:textSize="12sp" />
 
         <TextView
@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_time_string"
-            android:textColor="@color/fab_yellow"
+            android:textColor="#FDFE97"
             android:textSize="24sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -65,10 +65,10 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="4dp"
-            android:src="@drawable/ic_stop_button"
+            android:src="@drawable/icon_reset"
             android:scaleType="centerInside"
             android:padding="6dp"
-            android:contentDescription="@string/stop" />
+            android:contentDescription="@string/r" />
     </LinearLayout>
 
 </RelativeLayout>
