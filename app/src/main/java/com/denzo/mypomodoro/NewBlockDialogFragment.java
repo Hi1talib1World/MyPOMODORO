@@ -110,7 +110,8 @@ public class NewBlockDialogFragment extends DialogFragment {
                         true,
                         Constants.DEFAULT_LONG_BREAK_TIME,
                         finalSessions,
-                        false, false, false, true);
+                        false, false, false, true,
+                        "Deep Work", "General");
 
                 db.activityDao().insertActivity(newActivity);
                 
