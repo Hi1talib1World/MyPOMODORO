@@ -24,17 +24,27 @@ public final class TimerActionReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        String action = intent.getStringExtra(Constants.BUTTON_ACTION);
+        String action = intent.getAction();
+        
+        if (PomodoroWidgetProvider.ACTION_WIDGET_PLAY_PAUSE.equals(action)) {
+            handleWidgetPlayPause(context);
+            return;
+        } else if (PomodoroWidgetProvider.ACTION_WIDGET_RESET.equals(action)) {
+            handleWidgetReset(context);
+            return;
+        }
+
+        String buttonAction = intent.getStringExtra(Constants.BUTTON_ACTION);
         int activityId = intent.getIntExtra(Constants.CURRENT_ACTIVITY_ID_INTENT, 1);
 
-        if (action == null) {
+        if (buttonAction == null) {
             return;
         }
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editPreferences = preferences.edit();
 
-        switch (action) {
+        switch (buttonAction) {
             case Constants.BUTTON_STOP: {
                 stopNotificationService(context);
                 stopEndNotificationService(context);
@@ -208,6 +218,25 @@ public final class TimerActionReceiver extends BroadcastReceiver {
                 break;
             }
         }
+    }
+
+    private void handleWidgetPlayPause(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean isRunning = prefs.getBoolean(Constants.IS_TIMER_RUNNING, false);
+        
+        Intent intent = new Intent(context, TimerActionReceiver.class);
+        if (isRunning) {
+            intent.putExtra(Constants.BUTTON_ACTION, Constants.BUTTON_PAUSE);
+        } else {
+            intent.putExtra(Constants.BUTTON_ACTION, Constants.BUTTON_START);
+        }
+        context.sendBroadcast(intent);
+    }
+
+    private void handleWidgetReset(Context context) {
+        Intent intent = new Intent(context, TimerActionReceiver.class);
+        intent.putExtra(Constants.BUTTON_ACTION, Constants.BUTTON_STOP);
+        context.sendBroadcast(intent);
     }
 
     private void stopNotificationService(Context context) {
