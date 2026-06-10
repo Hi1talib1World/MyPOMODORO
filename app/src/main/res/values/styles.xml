@@ -3,35 +3,37 @@
     <!-- Base application theme with Material 3. -->
     <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/colorAccent</item>
-        <item name="colorOnSecondary">@color/white</item>
-        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">#24395B</item>
+        <item name="colorOnPrimary">#FDFE97</item>
+        <item name="colorSecondary">#FDFE97</item>
+        <item name="colorOnSecondary">#24395B</item>
+        <item name="android:windowBackground">#24395B</item>
+        <item name="android:statusBarColor">#24395B</item>
+        <item name="android:navigationBarColor">#24395B</item>
     </style>
 
 
     <style name="DarkTheme" parent="Theme.Material3.Dark">
         <!-- Dark theme -->
-        <item name="colorPrimary">@color/darkColorPrimary</item>
-        <item name="colorOnPrimary">@color/darkCardTitle</item>
-        <item name="colorSecondary">@color/colorAccent</item>
-        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorPrimary">#24395B</item>
+        <item name="colorOnPrimary">#FDFE97</item>
+        <item name="colorSecondary">#FDFE97</item>
+        <item name="colorOnSecondary">#24395B</item>
 
-        <item name="android:windowBackground">@color/darkListBackground</item>
-        <item name="colorSurface">@color/darkCardBackground</item>
+        <item name="android:windowBackground">#24395B</item>
+        <item name="colorSurface">#3A4D6E</item>
     </style>
 
 
     <!-- Light theme -->
     <style name="LightTheme" parent="Theme.Material3.Light">
-        <item name="colorPrimary">@color/lightColorPrimary</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/colorAccent</item>
-        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorPrimary">#24395B</item>
+        <item name="colorOnPrimary">#FDFE97</item>
+        <item name="colorSecondary">#FDFE97</item>
+        <item name="colorOnSecondary">#24395B</item>
 
-        <item name="android:windowBackground">@color/lightListBackground</item>
-        <item name="colorSurface">@color/lightCardBackground</item>
+        <item name="android:windowBackground">#24395B</item>
+        <item name="colorSurface">#3A4D6E</item>
     </style>
 
     <style name="BottomSheetItem">
@@ -46,13 +48,13 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">8dp</item>
-        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColor">#FDFE97</item>
         <item name="android:textSize">14sp</item>
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
     <style name="RedTimePickerTheme" parent="Theme.Material3.Light.Dialog">
-        <item name="colorAccent">#FF5252</item>
-        <item name="android:windowBackground">#ffffff</item>
+        <item name="colorAccent">#DA1E5B</item>
+        <item name="android:windowBackground">#24395B</item>
     </style>
 </resources>
