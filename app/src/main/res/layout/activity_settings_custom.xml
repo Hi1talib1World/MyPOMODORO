@@ -4,14 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F9FA">
+    android:background="#24395B">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:clipToPadding="false"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:clipToPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,6 +21,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
+                app:cardBackgroundColor="#3A4D6E"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="0dp">
 
@@ -35,7 +34,8 @@
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
                         android:src="@drawable/logo"
-                        android:alpha="0.1" />
+                        android:alpha="0.05"
+                        android:contentDescription="Settings Header Background" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -49,7 +49,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="PREFERENCES"
-                            android:textColor="#8D8D8D"
+                            android:textColor="#A0B0D0"
                             android:textSize="12sp"
                             android:textStyle="bold"
                             android:letterSpacing="0.1" />
@@ -58,7 +58,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Settings"
-                            android:textColor="#24395B"
+                            android:textColor="#FDFE97"
                             android:textSize="28sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -71,7 +71,7 @@
                 android:layout_marginTop="32dp"
                 android:letterSpacing="0.1"
                 android:text="TIMER DURATIONS"
-                android:textColor="#8D8D8D"
+                android:textColor="#A0B0D0"
                 android:textSize="10sp"
                 android:textStyle="bold" />
 
@@ -80,10 +80,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="@color/white"
+                app:cardBackgroundColor="#3A4D6E"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
-                app:strokeColor="#E0E0E0"
+                app:strokeColor="#50668F"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -102,7 +102,8 @@
                             android:layout_height="20dp"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_focus"
-                            app:tint="#DA1E5B" />
+                            android:contentDescription="Focus Icon"
+                            app:tint="#FDFE97" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -111,7 +112,7 @@
                             android:layout_marginStart="12dp"
                             android:layout_toEndOf="@id/icon_focus"
                             android:text="Focus"
-                            android:textColor="#24395B"
+                            android:textColor="@color/white"
                             android:textStyle="bold" />
 
                         <TextView
@@ -120,11 +121,11 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:background="@drawable/rounded_rectangle"
-                            android:backgroundTint="#FFE1E6"
+                            android:backgroundTint="#24395B"
                             android:paddingHorizontal="10dp"
                             android:paddingVertical="4dp"
                             android:text="25m"
-                            android:textColor="#DA1E5B"
+                            android:textColor="#FDFE97"
                             android:textSize="12sp"
                             android:textStyle="bold" />
                     </RelativeLayout>
@@ -137,9 +138,9 @@
                         android:valueFrom="1"
                         android:valueTo="60"
                         android:stepSize="1"
-                        app:thumbColor="#DA1E5B"
-                        app:trackColorActive="#DA1E5B"
-                        app:trackColorInactive="#E0E0E0" />
+                        app:thumbColor="#FDFE97"
+                        app:trackColorActive="#FDFE97"
+                        app:trackColorInactive="#24395B" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -148,10 +149,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="@color/white"
+                app:cardBackgroundColor="#3A4D6E"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
-                app:strokeColor="#E0E0E0"
+                app:strokeColor="#50668F"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -170,7 +171,8 @@
                             android:layout_height="20dp"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_break"
-                            app:tint="#5E8D5A" />
+                            android:contentDescription="Short Break Icon"
+                            app:tint="#FDFE97" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -179,7 +181,7 @@
                             android:layout_marginStart="12dp"
                             android:layout_toEndOf="@id/icon_short"
                             android:text="Short Break"
-                            android:textColor="#24395B"
+                            android:textColor="@color/white"
                             android:textStyle="bold" />
 
                         <TextView
@@ -188,11 +190,11 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:background="@drawable/rounded_rectangle"
-                            android:backgroundTint="#E8F5E9"
+                            android:backgroundTint="#24395B"
                             android:paddingHorizontal="10dp"
                             android:paddingVertical="4dp"
                             android:text="5m"
-                            android:textColor="#5E8D5A"
+                            android:textColor="#FDFE97"
                             android:textSize="12sp"
                             android:textStyle="bold" />
                     </RelativeLayout>
@@ -205,9 +207,9 @@
                         android:valueFrom="1"
                         android:valueTo="30"
                         android:stepSize="1"
-                        app:thumbColor="#5E8D5A"
-                        app:trackColorActive="#5E8D5A"
-                        app:trackColorInactive="#E0E0E0" />
+                        app:thumbColor="#FDFE97"
+                        app:trackColorActive="#FDFE97"
+                        app:trackColorInactive="#24395B" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -216,10 +218,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="@color/white"
+                app:cardBackgroundColor="#3A4D6E"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
-                app:strokeColor="#E0E0E0"
+                app:strokeColor="#50668F"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -238,7 +240,8 @@
                             android:layout_height="20dp"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_moon"
-                            app:tint="#4777C0" />
+                            android:contentDescription="Long Break Icon"
+                            app:tint="#FDFE97" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -247,7 +250,7 @@
                             android:layout_marginStart="12dp"
                             android:layout_toEndOf="@id/icon_long"
                             android:text="Long Break"
-                            android:textColor="#24395B"
+                            android:textColor="@color/white"
                             android:textStyle="bold" />
 
                         <TextView
@@ -256,11 +259,11 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:background="@drawable/rounded_rectangle"
-                            android:backgroundTint="#E1E9FF"
+                            android:backgroundTint="#24395B"
                             android:paddingHorizontal="10dp"
                             android:paddingVertical="4dp"
                             android:text="15m"
-                            android:textColor="#4777C0"
+                            android:textColor="#FDFE97"
                             android:textSize="12sp"
                             android:textStyle="bold" />
                     </RelativeLayout>
@@ -273,9 +276,9 @@
                         android:valueFrom="1"
                         android:valueTo="60"
                         android:stepSize="1"
-                        app:thumbColor="#4777C0"
-                        app:trackColorActive="#4777C0"
-                        app:trackColorInactive="#E0E0E0" />
+                        app:thumbColor="#FDFE97"
+                        app:trackColorActive="#FDFE97"
+                        app:trackColorInactive="#24395B" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -285,7 +288,7 @@
                 android:layout_marginTop="32dp"
                 android:letterSpacing="0.1"
                 android:text="PREFERENCES"
-                android:textColor="#8D8D8D"
+                android:textColor="#A0B0D0"
                 android:textSize="10sp"
                 android:textStyle="bold" />
 
@@ -294,10 +297,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="@color/white"
+                app:cardBackgroundColor="#3A4D6E"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
-                app:strokeColor="#E0E0E0"
+                app:strokeColor="#50668F"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -318,7 +321,8 @@
                             android:layout_height="20dp"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_play_button"
-                            app:tint="#24395B" />
+                            android:contentDescription="Auto-start Icon"
+                            app:tint="#A0B0D0" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -327,21 +331,23 @@
                             android:layout_marginStart="12dp"
                             android:layout_toEndOf="@id/icon_auto"
                             android:text="Auto-start Breaks"
-                            android:textColor="#24395B" />
+                            android:textColor="@color/white" />
 
                         <com.google.android.material.materialswitch.MaterialSwitch
                             android:id="@+id/auto_start_switch"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true" />
+                            android:layout_centerVertical="true"
+                            app:thumbTint="#FDFE97"
+                            app:trackTint="#24395B" />
                     </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginHorizontal="16dp"
-                        android:background="#F0F0F0" />
+                        android:background="#24395B" />
 
                     <!-- Notification Sounds -->
                     <RelativeLayout
@@ -355,7 +361,8 @@
                             android:layout_height="20dp"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_notifications"
-                            app:tint="#24395B" />
+                            android:contentDescription="Notification Icon"
+                            app:tint="#A0B0D0" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -364,21 +371,23 @@
                             android:layout_marginStart="12dp"
                             android:layout_toEndOf="@id/icon_bell"
                             android:text="Notification Sounds"
-                            android:textColor="#24395B" />
+                            android:textColor="@color/white" />
 
                         <com.google.android.material.materialswitch.MaterialSwitch
                             android:id="@+id/notification_switch"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true" />
+                            android:layout_centerVertical="true"
+                            app:thumbTint="#FDFE97"
+                            app:trackTint="#24395B" />
                     </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginHorizontal="16dp"
-                        android:background="#F0F0F0" />
+                        android:background="#24395B" />
 
                     <!-- Dark Mode -->
                     <RelativeLayout
@@ -392,7 +401,8 @@
                             android:layout_height="20dp"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_moon"
-                            app:tint="#24395B" />
+                            android:contentDescription="Dark Mode Icon"
+                            app:tint="#A0B0D0" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -401,14 +411,16 @@
                             android:layout_marginStart="12dp"
                             android:layout_toEndOf="@id/icon_dark"
                             android:text="Dark Mode"
-                            android:textColor="#24395B" />
+                            android:textColor="@color/white" />
 
                         <com.google.android.material.materialswitch.MaterialSwitch
                             android:id="@+id/dark_mode_switch"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true" />
+                            android:layout_centerVertical="true"
+                            app:thumbTint="#FDFE97"
+                            app:trackTint="#24395B" />
                     </RelativeLayout>
 
                 </LinearLayout>
@@ -420,7 +432,7 @@
                 android:layout_marginTop="32dp"
                 android:letterSpacing="0.1"
                 android:text="ABOUT"
-                android:textColor="#8D8D8D"
+                android:textColor="#A0B0D0"
                 android:textSize="10sp"
                 android:textStyle="bold" />
 
@@ -429,10 +441,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="@color/white"
+                app:cardBackgroundColor="#3A4D6E"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
-                app:strokeColor="#E0E0E0"
+                app:strokeColor="#50668F"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -452,7 +464,8 @@
                             android:layout_height="20dp"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_info"
-                            app:tint="#24395B" />
+                            android:contentDescription="Version Icon"
+                            app:tint="#A0B0D0" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -461,7 +474,7 @@
                             android:layout_marginStart="12dp"
                             android:layout_toEndOf="@id/icon_info"
                             android:text="Version"
-                            android:textColor="#24395B" />
+                            android:textColor="@color/white" />
 
                         <TextView
                             android:id="@+id/version_text"
@@ -470,14 +483,14 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:text="1.0.3"
-                            android:textColor="#8D8D8D" />
+                            android:textColor="#A0B0D0" />
                     </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginHorizontal="16dp"
-                        android:background="#F0F0F0" />
+                        android:background="#24395B" />
 
                     <RelativeLayout
                         android:id="@+id/privacy_policy_row"
@@ -492,7 +505,8 @@
                             android:layout_height="20dp"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_shield"
-                            app:tint="#24395B" />
+                            android:contentDescription="Privacy Icon"
+                            app:tint="#A0B0D0" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -501,7 +515,7 @@
                             android:layout_marginStart="12dp"
                             android:layout_toEndOf="@id/icon_privacy"
                             android:text="Privacy Policy"
-                            android:textColor="#24395B" />
+                            android:textColor="@color/white" />
 
                         <ImageView
                             android:layout_width="16dp"
@@ -510,7 +524,8 @@
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_baseline_add_24"
                             android:rotation="45"
-                            app:tint="#E0E0E0" />
+                            android:contentDescription="Arrow Icon"
+                            app:tint="#A0B0D0" />
                     </RelativeLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -524,22 +539,15 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginBottom="32dp"
                 android:text="Reset All Settings"
-                android:textColor="#DA1E5B"
-                app:backgroundTint="#FFE1E6"
+                android:textColor="#FDFE97"
+                app:backgroundTint="#DA1E5B"
                 app:cornerRadius="16dp"
                 app:icon="@drawable/trash_icon"
-                app:iconTint="#DA1E5B" />
+                app:iconTint="#FDFE97" />
+
+            <View android:layout_width="match_parent" android:layout_height="100dp"/>
 
         </LinearLayout>
     </ScrollView>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
-        app:labelVisibilityMode="labeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
