@@ -74,7 +74,7 @@ public class PomodoroWidgetProvider extends AppWidgetProvider {
     }
 
     private static String formatTime(long ms) {
-        return String.format("%02d:%02d",
+        return String.format(java.util.Locale.getDefault(), "%02d:%02d",
                 TimeUnit.MILLISECONDS.toMinutes(ms),
                 TimeUnit.MILLISECONDS.toSeconds(ms) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(ms)));
     }
