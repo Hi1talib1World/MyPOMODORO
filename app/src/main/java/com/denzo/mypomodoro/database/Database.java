@@ -28,7 +28,7 @@ import com.denzo.mypomodoro.Constants;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@androidx.room.Database(entities = {Pomodoro.class, Activity.class}, version = 1)
+@androidx.room.Database(entities = {Pomodoro.class, Activity.class}, version = 2)
 public abstract class Database extends RoomDatabase {
 
     private static volatile Database database;
@@ -40,7 +40,9 @@ public abstract class Database extends RoomDatabase {
             throw new RuntimeException("Use getInstance() method to get the single instance of " +
                     "this class.");
         }
-        return Room.databaseBuilder(context, Database.class, Constants.DATABASE_NAME).build();
+        return Room.databaseBuilder(context, Database.class, Constants.DATABASE_NAME)
+                .fallbackToDestructiveMigration()
+                .build();
     }
 
     public static Database getInstance(Context context) {
