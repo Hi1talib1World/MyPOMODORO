@@ -20,6 +20,7 @@ import com.denzo.mypomodoro.MainActivity;
 import com.denzo.mypomodoro.R;
 import com.denzo.mypomodoro.TimerActionReceiver;
 import com.denzo.mypomodoro.database.Activity;
+import com.denzo.mypomodoro.database.Database;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 
@@ -34,12 +35,22 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Vi
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         final TextView activityName;
+        final TextView activityPomos;
+        final com.google.android.material.chip.Chip chipType;
+        final com.google.android.material.chip.Chip chipProject;
         final ImageButton settingsButton;
+        final android.widget.RadioButton taskRadio;
+        final View progressDots;
 
         public ViewHolder(@NonNull View view) {
             super(view);
             activityName = view.findViewById(R.id.activity_name);
+            activityPomos = view.findViewById(R.id.activity_pomos);
+            chipType = view.findViewById(R.id.chip_type);
+            chipProject = view.findViewById(R.id.chip_project);
             settingsButton = view.findViewById(R.id.settings_button);
+            taskRadio = view.findViewById(R.id.task_radio);
+            progressDots = view.findViewById(R.id.progress_dots);
         }
     }
 
@@ -63,6 +74,49 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Vi
         Context context = holder.activityName.getContext();
 
         holder.activityName.setText(activity.getName());
+
+        if (holder.activityPomos != null) {
+            holder.activityPomos.setText(String.format("%d POMOS", activity.getSessionsBeforeLongBreak()));
+        }
+
+        if (holder.chipType != null) {
+            holder.chipType.setText(activity.getTaskType());
+        }
+
+        if (holder.chipProject != null) {
+            holder.chipProject.setText(activity.getProjectName());
+        }
+        
+        if (holder.progressDots != null && holder.progressDots instanceof android.widget.LinearLayout) {
+            android.widget.LinearLayout dotsLayout = (android.widget.LinearLayout) holder.progressDots;
+            dotsLayout.removeAllViews();
+            
+            int totalPomos = activity.getSessionsBeforeLongBreak();
+            Database.databaseExecutor.execute(() -> {
+                int completedToday = Database.getInstance(context).pomodoroDao()
+                    .getCompletedWorksForDate(java.time.LocalDate.now().toString(), new int[]{activity.getId()});
+                
+                ((android.app.Activity)context).runOnUiThread(() -> {
+                    for (int i = 0; i < totalPomos; i++) {
+                        View dot = new View(context);
+                        int size = (int) com.denzo.mypomodoro.Utility.convertDpToPixel(10, context);
+                        android.widget.LinearLayout.LayoutParams params = new android.widget.LinearLayout.LayoutParams(size, size);
+                        params.setMargins(4, 0, 4, 0);
+                        dot.setLayoutParams(params);
+                        dot.setBackgroundResource(R.drawable.drawable_circle_yellow);
+                        if (i >= completedToday) {
+                            dot.setAlpha(0.2f);
+                        }
+                        dotsLayout.addView(dot);
+                    }
+                });
+            });
+        }
+
+        int currentActivityId = preferences.getInt(Constants.CURRENT_ACTIVITY_ID, 1);
+        if (holder.taskRadio != null) {
+            holder.taskRadio.setChecked(currentActivityId == activity.getId());
+        }
 
         holder.itemView.setOnClickListener(view -> {
             int activityId = preferences.getInt(Constants.CURRENT_ACTIVITY_ID, 1);
