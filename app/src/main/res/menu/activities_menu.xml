@@ -13,4 +13,11 @@
         android:icon="@drawable/trash_icon"
         android:title="@string/delete"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/profile_placeholder"
+        android:icon="@drawable/ic_info"
+        android:title="Profile"
+        app:iconTint="?attr/colorOnPrimary"
+        app:showAsAction="always" />
 </menu>
