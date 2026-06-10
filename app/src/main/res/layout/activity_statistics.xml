@@ -4,16 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F9FA">
+    android:background="#24395B">
 
     <ScrollView
         android:id="@+id/statistics_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:paddingBottom="80dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:clipToPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/performance_summary"
-                android:textColor="#8D8D8D"
+                android:textColor="#A0B0D0"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:letterSpacing="0.1"/>
@@ -35,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@string/insightful_productivity"
-                android:textColor="#24395B"
+                android:textColor="#FDFE97"
                 android:textSize="24sp"
                 android:textStyle="bold"/>
 
@@ -44,11 +41,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                app:cardBackgroundColor="@color/white"
+                app:cardBackgroundColor="#3A4D6E"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
                 app:strokeWidth="1dp"
-                app:strokeColor="#E0E0E0">
+                app:strokeColor="#50668F">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -60,7 +57,8 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_focus"
-                        app:tint="#4777C0"
+                        android:contentDescription="Timer Icon"
+                        app:tint="#FDFE97"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -70,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="@string/total_focus_time"
-                        android:textColor="#8D8D8D"
+                        android:textColor="#A0B0D0"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/icon_timer" />
@@ -79,7 +77,7 @@
                         android:id="@+id/number_total_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#4777C0"
+                        android:textColor="#FDFE97"
                         android:textSize="32sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
@@ -90,11 +88,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/rounded_rectangle"
-                        android:backgroundTint="#E1E9FF"
+                        android:backgroundTint="#24395B"
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="6dp"
                         android:text="@string/vs_last_week"
-                        android:textColor="#4777C0"
+                        android:textColor="#FDFE97"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -116,11 +114,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
-                    app:cardBackgroundColor="@color/white"
+                    app:cardBackgroundColor="#3A4D6E"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
                     app:strokeWidth="1dp"
-                    app:strokeColor="#E0E0E0">
+                    app:strokeColor="#50668F">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -132,21 +130,22 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_tasks"
-                            app:tint="#5E5E5E" />
+                            android:contentDescription="Sessions Icon"
+                            app:tint="@color/white" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             android:text="@string/sessions"
-                            android:textColor="#8D8D8D"
+                            android:textColor="#A0B0D0"
                             android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/number_total_sessions_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#5E5E5E"
+                            android:textColor="@color/white"
                             android:textSize="28sp"
                             android:textStyle="bold"
                             tools:text="42" />
@@ -159,11 +158,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="8dp"
-                    app:cardBackgroundColor="@color/white"
+                    app:cardBackgroundColor="#3A4D6E"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
                     app:strokeWidth="1dp"
-                    app:strokeColor="#E0E0E0">
+                    app:strokeColor="#50668F">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -175,21 +174,22 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_baseline_add_24"
-                            app:tint="#EB6E7A" />
+                            android:contentDescription="Streak Icon"
+                            app:tint="#FDFE97" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             android:text="@string/daily_streak"
-                            android:textColor="#8D8D8D"
+                            android:textColor="#A0B0D0"
                             android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/daily_streak_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#EB6E7A"
+                            android:textColor="#FDFE97"
                             android:textSize="28sp"
                             android:textStyle="bold"
                             tools:text="7 Days" />
@@ -202,11 +202,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                app:cardBackgroundColor="@color/white"
+                app:cardBackgroundColor="#3A4D6E"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
                 app:strokeWidth="1dp"
-                app:strokeColor="#E0E0E0">
+                app:strokeColor="#50668F">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -223,7 +223,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/focus_activity"
-                            android:textColor="#24395B"
+                            android:textColor="@color/white"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -232,7 +232,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/focus_activity_title"
                             android:text="@string/last_7_days_minutes"
-                            android:textColor="#8D8D8D"
+                            android:textColor="#A0B0D0"
                             android:textSize="12sp" />
 
                         <ImageView
@@ -241,7 +241,8 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_baseline_add_24"
-                            app:tint="#8D8D8D" />
+                            android:contentDescription="Add Activity"
+                            app:tint="#A0B0D0" />
                     </RelativeLayout>
 
                     <com.github.mikephil.charting.charts.BarChart
@@ -258,16 +259,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                app:cardBackgroundColor="#E1E9FF"
+                app:cardBackgroundColor="#24395B"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="0dp">
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="#50668F">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="24dp"
                     android:text="@string/insight_text"
-                    android:textColor="#24395B"
+                    android:textColor="#A0B0D0"
                     android:textSize="16sp"
                     android:lineSpacingMultiplier="1.2"
                     android:textStyle="italic"/>
@@ -300,16 +303,9 @@
             <TextView android:id="@+id/number_month_text_view" android:layout_width="wrap_content" android:layout_height="wrap_content" android:visibility="gone"/>
             <com.github.mikephil.charting.charts.LineChart android:id="@+id/history_chart" android:layout_width="match_parent" android:layout_height="wrap_content" android:visibility="gone"/>
 
+            <View android:layout_width="match_parent" android:layout_height="100dp"/>
+
         </LinearLayout>
     </ScrollView>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
-        app:menu="@menu/bottom_nav_menu"
-        app:labelVisibilityMode="labeled"
-        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
