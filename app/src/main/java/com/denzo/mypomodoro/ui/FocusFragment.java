@@ -2,6 +2,9 @@ package com.denzo.mypomodoro.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -9,10 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,15 +21,15 @@ import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
 import com.denzo.mypomodoro.Constants;
-import com.denzo.mypomodoro.MainActivity;
 import com.denzo.mypomodoro.NewBlockDialogFragment;
 import com.denzo.mypomodoro.PomodoroService;
 import com.denzo.mypomodoro.R;
 import com.denzo.mypomodoro.database.Activity;
 import com.denzo.mypomodoro.database.Database;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -54,15 +54,15 @@ public class FocusFragment extends Fragment implements View.OnClickListener {
 
     private TimerMode currentMode = TimerMode.FOCUS;
     private TimerStatus timerStatus = TimerStatus.STOPPED;
-    private ProgressBar progressBarCircle;
+    private CircularProgressIndicator progressBarCircle;
     private TextView textViewTime;
     private TextView activityLabelButton;
+    private TextView todayPomosCount;
     private List<Activity> activityList;
     private View imageViewReset;
     private Button imageViewStartStop;
     private MaterialButtonToggleGroup toggleGroup;
     private CountDownTimer countDownTimer;
-    private View rootLayout;
     private TextView finishMessage;
 
     @Nullable
@@ -75,8 +75,41 @@ public class FocusFragment extends Fragment implements View.OnClickListener {
         setupToggleGroup(view);
 
         loadTimerSettings();
+        loadRealStats();
 
         return view;
+    }
+
+    private void loadRealStats() {
+        if (!isAdded()) return;
+        Database.databaseExecutor.execute(() -> {
+            Database db = Database.getInstance(requireContext());
+            int todaySessions = db.pomodoroDao().getCompletedWorksForDate(LocalDate.now().toString(), 
+                db.activityDao().getIdsToShow());
+            
+            if (getActivity() != null) {
+                getActivity().runOnUiThread(() -> {
+                    if (todayPomosCount != null) {
+                        todayPomosCount.setText(String.valueOf(todaySessions));
+                    }
+                });
+            }
+        });
+    }
+
+    private void initViews(View view) {
+        progressBarCircle = view.findViewById(R.id.progressBarCircle);
+        textViewTime = view.findViewById(R.id.textViewTime);
+        activityLabelButton = view.findViewById(R.id.activity_label_button);
+        todayPomosCount = view.findViewById(R.id.today_pomos_count);
+        imageViewReset = view.findViewById(R.id.Reset);
+        imageViewStartStop = view.findViewById(R.id.imageViewStartStop);
+        finishMessage = view.findViewById(R.id.finishMessage);
+    }
+
+    private void initListeners() {
+        if (imageViewReset != null) imageViewReset.setOnClickListener(this);
+        if (imageViewStartStop != null) imageViewStartStop.setOnClickListener(this);
     }
 
     private void setupToggleGroup(View view) {
@@ -193,21 +226,6 @@ public class FocusFragment extends Fragment implements View.OnClickListener {
         dialog.show(getParentFragmentManager(), "NewBlockDialog");
     }
 
-    private void initViews(View view) {
-        rootLayout = view.findViewById(R.id.activity_main);
-        progressBarCircle = view.findViewById(R.id.progressBarCircle);
-        textViewTime = view.findViewById(R.id.textViewTime);
-        activityLabelButton = view.findViewById(R.id.activity_label_button);
-        imageViewReset = view.findViewById(R.id.Reset);
-        imageViewStartStop = view.findViewById(R.id.imageViewStartStop);
-        finishMessage = view.findViewById(R.id.finishMessage);
-    }
-
-    private void initListeners() {
-        if (imageViewReset != null) imageViewReset.setOnClickListener(this);
-        if (imageViewStartStop != null) imageViewStartStop.setOnClickListener(this);
-    }
-
     @Override
     public void onClick(View view) {
         int id = view.getId();
@@ -218,8 +236,42 @@ public class FocusFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        syncWithRunningTimer();
+    }
+
+    private void syncWithRunningTimer() {
+        if (!isAdded()) return;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
+        boolean isRunning = prefs.getBoolean(Constants.IS_TIMER_RUNNING, false);
+        
+        if (isRunning) {
+            long endTime = prefs.getLong(Constants.TIMER_END_TIME, 0);
+            currentTimeLimitMs = prefs.getLong(Constants.CURRENT_TIME_LIMIT, workTimeMs);
+            long now = System.currentTimeMillis();
+            long remaining = endTime - now;
+            
+            if (remaining > 0) {
+                timeCountInMilliSeconds = remaining;
+                timerStatus = TimerStatus.STARTED;
+                if (imageViewStartStop != null) imageViewStartStop.setText("PAUSE");
+
+                startCountDownTimer();
+            } else {
+                // Timer finished while app was closed
+                prefs.edit().putBoolean(Constants.IS_TIMER_RUNNING, false).apply();
+                reset();
+            }
+        }
+    }
+
     private void reset() {
         stopCountDownTimer();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
+        prefs.edit().putBoolean(Constants.IS_TIMER_RUNNING, false).apply();
+        
         loadTimerSettings();
         if (imageViewStartStop != null) imageViewStartStop.setText("START SESSION");
         if (finishMessage != null) finishMessage.setVisibility(View.GONE);
@@ -227,16 +279,28 @@ public class FocusFragment extends Fragment implements View.OnClickListener {
     }
 
     private void startStop() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
         if (timerStatus == TimerStatus.STOPPED) {
             setProgressBarValues();
             if (imageViewStartStop != null) imageViewStartStop.setText("PAUSE");
             timerStatus = TimerStatus.STARTED;
+            
+            // Save state for persistence
+            long endTime = System.currentTimeMillis() + timeCountInMilliSeconds;
+            prefs.edit()
+                .putBoolean(Constants.IS_TIMER_RUNNING, true)
+                .putLong(Constants.TIMER_END_TIME, endTime)
+                .putLong(Constants.CURRENT_TIME_LIMIT, currentTimeLimitMs)
+                .apply();
+            
             startCountDownTimer();
             startPomodoroService();
         } else {
             stopCountDownTimer();
             if (imageViewStartStop != null) imageViewStartStop.setText("RESUME");
             timerStatus = TimerStatus.STOPPED;
+            
+            prefs.edit().putBoolean(Constants.IS_TIMER_RUNNING, false).apply();
         }
     }
 
@@ -247,20 +311,38 @@ public class FocusFragment extends Fragment implements View.OnClickListener {
     }
 
     private void startCountDownTimer() {
-        countDownTimer = new CountDownTimer(timeCountInMilliSeconds, 1000) {
+        countDownTimer = new CountDownTimer(timeCountInMilliSeconds, 100) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timeCountInMilliSeconds = millisUntilFinished;
                 textViewTime.setText(hmsTimeFormatter(millisUntilFinished));
-                progressBarCircle.setProgress((int) (millisUntilFinished / 1000));
+                
+                int progress = (int) ((millisUntilFinished * 1000) / currentTimeLimitMs);
+                progressBarCircle.setProgress(progress);
             }
 
             @Override
             public void onFinish() {
+                progressBarCircle.setProgress(0);
+                playSound();
                 finishPomodoroSession();
+                loadRealStats();
                 reset();
             }
         }.start();
+    }
+
+    private void playSound() {
+        try {
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            MediaPlayer mp = MediaPlayer.create(requireContext(), notification);
+            if (mp != null) {
+                mp.start();
+                mp.setOnCompletionListener(MediaPlayer::release);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void stopCountDownTimer() {
@@ -279,8 +361,9 @@ public class FocusFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setProgressBarValues() {
-        progressBarCircle.setMax((int) (currentTimeLimitMs / 1000));
-        progressBarCircle.setProgress((int) (timeCountInMilliSeconds / 1000));
+        progressBarCircle.setMax(1000);
+        int progress = (int) ((timeCountInMilliSeconds * 1000) / currentTimeLimitMs);
+        progressBarCircle.setProgress(progress);
     }
 
     private String hmsTimeFormatter(long milliSeconds) {
