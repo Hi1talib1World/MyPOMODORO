@@ -290,7 +290,7 @@ public class ActivitySettings extends AppCompatActivity {
                                                     database.activityDao().getFirstActivityID()).apply());
                                 }
 
-                                Intent intent = new Intent(this, Activities.class);
+                                Intent intent = new Intent(this, com.denzo.mypomodoro.MainActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                             });
@@ -309,7 +309,7 @@ public class ActivitySettings extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, Activities.class);
+        Intent intent = new Intent(this, com.denzo.mypomodoro.MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
