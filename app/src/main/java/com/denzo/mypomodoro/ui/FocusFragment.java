@@ -54,6 +54,7 @@ public class FocusFragment extends Fragment implements View.OnClickListener {
 
     private TimerMode currentMode = TimerMode.FOCUS;
     private TimerStatus timerStatus = TimerStatus.STOPPED;
+    private int currentActivityId;
     private CircularProgressIndicator progressBarCircle;
     private TextView textViewTime;
     private TextView activityLabelButton;
@@ -156,14 +157,16 @@ public class FocusFragment extends Fragment implements View.OnClickListener {
                 break;
         }
 
-        int currentActivityId = prefs.getInt(Constants.CURRENT_ACTIVITY_ID, 1);
+        currentActivityId = prefs.getInt(Constants.CURRENT_ACTIVITY_ID, 1);
+        final int activityId = currentActivityId;
+        
         Database.databaseExecutor.execute(() -> {
             Database db = Database.getInstance(requireContext());
             activityList = db.activityDao().getAll();
             
             Activity currentActivity = null;
             for (Activity a : activityList) {
-                if (a.getId() == currentActivityId) {
+                if (a.getId() == activityId) {
                     currentActivity = a;
                     break;
                 }
@@ -291,6 +294,7 @@ public class FocusFragment extends Fragment implements View.OnClickListener {
                 .putBoolean(Constants.IS_TIMER_RUNNING, true)
                 .putLong(Constants.TIMER_END_TIME, endTime)
                 .putLong(Constants.CURRENT_TIME_LIMIT, currentTimeLimitMs)
+                .putBoolean(Constants.IS_BREAK_STATE, currentMode != TimerMode.FOCUS)
                 .apply();
             
             startCountDownTimer();
@@ -326,7 +330,8 @@ public class FocusFragment extends Fragment implements View.OnClickListener {
                 progressBarCircle.setProgress(0);
                 playSound();
                 finishPomodoroSession();
-                loadRealStats();
+                // Delay a bit to let the Service write to DB
+                new Handler().postDelayed(() -> loadRealStats(), 500);
                 reset();
             }
         }.start();
