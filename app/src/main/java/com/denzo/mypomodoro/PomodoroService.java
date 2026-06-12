@@ -33,13 +33,20 @@ public class PomodoroService extends Service {
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         createNotificationChannel();
         remoteViews = new RemoteViews(getPackageName(), R.layout.notification_layout);
+        
+        // Tracking variables for incremental updates
+        lastSaveTime = System.currentTimeMillis();
     }
+
+    private long lastSaveTime;
+    private static final long SAVE_INTERVAL_MS = 60000; // Save every 1 minute
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         long endTime = prefs.getLong(Constants.TIMER_END_TIME, 0);
         long now = System.currentTimeMillis();
         timeRemaining = endTime - now;
+        lastSaveTime = now;
 
         if (timeRemaining <= 0) {
             stopSelf();
@@ -60,11 +67,32 @@ public class PomodoroService extends Service {
                 timeRemaining = millisUntilFinished;
                 updateNotification();
                 PomodoroWidgetProvider.updateAllWidgets(PomodoroService.this);
+                
+                // Incremental save every minute
+                long now = System.currentTimeMillis();
+                if (now - lastSaveTime >= SAVE_INTERVAL_MS) {
+                    saveIncrementalProgress(now - lastSaveTime);
+                    lastSaveTime = now;
+                }
             }
 
             @Override
             public void onFinish() {
+                long now = System.currentTimeMillis();
+                saveIncrementalProgress(now - lastSaveTime);
+                
                 timeRemaining = 0;
+                
+                // Mark session as completed (increment session count)
+                int activityId = prefs.getInt(Constants.CURRENT_ACTIVITY_ID, 1);
+                boolean isBreak = prefs.getBoolean(Constants.IS_BREAK_STATE, false);
+                
+                if (isBreak) {
+                    Utility.updateDatabaseBreaksCount(PomodoroService.this, activityId);
+                } else {
+                    Utility.updateDatabaseCompletedWorksCount(PomodoroService.this, activityId);
+                }
+
                 prefs.edit().putBoolean(Constants.IS_TIMER_RUNNING, false).apply();
                 updateNotification();
                 countDownTimer = null;
@@ -74,6 +102,17 @@ public class PomodoroService extends Service {
 
         // Start the foreground service with a notification
         startForeground(NOTIFICATION_ID, buildNotification(formatTime(timeRemaining)));
+    }
+
+    private void saveIncrementalProgress(long timeSpentMs) {
+        int activityId = prefs.getInt(Constants.CURRENT_ACTIVITY_ID, 1);
+        boolean isBreak = prefs.getBoolean(Constants.IS_BREAK_STATE, false);
+        
+        if (isBreak) {
+            Utility.updateDatabaseBreakTimeOnly(PomodoroService.this, timeSpentMs, activityId);
+        } else {
+            Utility.updateDatabaseWorkTimeOnly(PomodoroService.this, timeSpentMs, activityId);
+        }
     }
 
     private Notification buildNotification(String text) {
@@ -140,6 +179,10 @@ public class PomodoroService extends Service {
         super.onDestroy();
         if (countDownTimer != null) {
             countDownTimer.cancel();
+            
+            // Final save on service stop (Pause/App Kill)
+            long now = System.currentTimeMillis();
+            saveIncrementalProgress(now - lastSaveTime);
         }
     }
 }
