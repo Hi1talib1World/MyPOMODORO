@@ -53,8 +53,8 @@ public final class Pomodoro {
     @ColumnInfo(name = "ActivityId")
     private final int activityId;
 
-    public Pomodoro(@NonNull String Date, int CompletedWorks, int CompletedWorkTime,
-                    int IncompleteWorks, int IncompleteWorkTime, int Breaks, int BreakTime, int activityId) {
+    public Pomodoro(@NonNull String Date, int CompletedWorks, long CompletedWorkTime,
+                    int IncompleteWorks, long IncompleteWorkTime, int Breaks, long BreakTime, int activityId) {
         this.Date = Date;
         this.CompletedWorks = CompletedWorks;
         this.CompletedWorkTime = CompletedWorkTime;
