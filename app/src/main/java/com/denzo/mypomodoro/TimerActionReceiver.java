@@ -240,7 +240,7 @@ public final class TimerActionReceiver extends BroadcastReceiver {
     }
 
     private void stopNotificationService(Context context) {
-        Intent stopService = new Intent(context, NotificationService.class);
+        Intent stopService = new Intent(context, PomodoroService.class);
         context.stopService(stopService);
     }
 
@@ -250,24 +250,38 @@ public final class TimerActionReceiver extends BroadcastReceiver {
     }
 
     private void startNotificationService(Context context) {
-        Database database = Database.getInstance(context);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-
         int activityId = sharedPreferences.getInt(Constants.CURRENT_ACTIVITY_ID, 1);
-
+        boolean isBreak = sharedPreferences.getBoolean(Constants.IS_BREAK_STATE, false);
+        
         Database.databaseExecutor.execute(() -> {
+            Database database = Database.getInstance(context);
             int workDuration = database.activityDao().getWorkDuration(activityId);
             int breakDuration = database.activityDao().getBreakDuration(activityId);
             int longBreakDuration = database.activityDao().getLongBreakDuration(activityId);
             int sessionsBeforeLongBreak = database.activityDao().getSessionsBeforeLongBreak(activityId);
             boolean areLongBreaksEnabled = database.activityDao().areLongBreaksEnabled(activityId);
+            int workSessionCounter = sharedPreferences.getInt(Constants.WORK_SESSION_COUNTER, 0);
 
-            Intent startService = new Intent(context, NotificationService.class);
-            startService.putExtra(Constants.WORK_DURATION_INTENT, workDuration);
-            startService.putExtra(Constants.BREAK_DURATION_INTENT, breakDuration);
-            startService.putExtra(Constants.LONG_BREAK_DURATION_INTENT, longBreakDuration);
-            startService.putExtra(Constants.SESSIONS_BEFORE_LONG_BREAK_INTENT, sessionsBeforeLongBreak);
-            startService.putExtra(Constants.ARE_LONG_BREAKS_ENABLED_INTENT, areLongBreaksEnabled);
+            long limitMs;
+            if (isBreak) {
+                if (workSessionCounter >= sessionsBeforeLongBreak && areLongBreaksEnabled) {
+                    limitMs = longBreakDuration * 60_000L;
+                } else {
+                    limitMs = breakDuration * 60_000L;
+                }
+            } else {
+                limitMs = workDuration * 60_000L;
+            }
+
+            long endTime = System.currentTimeMillis() + limitMs;
+            sharedPreferences.edit()
+                .putBoolean(Constants.IS_TIMER_RUNNING, true)
+                .putLong(Constants.TIMER_END_TIME, endTime)
+                .putLong(Constants.CURRENT_TIME_LIMIT, limitMs)
+                .apply();
+
+            Intent startService = new Intent(context, PomodoroService.class);
             context.startService(startService);
         });
     }
