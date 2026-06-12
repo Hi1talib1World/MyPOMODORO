@@ -113,37 +113,37 @@ public interface PomodoroDao {
     void updateCompletedWorks(int completedWorks, int id);
 
     @Query("UPDATE Pomodoro SET CompletedWorkTime = :completedWorkTime WHERE ID = :id")
-    void updateCompletedWorkTime(int completedWorkTime, int id);
+    void updateCompletedWorkTime(long completedWorkTime, int id);
 
     @Query("UPDATE Pomodoro SET IncompleteWorks = :incompleteWorks WHERE ID = :id")
     void updateIncompleteWorks(int incompleteWorks, int id);
 
     @Query("UPDATE Pomodoro SET IncompleteWorkTime = :incompleteWorkTime WHERE ID = :id")
-    void updateIncompleteWorkTime(int incompleteWorkTime, int id);
+    void updateIncompleteWorkTime(long incompleteWorkTime, int id);
 
     @Query("UPDATE Pomodoro SET Breaks = :breaks WHERE ID = :id")
     void updateBreaks(int breaks, int id);
 
     @Query("UPDATE Pomodoro SET BreakTime = :BreakTime WHERE ID = :id")
-    void updateBreakTime(int BreakTime, int id);
+    void updateBreakTime(long BreakTime, int id);
 
     @Query("SELECT CompletedWorks FROM Pomodoro WHERE ID = :id")
     int getCompletedWorks(int id);
 
     @Query("SELECT CompletedWorkTime FROM Pomodoro WHERE ID = :id")
-    int getCompletedWorkTime(int id);
+    long getCompletedWorkTime(int id);
 
     @Query("SELECT IncompleteWorks FROM Pomodoro WHERE ID = :id")
     int getIncompleteWorks(int id);
 
     @Query("SELECT IncompleteWorkTime FROM Pomodoro WHERE ID = :id")
-    int getIncompleteWorkTime(int id);
+    long getIncompleteWorkTime(int id);
 
     @Query("SELECT Breaks FROM Pomodoro WHERE ID = :id")
     int getBreaks(int id);
 
     @Query("SELECT BreakTime FROM Pomodoro WHERE ID = :id")
-    int getBreakTime(int id);
+    long getBreakTime(int id);
 
     @Query("SELECT SUM(CompletedWorks) FROM Pomodoro WHERE ActivityId IN(:activityId)")
     int getTotalCompletedWorks(int[] activityId);
