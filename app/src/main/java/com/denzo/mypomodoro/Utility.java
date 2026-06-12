@@ -109,32 +109,7 @@ public final class Utility {
         long seconds = TimeUnit.MILLISECONDS.toSeconds(milliseconds) -
                 TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(milliseconds));
 
-        if (milliseconds == 0) {
-            return "0h";
-        }
-
-        if (minutes == 0 && hours == 0) {
-            return String.format("%ds", seconds);
-        }
-
-        if (seconds > 0) {
-            minutes++;
-        }
-
-        if (minutes == 60) {
-            minutes = 0;
-            hours++;
-        }
-
-        if (hours > 0 && minutes == 0 || hours > 9) {
-            return String.format("%dh", hours);
-        }
-
-        if (hours > 0) {
-            return String.format("%dh %dm", hours, minutes);
-        }
-
-        return String.format("%dm", minutes);
+        return String.format("%dh %dmin %dsec", hours, minutes, seconds).replace(" ", "");
     }
 
     @SuppressLint("DefaultLocale")
@@ -181,7 +156,7 @@ public final class Utility {
         return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 
-    public static void updateDatabaseBreaks(Context context, int time, int activityId) {
+    public static void updateDatabaseBreaks(Context context, long time, int activityId) {
         PomodoroDao pomodoroDao = Database.getInstance(context).pomodoroDao();
 
         String currentDate = LocalDate.now().toString();
@@ -198,7 +173,7 @@ public final class Utility {
         });
     }
 
-    public static void updateDatabaseCompletedWorks(Context context, int time, int activityId) {
+    public static void updateDatabaseCompletedWorks(Context context, long time, int activityId) {
         PomodoroDao pomodoroDao = Database.getInstance(context).pomodoroDao();
 
         String currentDate = LocalDate.now().toString();
@@ -215,7 +190,7 @@ public final class Utility {
         });
     }
 
-    public static void updateDatabaseIncompleteWorks(Context context, int time, int activityId) {
+    public static void updateDatabaseIncompleteWorks(Context context, long time, int activityId) {
         PomodoroDao pomodoroDao = Database.getInstance(context).pomodoroDao();
 
         String currentDate = LocalDate.now().toString();
@@ -228,6 +203,54 @@ public final class Utility {
             } else {
                 pomodoroDao.updateIncompleteWorks(pomodoroDao.getIncompleteWorks(pomodoroId) + 1, pomodoroId);
                 pomodoroDao.updateIncompleteWorkTime(pomodoroDao.getIncompleteWorkTime(pomodoroId) + time, pomodoroId);
+            }
+        });
+    }
+
+    public static void updateDatabaseBreakTimeOnly(Context context, long timeMs, int activityId) {
+        PomodoroDao pomodoroDao = Database.getInstance(context).pomodoroDao();
+        String currentDate = LocalDate.now().toString();
+        Database.databaseExecutor.execute(() -> {
+            int pomodoroId = pomodoroDao.getId(currentDate, activityId);
+            if (pomodoroId == 0) {
+                pomodoroDao.insertPomodoro(new Pomodoro(currentDate, 0, 0, 0, 0, 0, timeMs, activityId));
+            } else {
+                pomodoroDao.updateBreakTime(pomodoroDao.getBreakTime(pomodoroId) + timeMs, pomodoroId);
+            }
+        });
+    }
+
+    public static void updateDatabaseWorkTimeOnly(Context context, long timeMs, int activityId) {
+        PomodoroDao pomodoroDao = Database.getInstance(context).pomodoroDao();
+        String currentDate = LocalDate.now().toString();
+        Database.databaseExecutor.execute(() -> {
+            int pomodoroId = pomodoroDao.getId(currentDate, activityId);
+            if (pomodoroId == 0) {
+                pomodoroDao.insertPomodoro(new Pomodoro(currentDate, 0, timeMs, 0, 0, 0, 0, activityId));
+            } else {
+                pomodoroDao.updateCompletedWorkTime(pomodoroDao.getCompletedWorkTime(pomodoroId) + timeMs, pomodoroId);
+            }
+        });
+    }
+
+    public static void updateDatabaseBreaksCount(Context context, int activityId) {
+        PomodoroDao pomodoroDao = Database.getInstance(context).pomodoroDao();
+        String currentDate = LocalDate.now().toString();
+        Database.databaseExecutor.execute(() -> {
+            int pomodoroId = pomodoroDao.getId(currentDate, activityId);
+            if (pomodoroId != 0) {
+                pomodoroDao.updateBreaks(pomodoroDao.getBreaks(pomodoroId) + 1, pomodoroId);
+            }
+        });
+    }
+
+    public static void updateDatabaseCompletedWorksCount(Context context, int activityId) {
+        PomodoroDao pomodoroDao = Database.getInstance(context).pomodoroDao();
+        String currentDate = LocalDate.now().toString();
+        Database.databaseExecutor.execute(() -> {
+            int pomodoroId = pomodoroDao.getId(currentDate, activityId);
+            if (pomodoroId != 0) {
+                pomodoroDao.updateCompletedWorks(pomodoroDao.getCompletedWorks(pomodoroId) + 1, pomodoroId);
             }
         });
     }
