@@ -100,20 +100,22 @@ public class StatsFragment extends Fragment {
                 barEntries.add(new BarEntry(6 - i, value));
             }
 
-            if (getActivity() != null) {
+            if (isAdded() && getActivity() != null) {
                 getActivity().runOnUiThread(() -> {
-                    totalFocusTimeText.setText(timeStr);
-                    totalSessionsText.setText(String.valueOf(totalSessions));
-                    dailyStreakText.setText(getString(R.string.days_unit, streak));
+                    if (getContext() != null) {
+                        totalFocusTimeText.setText(timeStr);
+                        totalSessionsText.setText(String.valueOf(totalSessions));
+                        dailyStreakText.setText(getString(R.string.days_unit, streak));
 
-                    BarDataSet barDataSet = new BarDataSet(barEntries, "Focus Minutes");
-                    barDataSet.setColor(getResources().getColor(R.color.brand_yellow));
-                    barDataSet.setDrawValues(false);
+                        BarDataSet barDataSet = new BarDataSet(barEntries, "Focus Minutes");
+                        barDataSet.setColor(getResources().getColor(R.color.brand_yellow));
+                        barDataSet.setDrawValues(false);
 
-                    BarData barData = new BarData(barDataSet);
-                    barData.setBarWidth(0.5f);
-                    focusBarChart.setData(barData);
-                    focusBarChart.invalidate();
+                        BarData barData = new BarData(barDataSet);
+                        barData.setBarWidth(0.5f);
+                        focusBarChart.setData(barData);
+                        focusBarChart.invalidate();
+                    }
                 });
             }
         });
