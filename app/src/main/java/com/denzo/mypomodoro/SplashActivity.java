@@ -13,6 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -41,10 +42,14 @@ public class SplashActivity extends AppCompatActivity {
             progressBar.startAnimation(fadeIn);
         }
 
-        // Delay before navigating to MainActivity
+        // Delay before navigating
         createNotificationChannels();
         new Handler().postDelayed(() -> {
-            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+            boolean isFirstRunCompleted = PreferenceManager.getDefaultSharedPreferences(this)
+                    .getBoolean(OnboardingActivity.PREF_FIRST_RUN_COMPLETED, false);
+
+            Class<?> targetActivity = isFirstRunCompleted ? MainActivity.class : OnboardingActivity.class;
+            Intent intent = new Intent(SplashActivity.this, targetActivity);
             startActivity(intent);
             finish(); // Close splash screen
         }, SPLASH_DELAY);
