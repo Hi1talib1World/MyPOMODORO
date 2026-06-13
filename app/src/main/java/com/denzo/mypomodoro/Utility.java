@@ -89,7 +89,7 @@ public final class Utility {
     }
 
     @SuppressLint("DefaultLocale")
-    static String formatTime(long milliseconds) {
+    public static String formatTime(long milliseconds) {
         // I'm adding 999 milliseconds so that the timer doesn't end one second after 00:00, but
         // exactly when 00:00 strikes. Adding exactly 1000 milliseconds makes the timer show one
         // second more when it's not started.
