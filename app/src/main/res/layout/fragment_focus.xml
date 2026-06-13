@@ -2,23 +2,24 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/focus_scroll_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:background="#24395B">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/focus_layout"
+        android:id="@+id/focus_layout_inner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="100dp">
+        android:paddingBottom="200dp">
 
         <!-- Top Margin and Mode Toggle -->
         <com.google.android.material.button.MaterialButtonToggleGroup
             android:id="@+id/toggleGroup"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="64dp"
             android:layout_marginHorizontal="24dp"
             app:checkedButton="@+id/btn_focus"
             app:layout_constraintEnd_toEndOf="parent"
@@ -63,7 +64,7 @@
             android:id="@+id/timer_container"
             android:layout_width="320dp"
             android:layout_height="320dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="64dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toggleGroup">
@@ -73,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                app:indicatorSize="300dp"
+                app:indicatorSize="280dp"
                 app:trackThickness="12dp"
                 app:indicatorColor="#FDFE97"
                 app:trackColor="#3A4D6E"
@@ -88,7 +89,7 @@
                 android:layout_gravity="center"
                 android:text="25:00"
                 android:textColor="#FDFE97"
-                android:textSize="80sp"
+                android:textSize="72sp"
                 android:fontFamily="sans-serif-light" />
         </FrameLayout>
 
@@ -160,7 +161,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Session Finished!"
-            android:textColor="@color/brand_yellow"
+            android:textColor="#FDFE97"
             android:textSize="16sp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
