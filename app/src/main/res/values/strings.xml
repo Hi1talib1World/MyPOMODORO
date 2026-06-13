@@ -138,6 +138,17 @@
     <string name="bit">FocusPomodoro helps you boost productivity using the Pomodoro Technique. Work in focused 25-minute intervals with short breaks.</string>
     <string name="rate_the_app">Rate the App</string>
 
+    <string name="onboarding_skip">SKIP</string>
+    <string name="onboarding_next">NEXT</string>
+    <string name="onboarding_back">BACK</string>
+    <string name="onboarding_get_started">GET STARTED</string>
+    <string name="onboarding_step1_title">Welcome to MyPOMODORO</string>
+    <string name="onboarding_step1_desc">Master your productivity with the scientifically proven Pomodoro technique.</string>
+    <string name="onboarding_step2_title">Focus &amp; Break</string>
+    <string name="onboarding_step2_desc">Work for 25 minutes, then take a short 5-minute break. Repeat to maintain peak performance.</string>
+    <string name="onboarding_step3_title">Track Progress</string>
+    <string name="onboarding_step3_desc">Visualize your daily achievements and keep your streak alive.</string>
+
     <string-array name="history_spinner">
         <item>@string/days</item>
         <item>@string/weeks</item>
