@@ -50,10 +50,12 @@ public class TasksFragment extends Fragment {
     private void loadActivities() {
         Database.databaseExecutor.execute(() -> {
             List<Activity> activityList = database.activityDao().getAll();
-            if (getActivity() != null) {
+            if (isAdded() && getActivity() != null) {
                 getActivity().runOnUiThread(() -> {
-                    adapter = new ActivitiesAdapter(requireContext(), activityList);
-                    recyclerView.setAdapter(adapter);
+                    if (getContext() != null) {
+                        adapter = new ActivitiesAdapter(getContext(), activityList);
+                        recyclerView.setAdapter(adapter);
+                    }
                 });
             }
         });
