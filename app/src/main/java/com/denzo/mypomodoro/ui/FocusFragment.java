@@ -6,13 +6,14 @@ import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +25,8 @@ import com.denzo.mypomodoro.Constants;
 import com.denzo.mypomodoro.NewBlockDialogFragment;
 import com.denzo.mypomodoro.PomodoroService;
 import com.denzo.mypomodoro.R;
+import com.denzo.mypomodoro.TimerStateManager;
+import com.denzo.mypomodoro.Utility;
 import com.denzo.mypomodoro.database.Activity;
 import com.denzo.mypomodoro.database.Database;
 import com.google.android.material.button.MaterialButtonToggleGroup;
@@ -31,54 +34,215 @@ import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
+/**
+ * Pillar 3: Reactive UI & Interaction Interlocking.
+ */
 public class FocusFragment extends Fragment implements View.OnClickListener {
 
-    private long workTimeMs;
-    private long shortBreakTimeMs;
-    private long longBreakTimeMs;
-    private long currentTimeLimitMs;
-    private long timeCountInMilliSeconds;
-
-    private enum TimerStatus {
-        STARTED,
-        STOPPED
-    }
-
-    private enum TimerMode {
-        FOCUS,
-        SHORT_BREAK,
-        LONG_BREAK
-    }
-
-    private TimerMode currentMode = TimerMode.FOCUS;
-    private TimerStatus timerStatus = TimerStatus.STOPPED;
-    private int currentActivityId;
     private CircularProgressIndicator progressBarCircle;
     private TextView textViewTime;
     private TextView activityLabelButton;
     private TextView todayPomosCount;
-    private List<Activity> activityList;
-    private View imageViewReset;
+    private TextView sessionsTodayLabel;
     private Button imageViewStartStop;
+    private com.google.android.material.button.MaterialButton imageViewReset;
     private MaterialButtonToggleGroup toggleGroup;
-    private CountDownTimer countDownTimer;
     private TextView finishMessage;
+    private View scrollRoot;
+    
+    private List<Activity> activityList;
+    private TimerStateManager stateManager;
+    private final Handler frameHandler = new Handler(Looper.getMainLooper());
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_focus, container, false);
 
+        stateManager = TimerStateManager.getInstance(requireContext());
         initViews(view);
         initListeners();
-        setupToggleGroup(view);
-
-        loadTimerSettings();
+        
+        // Pillar 1 & 3: Observe persistent state SSOT
+        stateManager.getState().observe(getViewLifecycleOwner(), this::applyStateToUI);
+        
         loadRealStats();
+        loadCurrentActivity();
 
         return view;
+    }
+
+    private void initViews(View view) {
+        scrollRoot = view.findViewById(R.id.focus_scroll_root);
+        progressBarCircle = view.findViewById(R.id.progressBarCircle);
+        textViewTime = view.findViewById(R.id.textViewTime);
+        activityLabelButton = view.findViewById(R.id.activity_label_button);
+        todayPomosCount = view.findViewById(R.id.today_pomos_count);
+        
+        // Find label to change color too
+        View statsSummary = view.findViewById(R.id.stats_summary);
+        if (statsSummary instanceof ViewGroup) {
+            ViewGroup group = (ViewGroup) statsSummary;
+            for (int i = 0; i < group.getChildCount(); i++) {
+                View child = group.getChildAt(i);
+                if (child instanceof TextView && child != todayPomosCount) {
+                    sessionsTodayLabel = (TextView) child;
+                    break;
+                }
+            }
+        }
+
+        imageViewReset = view.findViewById(R.id.Reset);
+        imageViewStartStop = view.findViewById(R.id.imageViewStartStop);
+        finishMessage = view.findViewById(R.id.finishMessage);
+        toggleGroup = view.findViewById(R.id.toggleGroup);
+    }
+
+    private void initListeners() {
+        if (imageViewReset != null) imageViewReset.setOnClickListener(this);
+        if (imageViewStartStop != null) imageViewStartStop.setOnClickListener(this);
+        
+        if (toggleGroup != null) {
+            toggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+                if (isChecked && !stateManager.getCurrentState().isRunning) {
+                    boolean isBreak = checkedId != R.id.btn_focus;
+                    updateModeInState(isBreak);
+                }
+            });
+        }
+    }
+
+    private void applyStateToUI(TimerStateManager.TimerState state) {
+        // Interlocking: Disable mode toggle while running
+        if (toggleGroup != null) {
+            toggleGroup.setEnabled(!state.isRunning);
+            toggleGroup.setAlpha(state.isRunning ? 0.5f : 1.0f);
+            
+            // Sync toggle group selection
+            int targetId = state.isBreak ? R.id.btn_short_break : R.id.btn_focus;
+            if (toggleGroup.getCheckedButtonId() != targetId) {
+                toggleGroup.check(targetId);
+            }
+        }
+
+        // Color Switching: Trigger ONLY when session is running
+        // Idle is always brand Dark Blue
+        boolean isRunningBreak = state.isRunning && state.isBreak;
+        
+        int bgColor = isRunningBreak ? 0xFFFDFE97 : 0xFF24395B; // Yellow if running break, otherwise Blue
+        int textColor = isRunningBreak ? 0xFF24395B : 0xFFFDFE97; // Blue if running break, otherwise Yellow
+        int secondaryText = isRunningBreak ? 0xFF3A4D6E : 0xFFA0B0D0;
+        
+        if (scrollRoot != null) scrollRoot.setBackgroundColor(bgColor);
+        if (textViewTime != null) textViewTime.setTextColor(textColor);
+        if (todayPomosCount != null) todayPomosCount.setTextColor(textColor);
+        if (sessionsTodayLabel != null) sessionsTodayLabel.setTextColor(secondaryText);
+        
+        if (imageViewReset != null) {
+            imageViewReset.setTextColor(isRunningBreak ? 0xFF24395B : 0xFFFFFFFF);
+            imageViewReset.setIconTint(android.content.res.ColorStateList.valueOf(isRunningBreak ? 0xFF24395B : 0xFFFFFFFF));
+        }
+
+        if (progressBarCircle != null) {
+            progressBarCircle.setIndicatorColor(textColor);
+            progressBarCircle.setTrackColor(isRunningBreak ? 0xFFE0E0E0 : 0xFF3A4D6E);
+        }
+
+        imageViewStartStop.setText(state.isRunning ? "PAUSE" : "START SESSION");
+
+        if (state.isRunning) {
+            startLocalTimerLoop();
+        } else {
+            stopLocalTimerLoop();
+            long remaining = state.endTime; // Paused state stores remaining ms in endTime
+            textViewTime.setText(Utility.formatTime(remaining));
+            updateProgress(remaining, state.totalLimitMs);
+        }
+    }
+
+    private final Runnable timerRunnable = new Runnable() {
+        @Override
+        public void run() {
+            TimerStateManager.TimerState state = stateManager.getCurrentState();
+            if (!state.isRunning) return;
+
+            long remaining = state.endTime - System.currentTimeMillis();
+            if (remaining > 0) {
+                textViewTime.setText(Utility.formatTime(remaining));
+                updateProgress(remaining, state.totalLimitMs);
+                frameHandler.postDelayed(this, 500);
+            } else {
+                // Service handles completion logic, UI just observes
+                loadRealStats();
+            }
+        }
+    };
+
+    private void updateProgress(long remaining, long total) {
+        int progress = (int) ((remaining * 1000) / total);
+        progressBarCircle.setProgress(progress);
+    }
+
+    private void startLocalTimerLoop() {
+        frameHandler.removeCallbacks(timerRunnable);
+        frameHandler.post(timerRunnable);
+    }
+
+    private void stopLocalTimerLoop() {
+        frameHandler.removeCallbacks(timerRunnable);
+    }
+
+    private void updateModeInState(boolean isBreak) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
+        int workDur = prefs.getInt(Constants.WORK_DURATION_SETTING, 25);
+        int breakDur = prefs.getInt(Constants.BREAK_DURATION_SETTING, 5);
+        
+        // Force fix if stuck at 48 (or other values)
+        if (!isBreak && workDur > 60) workDur = 25; 
+        
+        long limit = (isBreak ? breakDur : workDur) * 60000L;
+        
+        TimerStateManager.TimerState newState = new TimerStateManager.TimerState(false, limit, limit, isBreak);
+        stateManager.commitState(newState);
+    }
+
+    private void startStop() {
+        TimerStateManager.TimerState current = stateManager.getCurrentState();
+        TimerStateManager.TimerState newState;
+        
+        if (current.isRunning) {
+            long remaining = current.endTime - System.currentTimeMillis();
+            newState = new TimerStateManager.TimerState(false, remaining, current.totalLimitMs, current.isBreak);
+            if (stateManager.commitState(newState)) {
+                requireContext().stopService(new Intent(requireContext(), PomodoroService.class));
+            } else {
+                showRollbackError();
+            }
+        } else {
+            long remaining = current.endTime > 0 ? current.endTime : current.totalLimitMs;
+            long targetEndTime = System.currentTimeMillis() + remaining;
+            newState = new TimerStateManager.TimerState(true, targetEndTime, current.totalLimitMs, current.isBreak);
+            if (stateManager.commitState(newState)) {
+                Intent serviceIntent = new Intent(requireContext(), PomodoroService.class);
+                requireContext().startService(serviceIntent);
+            } else {
+                showRollbackError();
+            }
+        }
+    }
+
+    private void reset() {
+        TimerStateManager.TimerState current = stateManager.getCurrentState();
+        TimerStateManager.TimerState newState = new TimerStateManager.TimerState(false, current.totalLimitMs, current.totalLimitMs, current.isBreak);
+        if (stateManager.commitState(newState)) {
+            requireContext().stopService(new Intent(requireContext(), PomodoroService.class));
+            if (finishMessage != null) finishMessage.setVisibility(View.GONE);
+        }
+    }
+
+    private void showRollbackError() {
+        Toast.makeText(requireContext(), "Sync Error: Hardware rollback initiated.", Toast.LENGTH_SHORT).show();
     }
 
     private void loadRealStats() {
@@ -88,96 +252,37 @@ public class FocusFragment extends Fragment implements View.OnClickListener {
             int todaySessions = db.pomodoroDao().getCompletedWorksForDate(LocalDate.now().toString(), 
                 db.activityDao().getIdsToShow());
             
-            if (getActivity() != null) {
-                getActivity().runOnUiThread(() -> {
-                    if (todayPomosCount != null) {
-                        todayPomosCount.setText(String.valueOf(todaySessions));
-                    }
-                });
-            }
+            Handler mainHandler = new Handler(Looper.getMainLooper());
+            mainHandler.post(() -> {
+                if (todayPomosCount != null) {
+                    todayPomosCount.setText(String.valueOf(todaySessions));
+                }
+            });
         });
     }
 
-    private void initViews(View view) {
-        progressBarCircle = view.findViewById(R.id.progressBarCircle);
-        textViewTime = view.findViewById(R.id.textViewTime);
-        activityLabelButton = view.findViewById(R.id.activity_label_button);
-        todayPomosCount = view.findViewById(R.id.today_pomos_count);
-        imageViewReset = view.findViewById(R.id.Reset);
-        imageViewStartStop = view.findViewById(R.id.imageViewStartStop);
-        finishMessage = view.findViewById(R.id.finishMessage);
-    }
-
-    private void initListeners() {
-        if (imageViewReset != null) imageViewReset.setOnClickListener(this);
-        if (imageViewStartStop != null) imageViewStartStop.setOnClickListener(this);
-    }
-
-    private void setupToggleGroup(View view) {
-        toggleGroup = view.findViewById(R.id.toggleGroup);
-        if (toggleGroup != null) {
-            toggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
-                if (isChecked) {
-                    if (checkedId == R.id.btn_focus) {
-                        setTimerMode(TimerMode.FOCUS);
-                    } else if (checkedId == R.id.btn_short_break) {
-                        setTimerMode(TimerMode.SHORT_BREAK);
-                    } else if (checkedId == R.id.btn_long_break) {
-                        setTimerMode(TimerMode.LONG_BREAK);
-                    }
-                }
-            });
-        }
-    }
-
-    private void setTimerMode(TimerMode mode) {
-        currentMode = mode;
-        stopCountDownTimer();
-        timerStatus = TimerStatus.STOPPED;
-        if (imageViewStartStop != null) imageViewStartStop.setText("START SESSION");
-        loadTimerSettings();
-    }
-
-    private void loadTimerSettings() {
+    private void loadCurrentActivity() {
         if (!isAdded()) return;
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
-        
-        switch (currentMode) {
-            case FOCUS:
-                workTimeMs = prefs.getInt(Constants.WORK_DURATION_SETTING, 25) * 60 * 1000L;
-                currentTimeLimitMs = workTimeMs;
-                break;
-            case SHORT_BREAK:
-                shortBreakTimeMs = prefs.getInt(Constants.BREAK_DURATION_SETTING, 5) * 60 * 1000L;
-                currentTimeLimitMs = shortBreakTimeMs;
-                break;
-            case LONG_BREAK:
-                longBreakTimeMs = prefs.getInt(Constants.LONG_BREAK_DURATION_SETTING, 20) * 60 * 1000L;
-                currentTimeLimitMs = longBreakTimeMs;
-                break;
-        }
-
-        currentActivityId = prefs.getInt(Constants.CURRENT_ACTIVITY_ID, 1);
-        final int activityId = currentActivityId;
+        int activityId = prefs.getInt(Constants.CURRENT_ACTIVITY_ID, 1);
         
         Database.databaseExecutor.execute(() -> {
             Database db = Database.getInstance(requireContext());
             activityList = db.activityDao().getAll();
             
-            Activity currentActivity = null;
+            Activity current = null;
             for (Activity a : activityList) {
                 if (a.getId() == activityId) {
-                    currentActivity = a;
+                    current = a;
                     break;
                 }
             }
             
-            final Activity finalActivity = currentActivity;
-            if (getActivity() != null) {
+            final Activity finalActivity = current;
+            if (isAdded() && getActivity() != null) {
                 getActivity().runOnUiThread(() -> {
                     if (finalActivity != null && activityLabelButton != null) {
                         activityLabelButton.setText(finalActivity.getName());
-                        
                         View view = getView();
                         if (view != null) {
                             com.google.android.material.chip.Chip typeChip = view.findViewById(R.id.chip_type);
@@ -185,21 +290,15 @@ public class FocusFragment extends Fragment implements View.OnClickListener {
                             if (typeChip != null) typeChip.setText(finalActivity.getTaskType());
                             if (projectChip != null) projectChip.setText(finalActivity.getProjectName());
                         }
-                        
                         activityLabelButton.setOnClickListener(v -> showActivitySelectionDialog());
                     }
                 });
             }
         });
-
-        if (timerStatus == TimerStatus.STOPPED) {
-            timeCountInMilliSeconds = currentTimeLimitMs;
-            textViewTime.setText(hmsTimeFormatter(timeCountInMilliSeconds));
-            setProgressBarValues();
-        }
     }
 
     private void showActivitySelectionDialog() {
+        if (activityList == null) return;
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Select or Add Activity");
 
@@ -216,16 +315,15 @@ public class FocusFragment extends Fragment implements View.OnClickListener {
                 Activity selected = activityList.get(which);
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
                 prefs.edit().putInt(Constants.CURRENT_ACTIVITY_ID, selected.getId()).apply();
-                loadTimerSettings();
+                loadCurrentActivity();
             }
         });
-
         builder.show();
     }
 
     private void showAddActivityDialog() {
         NewBlockDialogFragment dialog = new NewBlockDialogFragment();
-        dialog.setOnActivityAddedListener(this::loadTimerSettings);
+        dialog.setOnActivityAddedListener(this::loadCurrentActivity);
         dialog.show(getParentFragmentManager(), "NewBlockDialog");
     }
 
@@ -242,139 +340,6 @@ public class FocusFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        syncWithRunningTimer();
-    }
-
-    private void syncWithRunningTimer() {
-        if (!isAdded()) return;
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
-        boolean isRunning = prefs.getBoolean(Constants.IS_TIMER_RUNNING, false);
-        
-        if (isRunning) {
-            long endTime = prefs.getLong(Constants.TIMER_END_TIME, 0);
-            currentTimeLimitMs = prefs.getLong(Constants.CURRENT_TIME_LIMIT, workTimeMs);
-            long now = System.currentTimeMillis();
-            long remaining = endTime - now;
-            
-            if (remaining > 0) {
-                timeCountInMilliSeconds = remaining;
-                timerStatus = TimerStatus.STARTED;
-                if (imageViewStartStop != null) imageViewStartStop.setText("PAUSE");
-
-                startCountDownTimer();
-            } else {
-                // Timer finished while app was closed
-                prefs.edit().putBoolean(Constants.IS_TIMER_RUNNING, false).apply();
-                reset();
-            }
-        }
-    }
-
-    private void reset() {
-        stopCountDownTimer();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
-        prefs.edit().putBoolean(Constants.IS_TIMER_RUNNING, false).apply();
-        
-        loadTimerSettings();
-        if (imageViewStartStop != null) imageViewStartStop.setText("START SESSION");
-        if (finishMessage != null) finishMessage.setVisibility(View.GONE);
-        timerStatus = TimerStatus.STOPPED;
-    }
-
-    private void startStop() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
-        if (timerStatus == TimerStatus.STOPPED) {
-            setProgressBarValues();
-            if (imageViewStartStop != null) imageViewStartStop.setText("PAUSE");
-            timerStatus = TimerStatus.STARTED;
-            
-            // Save state for persistence
-            long endTime = System.currentTimeMillis() + timeCountInMilliSeconds;
-            prefs.edit()
-                .putBoolean(Constants.IS_TIMER_RUNNING, true)
-                .putLong(Constants.TIMER_END_TIME, endTime)
-                .putLong(Constants.CURRENT_TIME_LIMIT, currentTimeLimitMs)
-                .putBoolean(Constants.IS_BREAK_STATE, currentMode != TimerMode.FOCUS)
-                .apply();
-            
-            startCountDownTimer();
-            startPomodoroService();
-        } else {
-            stopCountDownTimer();
-            if (imageViewStartStop != null) imageViewStartStop.setText("RESUME");
-            timerStatus = TimerStatus.STOPPED;
-            
-            prefs.edit().putBoolean(Constants.IS_TIMER_RUNNING, false).apply();
-        }
-    }
-
-    private void startPomodoroService() {
-        Intent serviceIntent = new Intent(requireContext(), PomodoroService.class);
-        serviceIntent.putExtra("TIME_REMAINING", timeCountInMilliSeconds);
-        requireContext().startService(serviceIntent);
-    }
-
-    private void startCountDownTimer() {
-        countDownTimer = new CountDownTimer(timeCountInMilliSeconds, 100) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                timeCountInMilliSeconds = millisUntilFinished;
-                textViewTime.setText(hmsTimeFormatter(millisUntilFinished));
-                
-                int progress = (int) ((millisUntilFinished * 1000) / currentTimeLimitMs);
-                progressBarCircle.setProgress(progress);
-            }
-
-            @Override
-            public void onFinish() {
-                progressBarCircle.setProgress(0);
-                playSound();
-                finishPomodoroSession();
-                // Delay a bit to let the Service write to DB
-                new Handler().postDelayed(() -> loadRealStats(), 500);
-                reset();
-            }
-        }.start();
-    }
-
-    private void playSound() {
-        try {
-            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            MediaPlayer mp = MediaPlayer.create(requireContext(), notification);
-            if (mp != null) {
-                mp.start();
-                mp.setOnCompletionListener(MediaPlayer::release);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void stopCountDownTimer() {
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-        }
-        Intent serviceIntent = new Intent(requireContext(), PomodoroService.class);
-        requireContext().stopService(serviceIntent);
-    }
-
-    private void finishPomodoroSession() {
-        if (finishMessage != null) finishMessage.setVisibility(View.VISIBLE);
-        new Handler().postDelayed(() -> {
-            if (finishMessage != null) finishMessage.setVisibility(View.GONE);
-        }, 3000);
-    }
-
-    private void setProgressBarValues() {
-        progressBarCircle.setMax(1000);
-        int progress = (int) ((timeCountInMilliSeconds * 1000) / currentTimeLimitMs);
-        progressBarCircle.setProgress(progress);
-    }
-
-    private String hmsTimeFormatter(long milliSeconds) {
-        return String.format("%02d:%02d",
-                TimeUnit.MILLISECONDS.toMinutes(milliSeconds),
-                TimeUnit.MILLISECONDS.toSeconds(milliSeconds) -
-                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(milliSeconds)));
+        loadRealStats();
     }
 }
