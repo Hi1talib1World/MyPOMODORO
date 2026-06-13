@@ -1,19 +1,18 @@
 package com.denzo.mypomodoro;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.DrawableRes;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.preference.PreferenceManager;
@@ -24,11 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Principal UIUX Architect - Onboarding Engine
- * Requirement 1: First-Run Guard & Session Persistence
- * Requirement 2: State-Driven Step Engine
- * Requirement 3: Micro-Feedback & Navigation Guards
- * Requirement 4: Structural Data Strategy
+ * Principal UIUX Architect - Production-Ready Onboarding Engine.
+ * 
+ * Requirement 1: First-Run Guard & Session Persistence.
+ * Requirement 2: State-Driven Step Engine & UI Passive Observables.
+ * Requirement 3: Micro-Feedback, Step Locks, & Guarded Animations.
+ * Requirement 4: Structural Data Strategy & Payload Separation.
  */
 public class OnboardingActivity extends AppCompatActivity {
 
@@ -52,7 +52,7 @@ public class OnboardingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        // Requirement 1: Boot-time Interception
+        // Requirement 1: On-Launch Interception (Guard)
         if (isFirstRunCompleted()) {
             navigateToMain();
             return;
@@ -70,7 +70,7 @@ public class OnboardingActivity extends AppCompatActivity {
     }
 
     private void completeOnboarding() {
-        // Requirement 1: Permanent Dismissal (Asynchronous Disk Commit)
+        // Requirement 1: Permanent Dismissal & Async Disk Commit
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.edit().putBoolean(PREF_FIRST_RUN_COMPLETED, true).apply();
         navigateToMain();
@@ -83,24 +83,24 @@ public class OnboardingActivity extends AppCompatActivity {
     }
 
     private void initializeData() {
-        // Requirement 4: Structural Data Strategy & Payload Separation
+        // Requirement 4: Zero Hardcoding - Isolated Content Payload
         steps.add(new OnboardingStep(
-                "Welcome to MyPOMODORO",
-                "Master your productivity with the scientifically proven Pomodoro technique.",
-                R.drawable.logo, // Reusing logo as placeholder
-                0xFF24395B,
-                0xFFFDFE97
-        ));
-        steps.add(new OnboardingStep(
-                "Focus & Break",
-                "Work for 25 minutes, then take a short 5-minute break. Repeat to maintain peak performance.",
+                R.string.onboarding_step1_title,
+                R.string.onboarding_step1_desc,
                 R.drawable.logo,
-                0xFF24395B,
+                0xFF24395B, // Brand Blue
+                0xFFFDFE97  // Brand Yellow
+        ));
+        steps.add(new OnboardingStep(
+                R.string.onboarding_step2_title,
+                R.string.onboarding_step2_desc,
+                R.drawable.logo,
+                0xFF3A4D6E, // Brand Blue Card
                 0xFFFDFE97
         ));
         steps.add(new OnboardingStep(
-                "Track Progress",
-                "Visualize your daily achievements and keep your streak alive.",
+                R.string.onboarding_step3_title,
+                R.string.onboarding_step3_desc,
                 R.drawable.logo,
                 0xFF24395B,
                 0xFFFDFE97
@@ -117,7 +117,7 @@ public class OnboardingActivity extends AppCompatActivity {
         btnSkip = findViewById(R.id.btn_skip);
         btnBack = findViewById(R.id.btn_back);
 
-        // Requirement 2: Event Logic for Next, Back, and Skip
+        // Requirement 2: Explicit Event Logic Handlers
         btnNext.setOnClickListener(v -> handleNext());
         btnSkip.setOnClickListener(v -> completeOnboarding());
         btnBack.setOnClickListener(v -> handleBack());
@@ -129,10 +129,10 @@ public class OnboardingActivity extends AppCompatActivity {
         dotIndicatorContainer.removeAllViews();
         for (int i = 0; i < steps.size(); i++) {
             View dot = new View(this);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(24, 24);
-            params.setMargins(12, 0, 12, 0);
+            int size = (int) (8 * getResources().getDisplayMetrics().density);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size, size);
+            params.setMargins(size / 2, 0, size / 2, 0);
             dot.setLayoutParams(params);
-            dot.setBackgroundResource(R.drawable.dot_inactive); // Need to create this
             dotIndicatorContainer.addView(dot);
         }
     }
@@ -155,15 +155,15 @@ public class OnboardingActivity extends AppCompatActivity {
     }
 
     private void renderStep(boolean animate) {
-        // Requirement 3: Active Navigation Guards
+        // Requirement 3: Active Navigation Guards (Freeze Input)
         setNavigationEnabled(false);
         isTransitioning = true;
 
         OnboardingStep step = steps.get(currentStepIndex);
 
         if (animate) {
-            // Requirement 3: Guarded Animations (Crossfade)
-            rootLayout.animate().alpha(0.5f).setDuration(250).withEndAction(() -> {
+            // Requirement 3: Elegant Step-to-Step Transitions
+            rootLayout.animate().alpha(0f).setDuration(250).withEndAction(() -> {
                 updateUI(step);
                 rootLayout.animate().alpha(1.0f).setDuration(250).start();
             }).start();
@@ -171,7 +171,7 @@ public class OnboardingActivity extends AppCompatActivity {
             updateUI(step);
         }
 
-        // Requirement 3: Simulated Transition Channel (300ms-500ms)
+        // Requirement 3: 500ms Transition Channel Lock
         transitionHandler.postDelayed(() -> {
             isTransitioning = false;
             setNavigationEnabled(true);
@@ -179,19 +179,23 @@ public class OnboardingActivity extends AppCompatActivity {
     }
 
     private void updateUI(OnboardingStep step) {
-        stepTitle.setText(step.title);
-        stepDescription.setText(step.description);
+        // Requirement 4: Reactive Layout Variable Binding
+        stepTitle.setText(step.titleRes);
+        stepDescription.setText(step.descriptionRes);
         stepImage.setImageResource(step.imageRes);
+        rootLayout.setBackgroundColor(step.backgroundColor);
         
-        // Requirement 2: Button Morphing Contracts
+        // Requirement 2: Button Morphing Contract
         if (currentStepIndex == steps.size() - 1) {
-            btnNext.setText("GET STARTED");
+            btnNext.setText(R.string.onboarding_get_started);
         } else {
-            btnNext.setText("NEXT");
+            btnNext.setText(R.string.onboarding_next);
         }
 
         btnBack.setVisibility(currentStepIndex > 0 ? View.VISIBLE : View.GONE);
         btnSkip.setVisibility(currentStepIndex < steps.size() - 1 ? View.VISIBLE : View.GONE);
+
+        btnNext.setBackgroundTintList(ColorStateList.valueOf(step.accentColor));
 
         updateDots();
     }
@@ -207,22 +211,27 @@ public class OnboardingActivity extends AppCompatActivity {
         btnNext.setEnabled(enabled);
         btnSkip.setEnabled(enabled);
         btnBack.setEnabled(enabled);
-        btnNext.setAlpha(enabled ? 1.0f : 0.5f);
+        // Visual feedback for disabled state
+        float alpha = enabled ? 1.0f : 0.6f;
+        btnNext.setAlpha(alpha);
+        btnSkip.setAlpha(alpha);
+        btnBack.setAlpha(alpha);
     }
 
     /**
-     * Requirement 4: Payload Model
+     * Requirement 4: Immutable Data Model for Payload Separation.
      */
     private static class OnboardingStep {
-        final String title;
-        final String description;
+        @StringRes final int titleRes;
+        @StringRes final int descriptionRes;
         @DrawableRes final int imageRes;
         final int backgroundColor;
         final int accentColor;
 
-        OnboardingStep(String title, String description, int imageRes, int backgroundColor, int accentColor) {
-            this.title = title;
-            this.description = description;
+        OnboardingStep(@StringRes int titleRes, @StringRes int descriptionRes, 
+                       @DrawableRes int imageRes, int backgroundColor, int accentColor) {
+            this.titleRes = titleRes;
+            this.descriptionRes = descriptionRes;
             this.imageRes = imageRes;
             this.backgroundColor = backgroundColor;
             this.accentColor = accentColor;
