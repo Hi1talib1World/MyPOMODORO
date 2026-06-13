@@ -28,12 +28,23 @@ public class TimerStateManager {
     }
 
     private void hydrate() {
-        TimerState snapshot = new TimerState(
-            prefs.getBoolean(Constants.IS_TIMER_RUNNING, false),
-            prefs.getLong(Constants.TIMER_END_TIME, 0L),
-            prefs.getLong(Constants.CURRENT_TIME_LIMIT, 1500000L),
-            prefs.getBoolean(Constants.IS_BREAK_STATE, false)
-        );
+        boolean isRunning = prefs.getBoolean(Constants.IS_TIMER_RUNNING, false);
+        long initialTotalLimit = prefs.getLong(Constants.CURRENT_TIME_LIMIT, 1500000L);
+        boolean isBreak = prefs.getBoolean(Constants.IS_BREAK_STATE, false);
+        long endTime = prefs.getLong(Constants.TIMER_END_TIME, initialTotalLimit);
+
+        long finalTotalLimit = initialTotalLimit;
+        long finalEndTime = endTime;
+
+        // Safety: If not running, ensure duration matches current settings
+        if (!isRunning) {
+            int workDur = prefs.getInt(Constants.WORK_DURATION_SETTING, 25);
+            int breakDur = prefs.getInt(Constants.BREAK_DURATION_SETTING, 5);
+            finalTotalLimit = (isBreak ? breakDur : workDur) * 60000L;
+            finalEndTime = finalTotalLimit;
+        }
+
+        TimerState snapshot = new TimerState(isRunning, finalEndTime, finalTotalLimit, isBreak);
         stateStream.postValue(snapshot);
     }
 
