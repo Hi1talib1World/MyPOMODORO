@@ -1,19 +1,14 @@
 package com.denzo.mypomodoro;
 
 import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.os.Build;
-import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.preference.PreferenceManager;
 import android.app.Service;
-import android.content.SharedPreferences;
 import android.widget.RemoteViews;
 import java.util.concurrent.TimeUnit;
 
@@ -21,108 +16,101 @@ public class PomodoroService extends Service {
 
     private static final int NOTIFICATION_ID = 1;
     private CountDownTimer countDownTimer;
-    private long timeRemaining;
     private NotificationManagerCompat notificationManager;
     private RemoteViews remoteViews;
-    private SharedPreferences prefs;
+    private TimerStateManager stateManager;
 
     @Override
     public void onCreate() {
         super.onCreate();
         notificationManager = NotificationManagerCompat.from(this);
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        createNotificationChannel();
+        stateManager = TimerStateManager.getInstance(this);
         remoteViews = new RemoteViews(getPackageName(), R.layout.notification_layout);
-        
-        // Tracking variables for incremental updates
-        lastSaveTime = System.currentTimeMillis();
     }
-
-    private long lastSaveTime;
-    private static final long SAVE_INTERVAL_MS = 60000; // Save every 1 minute
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        long endTime = prefs.getLong(Constants.TIMER_END_TIME, 0);
-        long now = System.currentTimeMillis();
-        timeRemaining = endTime - now;
-        lastSaveTime = now;
-
-        if (timeRemaining <= 0) {
-            stopSelf();
-            return START_NOT_STICKY;
-        }
-
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-        }
-        startCountDown();
+        syncAndStart();
         return START_STICKY;
     }
 
-    private void startCountDown() {
-        countDownTimer = new CountDownTimer(timeRemaining, 1000) {
+    private void syncAndStart() {
+        TimerStateManager.TimerState state = stateManager.getCurrentState();
+        if (!state.isRunning) {
+            stopSelf();
+            return;
+        }
+
+        long now = System.currentTimeMillis();
+        long remaining = state.endTime - now;
+
+        if (remaining <= 0) {
+            handleFinish();
+            return;
+        }
+
+        if (countDownTimer != null) countDownTimer.cancel();
+        
+        countDownTimer = new CountDownTimer(remaining, 1000) {
+            private long lastIncrementalSave = System.currentTimeMillis();
+
             @Override
             public void onTick(long millisUntilFinished) {
-                timeRemaining = millisUntilFinished;
-                updateNotification();
+                updateNotification(millisUntilFinished);
                 PomodoroWidgetProvider.updateAllWidgets(PomodoroService.this);
                 
-                // Incremental save every minute
+                // Pillar 2: Atomic incremental save every minute
                 long now = System.currentTimeMillis();
-                if (now - lastSaveTime >= SAVE_INTERVAL_MS) {
-                    saveIncrementalProgress(now - lastSaveTime);
-                    lastSaveTime = now;
+                if (now - lastIncrementalSave >= 60000) {
+                    saveProgress(now - lastIncrementalSave);
+                    lastIncrementalSave = now;
                 }
             }
 
             @Override
             public void onFinish() {
-                long now = System.currentTimeMillis();
-                saveIncrementalProgress(now - lastSaveTime);
-                
-                timeRemaining = 0;
-                
-                // Mark session as completed (increment session count)
-                int activityId = prefs.getInt(Constants.CURRENT_ACTIVITY_ID, 1);
-                boolean isBreak = prefs.getBoolean(Constants.IS_BREAK_STATE, false);
-                
-                if (isBreak) {
-                    Utility.updateDatabaseBreaksCount(PomodoroService.this, activityId);
-                } else {
-                    Utility.updateDatabaseCompletedWorksCount(PomodoroService.this, activityId);
-                }
-
-                prefs.edit().putBoolean(Constants.IS_TIMER_RUNNING, false).apply();
-                updateNotification();
-                countDownTimer = null;
-                stopSelf();
+                saveProgress(System.currentTimeMillis() - lastIncrementalSave);
+                handleFinish();
             }
         }.start();
 
-        // Start the foreground service with a notification
-        startForeground(NOTIFICATION_ID, buildNotification(formatTime(timeRemaining)));
+        startForeground(NOTIFICATION_ID, buildNotification(formatTime(remaining)));
     }
 
-    private void saveIncrementalProgress(long timeSpentMs) {
-        int activityId = prefs.getInt(Constants.CURRENT_ACTIVITY_ID, 1);
-        boolean isBreak = prefs.getBoolean(Constants.IS_BREAK_STATE, false);
+    private void handleFinish() {
+        TimerStateManager.TimerState current = stateManager.getCurrentState();
+        int activityId = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this)
+                .getInt(Constants.CURRENT_ACTIVITY_ID, 1);
         
-        if (isBreak) {
-            Utility.updateDatabaseBreakTimeOnly(PomodoroService.this, timeSpentMs, activityId);
+        if (current.isBreak) {
+            Utility.updateDatabaseBreaksCount(this, activityId);
         } else {
-            Utility.updateDatabaseWorkTimeOnly(PomodoroService.this, timeSpentMs, activityId);
+            Utility.updateDatabaseCompletedWorksCount(this, activityId);
+        }
+
+        // Commit finished state to SSOT
+        stateManager.commitState(new TimerStateManager.TimerState(false, 0, current.totalLimitMs, current.isBreak));
+        
+        stopSelf();
+    }
+
+    private void saveProgress(long deltaMs) {
+        TimerStateManager.TimerState current = stateManager.getCurrentState();
+        int activityId = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this)
+                .getInt(Constants.CURRENT_ACTIVITY_ID, 1);
+        
+        if (current.isBreak) {
+            Utility.updateDatabaseBreakTimeOnly(this, deltaMs, activityId);
+        } else {
+            Utility.updateDatabaseWorkTimeOnly(this, deltaMs, activityId);
         }
     }
 
     private Notification buildNotification(String text) {
-        boolean isRunning = prefs.getBoolean(Constants.IS_TIMER_RUNNING, false);
-
-        // Create the play and stop button intents
+        TimerStateManager.TimerState state = stateManager.getCurrentState();
+        
         int flags = PendingIntent.FLAG_UPDATE_CURRENT;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            flags |= PendingIntent.FLAG_IMMUTABLE;
-        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) flags |= PendingIntent.FLAG_IMMUTABLE;
 
         Intent playIntent = new Intent(this, PomodoroReceiver.class);
         playIntent.setAction("com.denzo.mypomodoro.PLAY");
@@ -132,13 +120,11 @@ public class PomodoroService extends Service {
         stopIntent.setAction("com.denzo.mypomodoro.STOP");
         PendingIntent stopPendingIntent = PendingIntent.getBroadcast(this, 0, stopIntent, flags);
 
-        // Set the custom view
         remoteViews.setTextViewText(R.id.countdownText, text);
-        remoteViews.setImageViewResource(R.id.playButton, isRunning ? R.drawable.pause : R.drawable.ic_play_button);
+        remoteViews.setImageViewResource(R.id.playButton, state.isRunning ? R.drawable.pause : R.drawable.ic_play_button);
         remoteViews.setOnClickPendingIntent(R.id.playButton, playPendingIntent);
         remoteViews.setOnClickPendingIntent(R.id.stopButton, stopPendingIntent);
 
-        // Build the notification
         return new NotificationCompat.Builder(this, Constants.CHANNEL_TIMER)
                 .setSmallIcon(R.drawable.notification_icon)
                 .setCustomContentView(remoteViews)
@@ -147,42 +133,24 @@ public class PomodoroService extends Service {
                 .setOngoing(true)
                 .setOnlyAlertOnce(true)
                 .setColor(0xFF24395B)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .build();
     }
 
-    private void updateNotification() {
-        String timeFormatted = formatTime(timeRemaining);
-        Notification notification = buildNotification(timeFormatted);
-        
-        startForeground(NOTIFICATION_ID, notification);
+    private void updateNotification(long ms) {
+        startForeground(NOTIFICATION_ID, buildNotification(formatTime(ms)));
     }
 
-    private String formatTime(long milliSeconds) {
-        return String.format("%02d:%02d",
-                TimeUnit.MILLISECONDS.toMinutes(milliSeconds),
-                TimeUnit.MILLISECONDS.toSeconds(milliSeconds) -
-                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(milliSeconds)));
-    }
-
-    private void createNotificationChannel() {
-        // Channels are now created in SplashActivity
+    private String formatTime(long ms) {
+        return String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(ms), 
+                TimeUnit.MILLISECONDS.toSeconds(ms % 60000));
     }
 
     @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
+    public IBinder onBind(Intent intent) { return null; }
 
     @Override
     public void onDestroy() {
+        if (countDownTimer != null) countDownTimer.cancel();
         super.onDestroy();
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-            
-            // Final save on service stop (Pause/App Kill)
-            long now = System.currentTimeMillis();
-            saveIncrementalProgress(now - lastSaveTime);
-        }
     }
 }
