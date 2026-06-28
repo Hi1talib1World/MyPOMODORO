@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/rounded_rectangle"
-    android:backgroundTint="#24395B"
+    android:backgroundTint="@color/brand_blue"
     android:padding="12dp">
 
     <ImageView
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="FOCUS"
-        android:textColor="#A0B0D0"
+        android:textColor="@color/brand_grey"
         android:textSize="10sp"
         android:textStyle="bold"
         android:letterSpacing="0.1"
@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="25:00"
-        android:textColor="#FDFE97"
+        android:textColor="@color/brand_yellow"
         android:textSize="32sp"
         android:fontFamily="sans-serif-light"
         android:layout_centerInParent="true" />
