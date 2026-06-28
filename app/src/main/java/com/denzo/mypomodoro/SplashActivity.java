@@ -73,9 +73,8 @@ public class SplashActivity extends AppCompatActivity {
                 NotificationChannel completedChannel = new NotificationChannel(
                         Constants.CHANNEL_TIMER_COMPLETED,
                         "Timer Completed",
-                        NotificationManager.IMPORTANCE_LOW
+                        NotificationManager.IMPORTANCE_DEFAULT
                 );
-                completedChannel.setSound(null, null);
                 notificationManager.createNotificationChannel(completedChannel);
             }
         }
