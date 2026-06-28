@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Activity Name"
-        app:boxStrokeColor="#FDFE97"
-        app:hintTextColor="#A0B0D0">
+        app:boxStrokeColor="@color/brand_yellow"
+        app:hintTextColor="@color/brand_grey">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_activity_name"
@@ -28,8 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:hint="Task Type (e.g. Deep Work)"
-        app:boxStrokeColor="#FDFE97"
-        app:hintTextColor="#A0B0D0">
+        app:boxStrokeColor="@color/brand_yellow"
+        app:hintTextColor="@color/brand_grey">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_task_type"
@@ -45,8 +45,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:hint="Project Name"
-        app:boxStrokeColor="#FDFE97"
-        app:hintTextColor="#A0B0D0">
+        app:boxStrokeColor="@color/brand_yellow"
+        app:hintTextColor="@color/brand_grey">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_project_name"
@@ -62,8 +62,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:hint="Planned Pomodoros (Sessions)"
-        app:boxStrokeColor="#FDFE97"
-        app:hintTextColor="#A0B0D0">
+        app:boxStrokeColor="@color/brand_yellow"
+        app:hintTextColor="@color/brand_grey">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_planned_pomos"
