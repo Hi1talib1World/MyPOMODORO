@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#24395B">
+    android:background="@color/brand_blue">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/some_constraint_layout"
@@ -34,7 +34,7 @@
                 android:id="@+id/work_duration_summary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#A0B0D0"
+                android:textColor="@color/brand_grey"
                 tools:text="25m" />
         </LinearLayout>
 
@@ -61,7 +61,7 @@
                 android:id="@+id/break_duration_summary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#A0B0D0"
+                android:textColor="@color/brand_grey"
                 tools:text="5m" />
         </LinearLayout>
 
@@ -90,7 +90,7 @@
                 android:id="@+id/long_break_duration_summary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#A0B0D0"
+                android:textColor="@color/brand_grey"
                 tools:text="20m" />
         </LinearLayout>
 
@@ -119,7 +119,7 @@
                 android:id="@+id/sessions_till_long_break_summary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#A0B0D0"
+                android:textColor="@color/brand_grey"
                 tools:text="4" />
         </LinearLayout>
 
@@ -164,7 +164,7 @@
                 android:layout_below="@id/do_not_disturb"
                 android:layout_marginEnd="8dp"
                 android:layout_toStartOf="@+id/do_not_disturb_switch"
-                android:textColor="#A0B0D0"
+                android:textColor="@color/brand_grey"
                 android:text="@string/do_not_disturb_summary" />
 
             <com.google.android.material.materialswitch.MaterialSwitch
@@ -216,7 +216,7 @@
                 android:layout_below="@id/disable_wifi"
                 android:layout_marginEnd="8dp"
                 android:layout_toStartOf="@+id/wifi_switch"
-                android:textColor="#A0B0D0"
+                android:textColor="@color/brand_grey"
                 android:text="@string/disable_wifi_summary" />
 
             <com.google.android.material.materialswitch.MaterialSwitch
