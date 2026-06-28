@@ -52,24 +52,28 @@ public class PomodoroService extends Service {
         if (countDownTimer != null) countDownTimer.cancel();
         
         countDownTimer = new CountDownTimer(remaining, 1000) {
-            private long lastIncrementalSave = System.currentTimeMillis();
-
             @Override
             public void onTick(long millisUntilFinished) {
                 updateNotification(millisUntilFinished);
                 PomodoroWidgetProvider.updateAllWidgets(PomodoroService.this);
                 
-                // Pillar 2: Atomic incremental save every minute
+                // Atomic incremental save every minute
                 long now = System.currentTimeMillis();
-                if (now - lastIncrementalSave >= 60000) {
-                    saveProgress(now - lastIncrementalSave);
-                    lastIncrementalSave = now;
+                TimerStateManager.TimerState current = stateManager.getCurrentState();
+                if (current.isRunning && current.lastSaveTime > 0 && (now - current.lastSaveTime >= 60000)) {
+                    long delta = now - current.lastSaveTime;
+                    saveProgress(delta);
+                    // Update lastSaveTime in SSOT
+                    stateManager.commitState(new TimerStateManager.TimerState(true, current.endTime, current.totalLimitMs, current.isBreak, now));
                 }
             }
 
             @Override
             public void onFinish() {
-                saveProgress(System.currentTimeMillis() - lastIncrementalSave);
+                TimerStateManager.TimerState current = stateManager.getCurrentState();
+                if (current.isRunning && current.lastSaveTime > 0) {
+                    saveProgress(System.currentTimeMillis() - current.lastSaveTime);
+                }
                 handleFinish();
             }
         }.start();
@@ -89,7 +93,15 @@ public class PomodoroService extends Service {
         }
 
         // Commit finished state to SSOT
-        stateManager.commitState(new TimerStateManager.TimerState(false, 0, current.totalLimitMs, current.isBreak));
+        stateManager.commitState(new TimerStateManager.TimerState(false, 0, current.totalLimitMs, current.isBreak, 0L));
+        
+        // Trigger completion alert
+        Intent endIntent = new Intent(this, EndNotificationService.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(endIntent);
+        } else {
+            startService(endIntent);
+        }
         
         stopSelf();
     }
@@ -132,7 +144,7 @@ public class PomodoroService extends Service {
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setOngoing(true)
                 .setOnlyAlertOnce(true)
-                .setColor(0xFF24395B)
+                .setColor(getResources().getColor(R.color.brand_blue))
                 .build();
     }
 
@@ -151,6 +163,14 @@ public class PomodoroService extends Service {
     @Override
     public void onDestroy() {
         if (countDownTimer != null) countDownTimer.cancel();
+        
+        TimerStateManager.TimerState current = stateManager.getCurrentState();
+        if (current.isRunning && current.lastSaveTime > 0) {
+            saveProgress(System.currentTimeMillis() - current.lastSaveTime);
+            // Update state so it doesn't double count if restarted
+            stateManager.commitState(new TimerStateManager.TimerState(true, current.endTime, current.totalLimitMs, current.isBreak, System.currentTimeMillis()));
+        }
+
         super.onDestroy();
     }
 }
