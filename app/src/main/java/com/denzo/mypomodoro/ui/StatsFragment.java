@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.denzo.mypomodoro.R;
 import com.denzo.mypomodoro.Utility;
 import com.denzo.mypomodoro.database.Database;
+import com.denzo.mypomodoro.statistics.activitychart.PieChartItem;
 import com.denzo.mypomodoro.statistics.historychart.HistoryChartItem;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -31,6 +32,7 @@ public class StatsFragment extends Fragment {
     private Database database;
     private BarChart focusBarChart;
     private TextView totalFocusTimeText, totalSessionsText, dailyStreakText;
+    private TextView topActivityNameText, topActivityTimeText;
 
     @Nullable
     @Override
@@ -43,6 +45,9 @@ public class StatsFragment extends Fragment {
         totalSessionsText = view.findViewById(R.id.number_total_sessions_text_view);
         dailyStreakText = view.findViewById(R.id.daily_streak_text_view);
         focusBarChart = view.findViewById(R.id.focus_bar_chart);
+        
+        topActivityNameText = view.findViewById(R.id.top_activity_name);
+        topActivityTimeText = view.findViewById(R.id.top_activity_time);
 
         setupBarChartLook();
         loadData();
@@ -91,6 +96,22 @@ public class StatsFragment extends Fragment {
             // Daily Streak
             int streak = calculateDailyStreak(ids);
 
+            // Top Activity
+            List<PieChartItem> pieItems = database.pomodoroDao().getAllPieChartItems();
+            String topActName = "No Data";
+            String topActTime = "0m";
+            if (pieItems != null && !pieItems.isEmpty()) {
+                PieChartItem top = pieItems.get(0);
+                for (PieChartItem item : pieItems) {
+                    if (item.getTotalTime() > top.getTotalTime()) top = item;
+                }
+                topActName = top.getActivityName();
+                topActTime = Utility.formatStatisticsTime(top.getTotalTime());
+            }
+
+            final String finalTopActName = topActName;
+            final String finalTopActTime = topActTime;
+
             // Bar Chart Last 7 Days
             List<BarEntry> barEntries = new ArrayList<>();
             for (int i = 6; i >= 0; i--) {
@@ -106,6 +127,9 @@ public class StatsFragment extends Fragment {
                         totalFocusTimeText.setText(timeStr);
                         totalSessionsText.setText(String.valueOf(totalSessions));
                         dailyStreakText.setText(getString(R.string.days_unit, streak));
+
+                        if (topActivityNameText != null) topActivityNameText.setText(finalTopActName);
+                        if (topActivityTimeText != null) topActivityTimeText.setText(finalTopActTime + " total");
 
                         BarDataSet barDataSet = new BarDataSet(barEntries, "Focus Minutes");
                         barDataSet.setColor(getResources().getColor(R.color.brand_yellow));
