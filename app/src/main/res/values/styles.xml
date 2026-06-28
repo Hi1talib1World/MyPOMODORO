@@ -10,6 +10,10 @@
         <item name="android:windowBackground">#24395B</item>
         <item name="android:statusBarColor">#24395B</item>
         <item name="android:navigationBarColor">#24395B</item>
+
+        <!-- Global Font -->
+        <item name="android:fontFamily">@font/calsans</item>
+        <item name="fontFamily">@font/calsans</item>
     </style>
 
 
@@ -22,6 +26,10 @@
 
         <item name="android:windowBackground">#24395B</item>
         <item name="colorSurface">#3A4D6E</item>
+
+        <!-- Global Font -->
+        <item name="android:fontFamily">@font/calsans</item>
+        <item name="fontFamily">@font/calsans</item>
     </style>
 
 
@@ -34,6 +42,10 @@
 
         <item name="android:windowBackground">#24395B</item>
         <item name="colorSurface">#3A4D6E</item>
+
+        <!-- Global Font -->
+        <item name="android:fontFamily">@font/calsans</item>
+        <item name="fontFamily">@font/calsans</item>
     </style>
 
     <style name="BottomSheetItem">
@@ -42,6 +54,7 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">15dp</item>
+        <item name="android:fontFamily">@font/calsans</item>
     </style>
 
     <style name="StatsPeriodButton">
@@ -51,10 +64,12 @@
         <item name="android:textColor">#FDFE97</item>
         <item name="android:textSize">14sp</item>
         <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:fontFamily">@font/calsans</item>
     </style>
 
     <style name="RedTimePickerTheme" parent="Theme.Material3.Light.Dialog">
         <item name="colorAccent">#DA1E5B</item>
         <item name="android:windowBackground">#24395B</item>
+        <item name="android:fontFamily">@font/calsans</item>
     </style>
 </resources>
