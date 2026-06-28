@@ -37,7 +37,7 @@ public class TasksFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.activities_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(false);
 
         View addActivity = view.findViewById(R.id.add_activity_button);
         addActivity.setOnClickListener(v -> showAddActivityDialog());
