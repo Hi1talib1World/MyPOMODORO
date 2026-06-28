@@ -4,7 +4,7 @@
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#24395B">
+    android:background="@color/brand_blue">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/main_viewpager"
@@ -17,9 +17,9 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#24395B"
-        app:itemIconTint="#FDFE97"
-        app:itemTextColor="#FDFE97"
+        android:background="@color/brand_blue"
+        app:itemIconTint="@color/brand_yellow"
+        app:itemTextColor="@color/brand_yellow"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_nav_menu" />
