@@ -1,17 +1,17 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 35
+    compileSdkVersion = 35
 
     defaultConfig {
-        applicationId "com.denzo.mypomodoro"
+        applicationId = "com.denzo.mypomodoro"
         minSdkVersion 21
         targetSdkVersion 35
-        versionCode 5
-        versionName "1.0.3"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.debug
-        multiDexEnabled true
+        versionCode = 8
+        versionName = "1.0.4"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig = signingConfigs.debug
+        multiDexEnabled = true
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -22,23 +22,23 @@ android {
 
     compileOptions {
         // Flag to enable support for the new language APIs
-        coreLibraryDesugaringEnabled true
+        coreLibraryDesugaringEnabled = true
 
         // Sets Java compatibility to Java 8
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled = true
+            shrinkResources = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
         debug {
-            applicationIdSuffix ".debug"
-            debuggable true
+            applicationIdSuffix = ".debug"
+            debuggable = true
         }
     }
 
@@ -47,7 +47,7 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
-    namespace 'com.denzo.mypomodoro'
+    namespace = 'com.denzo.mypomodoro'
 
 }
 
