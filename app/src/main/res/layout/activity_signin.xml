@@ -1,79 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
-    android:background="#24395B">
+    android:background="@color/brand_blue"
+    android:clipToPadding="false">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="72dp"
+        android:paddingBottom="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WELCOME BACK"
+            android:textColor="@color/brand_grey"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.1"
+            android:layout_marginBottom="8dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sign In"
-            android:textColor="@color/fab_yellow"
-            android:textSize="24sp"
+            android:textColor="@color/brand_yellow"
+            android:textSize="28sp"
             android:textStyle="bold"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:paddingBottom="20dp"/>
+            android:layout_marginBottom="32dp"/>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:hint="Email"
-            android:textColorHint="@color/white">
+            app:cardBackgroundColor="@color/brand_blue_card"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/signin_email"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:textColor="@color/white" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:orientation="vertical"
+                android:padding="20dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:hint="Password"
-            android:layout_marginTop="10dp"
-            android:textColorHint="@color/white"
-            app:endIconMode="password_toggle">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:hint="Email"
+                    app:boxStrokeColor="@color/brand_yellow"
+                    app:hintTextColor="@color/brand_grey"
+                    android:textColorHint="@color/brand_grey">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/signin_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:textColor="@color/white" />
-        </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/signin_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/white" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/signin_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sign In"
-            app:backgroundTint="@color/fab_yellow"
-            android:textColor="@android:color/black"
-            android:layout_marginTop="20dp"
-            style="@style/Widget.Material3.Button" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:hint="Password"
+                    android:layout_marginTop="16dp"
+                    app:boxStrokeColor="@color/brand_yellow"
+                    app:hintTextColor="@color/brand_grey"
+                    android:textColorHint="@color/brand_grey"
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="@color/brand_grey">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/signin_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:textColor="@color/white" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/signin_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="Sign In"
+                    app:backgroundTint="@color/brand_yellow"
+                    android:textColor="@color/brand_blue"
+                    android:layout_marginTop="24dp"
+                    android:textStyle="bold"
+                    app:cornerRadius="12dp"
+                    style="@style/Widget.Material3.Button" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:id="@+id/signup_redirect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Don't have an account? Sign Up"
-            android:textColor="@color/fab_yellow"
+            android:textColor="@color/brand_yellow"
             android:textSize="14sp"
             android:layout_gravity="center"
-            android:paddingTop="10dp"
-            android:clickable="true"/>
+            android:layout_marginTop="24dp"
+            android:padding="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground"/>
 
     </LinearLayout>
 </ScrollView>
