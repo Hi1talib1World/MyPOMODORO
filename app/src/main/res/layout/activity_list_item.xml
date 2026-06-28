@@ -5,11 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="8dp"
-    app:cardBackgroundColor="#3A4D6E"
-    app:cardCornerRadius="20dp"
-    app:cardElevation="0dp"
-    app:strokeColor="#50668F"
-    app:strokeWidth="1dp">
+    app:cardBackgroundColor="@color/brand_blue_card"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -22,7 +20,7 @@
             android:layout_height="wrap_content"
             android:clickable="false"
             android:focusable="false"
-            android:buttonTint="#FDFE97"
+            android:buttonTint="@color/brand_yellow"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,14 +55,14 @@
                     android:layout_height="14dp"
                     android:src="@drawable/ic_pomodoro"
                     android:contentDescription="Pomodoro Icon"
-                    app:tint="#A0B0D0" />
+                    app:tint="@color/brand_grey" />
 
                 <TextView
                     android:id="@+id/activity_pomos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:textColor="#A0B0D0"
+                    android:textColor="@color/brand_grey"
                     android:textSize="12sp"
                     tools:text="4 POMOS" />
             </LinearLayout>
@@ -80,8 +78,8 @@
                     style="@style/Widget.Material3.Chip.Assist"
                     android:layout_width="wrap_content"
                     android:layout_height="32dp"
-                    android:textColor="#A0B0D0"
-                    app:chipBackgroundColor="#24395B"
+                    android:textColor="@color/brand_grey"
+                    app:chipBackgroundColor="@color/brand_blue"
                     app:chipStrokeWidth="0dp"
                     android:textSize="11sp"
                     tools:text="Deep Work" />
@@ -92,8 +90,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="32dp"
                     android:layout_marginStart="8dp"
-                    android:textColor="#4777C0"
-                    app:chipBackgroundColor="#E1E9FF"
+                    android:textColor="@color/brand_grey"
+                    app:chipBackgroundColor="@color/brand_blue"
                     app:chipStrokeWidth="0dp"
                     android:textSize="11sp"
                     tools:text="Project Alpha" />
@@ -140,7 +138,7 @@
             android:src="@drawable/edit_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="#A0B0D0" />
+            app:tint="@color/brand_grey" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
