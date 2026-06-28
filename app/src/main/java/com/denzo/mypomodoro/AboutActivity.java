@@ -9,13 +9,24 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 public class AboutActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         setContentView(R.layout.activity_about);
+
+        // Handle window insets for edge-to-edge
+        findViewById(R.id.about_scroll_view).setOnApplyWindowInsetsListener((v, insets) -> {
+            WindowInsetsCompat windowInsets = WindowInsetsCompat.toWindowInsetsCompat(insets);
+            v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight(),
+                    windowInsets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom);
+            return insets;
+        });
 
         // Set version number dynamically
         try {
