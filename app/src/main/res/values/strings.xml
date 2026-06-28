@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">MyPOMODORO</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="listEmptyText">
 <![CDATA[
 <p><b>What do you want to do today?</b><br> You can create new ToDo <br>using  + button</p>
@@ -73,9 +71,9 @@
     <string name="disable_wifi_summary">Disables Wi-Fi during work session</string>
     <string name="app_lock">Block applications</string>
     <string name="application_icon">Application Icon</string>
-    <string name="accessibility_service_description">To allow GetFlow to block other Android applications during work session enable this accessibility service.</string>
+    <string name="accessibility_service_description">To allow MyPOMODORO to block other Android applications during work session enable this accessibility service.</string>
     <string name="app_lock_switch_description">Block applications when the work session is on</string>
-    <string name="accessibility_not_enabled_dialog">To allow GetFlow to block other Android applications you need to enable accessibility service.</string>
+    <string name="accessibility_not_enabled_dialog">To allow MyPOMODORO to block other Android applications you need to enable accessibility service.</string>
     <string name="new_activity_name">New activity name</string>
     <string name="OK">OK</string>
     <string name="activity_name">Activity name</string>
