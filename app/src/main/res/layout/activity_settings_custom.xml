@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#24395B">
+    android:background="@color/brand_blue">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,13 +15,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="24dp"
+            android:paddingTop="72dp">
 
             <!-- Header Section -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
-                app:cardBackgroundColor="#3A4D6E"
+                app:cardBackgroundColor="@color/brand_blue_card"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="0dp">
 
@@ -49,7 +50,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="PREFERENCES"
-                            android:textColor="#A0B0D0"
+                            android:textColor="@color/brand_grey"
                             android:textSize="12sp"
                             android:textStyle="bold"
                             android:letterSpacing="0.1" />
@@ -58,7 +59,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Settings"
-                            android:textColor="#FDFE97"
+                            android:textColor="@color/brand_yellow"
                             android:textSize="28sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -71,7 +72,7 @@
                 android:layout_marginTop="32dp"
                 android:letterSpacing="0.1"
                 android:text="TIMER DURATIONS"
-                android:textColor="#A0B0D0"
+                android:textColor="@color/brand_grey"
                 android:textSize="10sp"
                 android:textStyle="bold" />
 
@@ -80,10 +81,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="#3A4D6E"
+                app:cardBackgroundColor="@color/brand_blue_card"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
-                app:strokeColor="#50668F"
+                app:strokeColor="@color/brand_grey"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -103,7 +104,7 @@
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_focus"
                             android:contentDescription="Focus Icon"
-                            app:tint="#FDFE97" />
+                            app:tint="@color/brand_yellow" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -121,13 +122,14 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:background="@drawable/rounded_rectangle"
-                            android:backgroundTint="#24395B"
+                            android:backgroundTint="@color/brand_blue"
                             android:paddingHorizontal="10dp"
                             android:paddingVertical="4dp"
                             android:text="25m"
-                            android:textColor="#FDFE97"
+                            android:textColor="@color/brand_yellow"
                             android:textSize="12sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-medium" />
                     </RelativeLayout>
 
                     <com.google.android.material.slider.Slider
@@ -138,9 +140,9 @@
                         android:valueFrom="1"
                         android:valueTo="60"
                         android:stepSize="1"
-                        app:thumbColor="#FDFE97"
-                        app:trackColorActive="#FDFE97"
-                        app:trackColorInactive="#24395B" />
+                        app:thumbColor="@color/brand_yellow"
+                app:trackColorActive="@color/brand_yellow"
+                app:trackColorInactive="@color/brand_blue" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -149,10 +151,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="#3A4D6E"
+                app:cardBackgroundColor="@color/brand_blue_card"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
-                app:strokeColor="#50668F"
+                app:strokeColor="@color/brand_grey"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -172,7 +174,7 @@
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_break"
                             android:contentDescription="Short Break Icon"
-                            app:tint="#FDFE97" />
+                            app:tint="@color/brand_yellow" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -190,13 +192,14 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:background="@drawable/rounded_rectangle"
-                            android:backgroundTint="#24395B"
+                            android:backgroundTint="@color/brand_blue"
                             android:paddingHorizontal="10dp"
                             android:paddingVertical="4dp"
                             android:text="5m"
-                            android:textColor="#FDFE97"
+                            android:textColor="@color/brand_yellow"
                             android:textSize="12sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-medium" />
                     </RelativeLayout>
 
                     <com.google.android.material.slider.Slider
@@ -207,9 +210,9 @@
                         android:valueFrom="1"
                         android:valueTo="30"
                         android:stepSize="1"
-                        app:thumbColor="#FDFE97"
-                        app:trackColorActive="#FDFE97"
-                        app:trackColorInactive="#24395B" />
+                        app:thumbColor="@color/brand_yellow"
+                app:trackColorActive="@color/brand_yellow"
+                app:trackColorInactive="@color/brand_blue" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -218,10 +221,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="#3A4D6E"
+                app:cardBackgroundColor="@color/brand_blue_card"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
-                app:strokeColor="#50668F"
+                app:strokeColor="@color/brand_grey"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -241,7 +244,7 @@
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_moon"
                             android:contentDescription="Long Break Icon"
-                            app:tint="#FDFE97" />
+                            app:tint="@color/brand_yellow" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -259,13 +262,14 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:background="@drawable/rounded_rectangle"
-                            android:backgroundTint="#24395B"
+                            android:backgroundTint="@color/brand_blue"
                             android:paddingHorizontal="10dp"
                             android:paddingVertical="4dp"
                             android:text="15m"
-                            android:textColor="#FDFE97"
+                            android:textColor="@color/brand_yellow"
                             android:textSize="12sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-medium" />
                     </RelativeLayout>
 
                     <com.google.android.material.slider.Slider
@@ -276,9 +280,9 @@
                         android:valueFrom="1"
                         android:valueTo="60"
                         android:stepSize="1"
-                        app:thumbColor="#FDFE97"
-                        app:trackColorActive="#FDFE97"
-                        app:trackColorInactive="#24395B" />
+                        app:thumbColor="@color/brand_yellow"
+                app:trackColorActive="@color/brand_yellow"
+                app:trackColorInactive="@color/brand_blue" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -288,7 +292,7 @@
                 android:layout_marginTop="32dp"
                 android:letterSpacing="0.1"
                 android:text="PREFERENCES"
-                android:textColor="#A0B0D0"
+                android:textColor="@color/brand_grey"
                 android:textSize="10sp"
                 android:textStyle="bold" />
 
@@ -297,10 +301,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="#3A4D6E"
+                app:cardBackgroundColor="@color/brand_blue_card"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
-                app:strokeColor="#50668F"
+                app:strokeColor="@color/brand_grey"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -322,7 +326,7 @@
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_play_button"
                             android:contentDescription="Auto-start Icon"
-                            app:tint="#A0B0D0" />
+                            app:tint="@color/brand_grey" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -339,15 +343,15 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            app:thumbTint="#FDFE97"
-                            app:trackTint="#24395B" />
+                            app:thumbTint="@color/brand_yellow"
+            app:trackTint="@color/brand_blue" />
                     </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginHorizontal="16dp"
-                        android:background="#24395B" />
+                        android:background="@color/brand_blue" />
 
                     <!-- Notification Sounds -->
                     <RelativeLayout
@@ -362,7 +366,7 @@
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_notifications"
                             android:contentDescription="Notification Icon"
-                            app:tint="#A0B0D0" />
+                            app:tint="@color/brand_grey" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -379,15 +383,15 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            app:thumbTint="#FDFE97"
-                            app:trackTint="#24395B" />
+                            app:thumbTint="@color/brand_yellow"
+            app:trackTint="@color/brand_blue" />
                     </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginHorizontal="16dp"
-                        android:background="#24395B" />
+                        android:background="@color/brand_blue" />
 
                     <!-- Dark Mode -->
                     <RelativeLayout
@@ -402,7 +406,7 @@
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_moon"
                             android:contentDescription="Dark Mode Icon"
-                            app:tint="#A0B0D0" />
+                            app:tint="@color/brand_grey" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -419,8 +423,8 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            app:thumbTint="#FDFE97"
-                            app:trackTint="#24395B" />
+                            app:thumbTint="@color/brand_yellow"
+            app:trackTint="@color/brand_blue" />
                     </RelativeLayout>
 
                 </LinearLayout>
@@ -432,7 +436,7 @@
                 android:layout_marginTop="32dp"
                 android:letterSpacing="0.1"
                 android:text="ABOUT"
-                android:textColor="#A0B0D0"
+                android:textColor="@color/brand_grey"
                 android:textSize="10sp"
                 android:textStyle="bold" />
 
@@ -441,10 +445,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="#3A4D6E"
+                app:cardBackgroundColor="@color/brand_blue_card"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
-                app:strokeColor="#50668F"
+                app:strokeColor="@color/brand_grey"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -465,7 +469,7 @@
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_info"
                             android:contentDescription="Version Icon"
-                            app:tint="#A0B0D0" />
+                            app:tint="@color/brand_grey" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -483,14 +487,14 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:text="1.0.3"
-                            android:textColor="#A0B0D0" />
+                            android:textColor="@color/brand_grey" />
                     </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginHorizontal="16dp"
-                        android:background="#24395B" />
+                        android:background="@color/brand_blue" />
 
                     <RelativeLayout
                         android:id="@+id/privacy_policy_row"
@@ -506,7 +510,7 @@
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_shield"
                             android:contentDescription="Privacy Icon"
-                            app:tint="#A0B0D0" />
+                            app:tint="@color/brand_grey" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -525,7 +529,7 @@
                             android:src="@drawable/ic_baseline_add_24"
                             android:rotation="45"
                             android:contentDescription="Arrow Icon"
-                            app:tint="#A0B0D0" />
+                            app:tint="@color/brand_grey" />
                     </RelativeLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -539,11 +543,11 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginBottom="32dp"
                 android:text="Reset All Settings"
-                android:textColor="#FDFE97"
-                app:backgroundTint="#DA1E5B"
+                android:textColor="@color/brand_yellow"
+                app:backgroundTint="@color/brand_red"
                 app:cornerRadius="16dp"
                 app:icon="@drawable/trash_icon"
-                app:iconTint="#FDFE97" />
+                app:iconTint="@color/brand_yellow" />
 
             <View android:layout_width="match_parent" android:layout_height="100dp"/>
 
