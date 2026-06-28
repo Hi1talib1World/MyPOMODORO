@@ -4,5 +4,5 @@
     android:shape="ring"
     android:thickness="10dp"
     android:useLevel="false">
-    <solid android:color="#3A4D6E" />
+    <solid android:color="@color/brand_blue_card" />
 </shape>
