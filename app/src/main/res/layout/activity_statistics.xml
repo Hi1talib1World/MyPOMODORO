@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_stats_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#24395B">
+    android:background="@color/brand_blue">
 
     <ScrollView
         android:id="@+id/statistics_scroll_view"
@@ -16,13 +17,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:paddingHorizontal="24dp"
+            android:paddingTop="72dp"
+            android:paddingBottom="24dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/performance_summary"
-                android:textColor="#A0B0D0"
+                android:textColor="@color/brand_grey"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:letterSpacing="0.1"/>
@@ -32,20 +35,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@string/insightful_productivity"
-                android:textColor="#FDFE97"
+                android:textColor="@color/brand_yellow"
                 android:textSize="24sp"
                 android:textStyle="bold"/>
 
-            <!-- Total Focus Time Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                app:cardBackgroundColor="#3A4D6E"
+                app:cardBackgroundColor="@color/brand_blue_card"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="#50668F">
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -58,7 +58,7 @@
                         android:layout_height="24dp"
                         android:src="@drawable/ic_focus"
                         android:contentDescription="Timer Icon"
-                        app:tint="#FDFE97"
+                        app:tint="@color/brand_yellow"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -68,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="@string/total_focus_time"
-                        android:textColor="#A0B0D0"
+                        android:textColor="@color/brand_grey"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/icon_timer" />
@@ -77,9 +77,10 @@
                         android:id="@+id/number_total_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#FDFE97"
+                        android:textColor="@color/brand_yellow"
                         android:textSize="32sp"
                         android:textStyle="bold"
+                        android:fontFamily="sans-serif-medium"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/label_total_focus"
                         tools:text="24h 45m" />
@@ -88,11 +89,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/rounded_rectangle"
-                        android:backgroundTint="#24395B"
+                        android:backgroundTint="@color/brand_blue"
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="6dp"
                         android:text="@string/vs_last_week"
-                        android:textColor="#FDFE97"
+                        android:textColor="@color/brand_yellow"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -108,17 +109,14 @@
                 android:orientation="horizontal"
                 android:baselineAligned="false">
 
-                <!-- Sessions Card -->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
-                    app:cardBackgroundColor="#3A4D6E"
+                    app:cardBackgroundColor="@color/brand_blue_card"
                     app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp"
-                    app:strokeWidth="1dp"
-                    app:strokeColor="#50668F">
+                    app:cardElevation="0dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -138,7 +136,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             android:text="@string/sessions"
-                            android:textColor="#A0B0D0"
+                            android:textColor="@color/brand_grey"
                             android:textSize="14sp" />
 
                         <TextView
@@ -148,21 +146,19 @@
                             android:textColor="@color/white"
                             android:textSize="28sp"
                             android:textStyle="bold"
+                            android:fontFamily="sans-serif-medium"
                             tools:text="42" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Daily Streak Card -->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="8dp"
-                    app:cardBackgroundColor="#3A4D6E"
+                    app:cardBackgroundColor="@color/brand_blue_card"
                     app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp"
-                    app:strokeWidth="1dp"
-                    app:strokeColor="#50668F">
+                    app:cardElevation="0dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -175,38 +171,36 @@
                             android:layout_height="24dp"
                             android:src="@drawable/ic_baseline_add_24"
                             android:contentDescription="Streak Icon"
-                            app:tint="#FDFE97" />
+                            app:tint="@color/brand_yellow" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             android:text="@string/daily_streak"
-                            android:textColor="#A0B0D0"
+                            android:textColor="@color/brand_grey"
                             android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/daily_streak_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#FDFE97"
+                            android:textColor="@color/brand_yellow"
                             android:textSize="28sp"
                             android:textStyle="bold"
+                            android:fontFamily="sans-serif-medium"
                             tools:text="7 Days" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
-            <!-- Focus Activity Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                app:cardBackgroundColor="#3A4D6E"
+                app:cardBackgroundColor="@color/brand_blue_card"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="#50668F">
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -232,7 +226,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/focus_activity_title"
                             android:text="@string/last_7_days_minutes"
-                            android:textColor="#A0B0D0"
+                            android:textColor="@color/brand_grey"
                             android:textSize="12sp" />
 
                         <ImageView
@@ -242,7 +236,7 @@
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_baseline_add_24"
                             android:contentDescription="Add Activity"
-                            app:tint="#A0B0D0" />
+                            app:tint="@color/brand_grey" />
                     </RelativeLayout>
 
                     <com.github.mikephil.charting.charts.BarChart
@@ -254,23 +248,20 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Insight Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                app:cardBackgroundColor="#24395B"
+                app:cardBackgroundColor="@color/brand_blue"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="#50668F">
+                app:cardElevation="0dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="24dp"
                     android:text="@string/insight_text"
-                    android:textColor="#A0B0D0"
+                    android:textColor="@color/brand_grey"
                     android:textSize="16sp"
                     android:lineSpacingMultiplier="1.2"
                     android:textStyle="italic"/>
