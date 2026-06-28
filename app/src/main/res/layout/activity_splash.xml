@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:background="#24395B"> <!-- Set Background Color -->
+    android:background="@color/brand_blue"> <!-- Set Background Color -->
 
     <ImageView
         android:id="@+id/logo"
