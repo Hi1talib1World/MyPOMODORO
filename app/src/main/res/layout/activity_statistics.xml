@@ -267,6 +267,72 @@
                     android:textStyle="italic"/>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Top Activity Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_top_activity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:cardBackgroundColor="@color/brand_blue_card"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/label_top_activity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TOP FOCUS AREA"
+                        android:textColor="@color/brand_grey"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/icon_crown"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/logo"
+                        android:alpha="0.6"
+                        android:contentDescription="Top Activity Icon"
+                        app:tint="@color/brand_yellow"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/top_activity_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/label_top_activity"
+                        tools:text="Deep Work" />
+
+                    <TextView
+                        android:id="@+id/top_activity_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/brand_yellow"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-medium"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/top_activity_name"
+                        tools:text="12h 30m total" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
             <!-- Existing Pie Chart (Hidden for now as it's not in the target design) -->
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/pie_chart"
