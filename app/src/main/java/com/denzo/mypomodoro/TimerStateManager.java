@@ -32,6 +32,7 @@ public class TimerStateManager {
         long initialTotalLimit = prefs.getLong(Constants.CURRENT_TIME_LIMIT, 1500000L);
         boolean isBreak = prefs.getBoolean(Constants.IS_BREAK_STATE, false);
         long endTime = prefs.getLong(Constants.TIMER_END_TIME, initialTotalLimit);
+        long lastSaveTime = prefs.getLong(Constants.LAST_SAVE_TIME, 0L);
 
         long finalTotalLimit = initialTotalLimit;
         long finalEndTime = endTime;
@@ -42,9 +43,10 @@ public class TimerStateManager {
             int breakDur = prefs.getInt(Constants.BREAK_DURATION_SETTING, 5);
             finalTotalLimit = (isBreak ? breakDur : workDur) * 60000L;
             finalEndTime = finalTotalLimit;
+            lastSaveTime = 0L;
         }
 
-        TimerState snapshot = new TimerState(isRunning, finalEndTime, finalTotalLimit, isBreak);
+        TimerState snapshot = new TimerState(isRunning, finalEndTime, finalTotalLimit, isBreak, lastSaveTime);
         stateStream.postValue(snapshot);
     }
 
@@ -53,7 +55,7 @@ public class TimerStateManager {
     }
 
     public TimerState getCurrentState() {
-        return stateStream.getValue() != null ? stateStream.getValue() : new TimerState(false, 0, 1500000L, false);
+        return stateStream.getValue() != null ? stateStream.getValue() : new TimerState(false, 0, 1500000L, false, 0L);
     }
 
     /**
@@ -66,6 +68,7 @@ public class TimerStateManager {
             editor.putLong(Constants.TIMER_END_TIME, newState.endTime);
             editor.putLong(Constants.CURRENT_TIME_LIMIT, newState.totalLimitMs);
             editor.putBoolean(Constants.IS_BREAK_STATE, newState.isBreak);
+            editor.putLong(Constants.LAST_SAVE_TIME, newState.lastSaveTime);
             
             if (editor.commit()) { // Atomic synchronous write
                 stateStream.postValue(newState);
@@ -83,12 +86,14 @@ public class TimerStateManager {
         public final long endTime;
         public final long totalLimitMs;
         public final boolean isBreak;
+        public final long lastSaveTime;
 
-        public TimerState(boolean isRunning, long endTime, long totalLimitMs, boolean isBreak) {
+        public TimerState(boolean isRunning, long endTime, long totalLimitMs, boolean isBreak, long lastSaveTime) {
             this.isRunning = isRunning;
             this.endTime = endTime;
             this.totalLimitMs = totalLimitMs;
             this.isBreak = isBreak;
+            this.lastSaveTime = lastSaveTime;
         }
     }
 }
