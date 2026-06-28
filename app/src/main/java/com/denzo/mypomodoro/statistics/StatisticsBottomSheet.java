@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -175,8 +176,9 @@ public class StatisticsBottomSheet extends BottomSheetDialogFragment {
 
     private void updateLineChart(List<Entry> entries) {
         LineDataSet dataSet = new LineDataSet(entries, "Completed Pomodoros");
-        dataSet.setColor(Color.parseColor("#DA1E5B"));
-        dataSet.setCircleColor(Color.parseColor("#DA1E5B"));
+        int color = ContextCompat.getColor(requireContext(), R.color.brand_red);
+        dataSet.setColor(color);
+        dataSet.setCircleColor(color);
         dataSet.setLineWidth(2.5f);
         dataSet.setCircleRadius(4f);
         dataSet.setDrawValues(false);
