@@ -1,7 +1,6 @@
 package com.denzo.mypomodoro;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,6 +24,8 @@ public class NewBlockDialogFragment extends DialogFragment {
 
     private EditText nameInput;
     private EditText sessionInput;
+    private EditText taskTypeInput;
+    private EditText projectNameInput;
     private TextView durationText;
     private int selectedDurationMins = 25;
     private OnActivityAddedListener listener;
@@ -40,6 +41,7 @@ public class NewBlockDialogFragment extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Pillar 2: Consistency - Restore original full screen light theme
         setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Light_NoTitleBar_Fullscreen);
     }
 
@@ -50,7 +52,10 @@ public class NewBlockDialogFragment extends DialogFragment {
 
         nameInput = view.findViewById(R.id.edit_activity_name);
         sessionInput = view.findViewById(R.id.edit_sessions);
+        taskTypeInput = view.findViewById(R.id.edit_task_type);
+        projectNameInput = view.findViewById(R.id.edit_project_name);
         durationText = view.findViewById(R.id.text_duration);
+        
         ImageView closeBtn = view.findViewById(R.id.btn_close);
         ImageView saveBtn = view.findViewById(R.id.btn_save);
 
@@ -76,7 +81,7 @@ public class NewBlockDialogFragment extends DialogFragment {
                 (view, hourOfDay, minute) -> {
                     selectedDurationMins = (hourOfDay * 60) + minute;
                     if (selectedDurationMins == 0) selectedDurationMins = 1; // Min 1 min
-                    String durationStr = selectedDurationMins + " minutes";
+                    String durationStr = selectedDurationMins + "m";
                     durationText.setText(durationStr);
                 }, hours, mins, true);
 
@@ -90,6 +95,12 @@ public class NewBlockDialogFragment extends DialogFragment {
     private void saveActivity() {
         String name = nameInput.getText().toString().trim();
         String sessionsStr = sessionInput.getText().toString().trim();
+        String taskType = taskTypeInput.getText().toString().trim();
+        String projectName = projectNameInput.getText().toString().trim();
+        
+        if (taskType.isEmpty()) taskType = "Deep Work";
+        if (projectName.isEmpty()) projectName = "General";
+
         int sessionsValue = 4; // Default
         try {
             if (!sessionsStr.isEmpty()) sessionsValue = Integer.parseInt(sessionsStr);
@@ -101,6 +112,9 @@ public class NewBlockDialogFragment extends DialogFragment {
         }
 
         final int finalSessions = sessionsValue;
+        final String finalTaskType = taskType;
+        final String finalProjectName = projectName;
+
         Database.databaseExecutor.execute(() -> {
             Database db = Database.getInstance(requireContext());
             if (!db.activityDao().isNameOccupied(name)) {
@@ -111,15 +125,9 @@ public class NewBlockDialogFragment extends DialogFragment {
                         Constants.DEFAULT_LONG_BREAK_TIME,
                         finalSessions,
                         false, false, false, true,
-                        "Deep Work", "General");
+                        finalTaskType, finalProjectName);
 
                 db.activityDao().insertActivity(newActivity);
-                
-                // Set as active activity
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
-                // We need the ID of the newly inserted activity. 
-                // For simplicity, I'll just refresh and let the user select it, 
-                // or I can fetch it back.
                 
                 if (getActivity() != null) {
                     getActivity().runOnUiThread(() -> {
