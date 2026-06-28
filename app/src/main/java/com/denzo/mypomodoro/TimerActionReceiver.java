@@ -3,7 +3,6 @@ package com.denzo.mypomodoro;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import androidx.preference.PreferenceManager;
 
 public final class TimerActionReceiver extends BroadcastReceiver {
@@ -33,16 +32,24 @@ public final class TimerActionReceiver extends BroadcastReceiver {
 
     private void handlePlayPause(Context context, TimerStateManager stateManager, TimerStateManager.TimerState current) {
         TimerStateManager.TimerState newState;
+        long now = System.currentTimeMillis();
+        
         if (current.isRunning) {
-            long remaining = current.endTime - System.currentTimeMillis();
-            newState = new TimerStateManager.TimerState(false, remaining, current.totalLimitMs, current.isBreak);
+            // Save progress
+            if (current.lastSaveTime > 0) {
+                long delta = now - current.lastSaveTime;
+                saveManualProgress(context, delta, current.isBreak);
+            }
+            
+            long remaining = current.endTime - now;
+            newState = new TimerStateManager.TimerState(false, remaining, current.totalLimitMs, current.isBreak, 0L);
             if (stateManager.commitState(newState)) {
                 context.stopService(new Intent(context, PomodoroService.class));
             }
         } else {
             long remaining = current.endTime > 0 ? current.endTime : current.totalLimitMs;
-            long targetEndTime = System.currentTimeMillis() + remaining;
-            newState = new TimerStateManager.TimerState(true, targetEndTime, current.totalLimitMs, current.isBreak);
+            long targetEndTime = now + remaining;
+            newState = new TimerStateManager.TimerState(true, targetEndTime, current.totalLimitMs, current.isBreak, now);
             if (stateManager.commitState(newState)) {
                 Intent serviceIntent = new Intent(context, PomodoroService.class);
                 context.startService(serviceIntent);
@@ -51,9 +58,27 @@ public final class TimerActionReceiver extends BroadcastReceiver {
     }
 
     private void handleReset(Context context, TimerStateManager stateManager, TimerStateManager.TimerState current) {
-        TimerStateManager.TimerState newState = new TimerStateManager.TimerState(false, current.totalLimitMs, current.totalLimitMs, current.isBreak);
+        if (current.isRunning && current.lastSaveTime > 0) {
+            long delta = System.currentTimeMillis() - current.lastSaveTime;
+            saveManualProgress(context, delta, current.isBreak);
+        }
+        
+        TimerStateManager.TimerState newState = new TimerStateManager.TimerState(false, current.totalLimitMs, current.totalLimitMs, current.isBreak, 0L);
         if (stateManager.commitState(newState)) {
             context.stopService(new Intent(context, PomodoroService.class));
+        }
+    }
+
+    private void saveManualProgress(Context context, long deltaMs, boolean isBreak) {
+        if (deltaMs < 1000) return;
+        
+        int activityId = PreferenceManager.getDefaultSharedPreferences(context)
+                .getInt(Constants.CURRENT_ACTIVITY_ID, 1);
+        
+        if (isBreak) {
+            Utility.updateDatabaseBreakTimeOnly(context, deltaMs, activityId);
+        } else {
+            Utility.updateDatabaseWorkTimeOnly(context, deltaMs, activityId);
         }
     }
 }
