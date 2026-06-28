@@ -2,9 +2,6 @@ package com.denzo.mypomodoro.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.MediaPlayer;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -203,7 +200,7 @@ public class FocusFragment extends Fragment implements View.OnClickListener {
         
         long limit = (isBreak ? breakDur : workDur) * 60000L;
         
-        TimerStateManager.TimerState newState = new TimerStateManager.TimerState(false, limit, limit, isBreak);
+        TimerStateManager.TimerState newState = new TimerStateManager.TimerState(false, limit, limit, isBreak, 0L);
         stateManager.commitState(newState);
     }
 
@@ -211,9 +208,17 @@ public class FocusFragment extends Fragment implements View.OnClickListener {
         TimerStateManager.TimerState current = stateManager.getCurrentState();
         TimerStateManager.TimerState newState;
         
+        long now = System.currentTimeMillis();
+        
         if (current.isRunning) {
-            long remaining = current.endTime - System.currentTimeMillis();
-            newState = new TimerStateManager.TimerState(false, remaining, current.totalLimitMs, current.isBreak);
+            // Save progress before pausing
+            if (current.lastSaveTime > 0) {
+                long delta = now - current.lastSaveTime;
+                saveManualProgress(delta, current.isBreak);
+            }
+            
+            long remaining = current.endTime - now;
+            newState = new TimerStateManager.TimerState(false, remaining, current.totalLimitMs, current.isBreak, 0L);
             if (stateManager.commitState(newState)) {
                 requireContext().stopService(new Intent(requireContext(), PomodoroService.class));
             } else {
@@ -221,8 +226,9 @@ public class FocusFragment extends Fragment implements View.OnClickListener {
             }
         } else {
             long remaining = current.endTime > 0 ? current.endTime : current.totalLimitMs;
-            long targetEndTime = System.currentTimeMillis() + remaining;
-            newState = new TimerStateManager.TimerState(true, targetEndTime, current.totalLimitMs, current.isBreak);
+            long targetEndTime = now + remaining;
+            // Start running, set lastSaveTime to now
+            newState = new TimerStateManager.TimerState(true, targetEndTime, current.totalLimitMs, current.isBreak, now);
             if (stateManager.commitState(newState)) {
                 Intent serviceIntent = new Intent(requireContext(), PomodoroService.class);
                 requireContext().startService(serviceIntent);
@@ -234,10 +240,29 @@ public class FocusFragment extends Fragment implements View.OnClickListener {
 
     private void reset() {
         TimerStateManager.TimerState current = stateManager.getCurrentState();
-        TimerStateManager.TimerState newState = new TimerStateManager.TimerState(false, current.totalLimitMs, current.totalLimitMs, current.isBreak);
+        
+        if (current.isRunning && current.lastSaveTime > 0) {
+            long delta = System.currentTimeMillis() - current.lastSaveTime;
+            saveManualProgress(delta, current.isBreak);
+        }
+
+        TimerStateManager.TimerState newState = new TimerStateManager.TimerState(false, current.totalLimitMs, current.totalLimitMs, current.isBreak, 0L);
         if (stateManager.commitState(newState)) {
             requireContext().stopService(new Intent(requireContext(), PomodoroService.class));
             if (finishMessage != null) finishMessage.setVisibility(View.GONE);
+        }
+    }
+
+    private void saveManualProgress(long deltaMs, boolean isBreak) {
+        if (deltaMs < 1000) return; // Ignore less than 1 second
+        
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
+        int activityId = prefs.getInt(Constants.CURRENT_ACTIVITY_ID, 1);
+        
+        if (isBreak) {
+            Utility.updateDatabaseBreakTimeOnly(requireContext(), deltaMs, activityId);
+        } else {
+            Utility.updateDatabaseWorkTimeOnly(requireContext(), deltaMs, activityId);
         }
     }
 
