@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="64dp"
-    android:background="#24395B"
+    android:background="@color/brand_blue"
     android:padding="8dp">
 
     <ImageView
@@ -30,15 +30,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textColor="#A0B0D0"
-            android:textSize="12sp" />
+            android:textColor="@color/brand_yellow"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.05" />
 
         <TextView
             android:id="@+id/countdownText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_time_string"
-            android:textColor="#FDFE97"
+            android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold" />
     </LinearLayout>
